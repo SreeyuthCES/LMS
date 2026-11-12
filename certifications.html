@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifications & Courses · CES Learning Platform</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Official Fonts & Icons -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4A82A3",
+            "primary-light": "#6BA3C2",
+            "primary-dark": "#2B4C5E",
+            "text-main": "#2C1E16",
+            "text-secondary": "#5C473D",
+            "background-main": "#FAFAFA",
+            "oracle-red": "#C74634",
+            "ai-purple": "#6B4A93"
+          },
+          fontFamily: { display: ["Manrope", "sans-serif"] },
+          animation: {
+            'slide-up': 'slideUp 0.4s ease-out forwards',
+          },
+          keyframes: {
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth, Elegant Gradient Background */
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #2C1E16;
+      background-color: #FAFAFA;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(74, 130, 163, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(107, 74, 147, 0.06) 0%, transparent 50%),
+        linear-gradient(135deg, #FFFFFF 0%, #F9F6F3 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(74, 130, 163, 0.3);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 130, 163, 0.6);
+    }
+
+    /* Horizontal Scrollbar specifically for Certifications and Courses */
+    .horizontal-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 10px;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(74, 130, 163, 0.2);
+      border-radius: 10px;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 130, 163, 0.5);
+    }
+
+    /* Edge-to-Edge Hero Image Setup (Floats seamlessly under navbar) */
+    .hero-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    .hero-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(44, 30, 22, 0.65) 0%, rgba(44, 30, 22, 0.75) 55%, rgba(250, 250, 250, 1) 100%);
+    }
+
+    /* Segregated Content Blocks with Track Gradients */
+    .content-block {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 12px 40px -12px rgba(44, 30, 22, 0.06);
+    }
+
+    .theme-block-oracle {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(199, 70, 52, 0.05) 100%);
+      border: 1px solid rgba(199, 70, 52, 0.15);
+    }
+
+    .theme-block-ai {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(107, 74, 147, 0.05) 100%);
+      border: 1px solid rgba(107, 74, 147, 0.15);
+    }
+
+    @media (max-width: 640px) {
+      .content-block {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    /* Intuitive Segmented Control (Main Toggle) */
+    .track-toggle-container {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(232, 226, 217, 0.8);
+      border-radius: 999px;
+      padding: 6px;
+      display: flex;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+      z-index: 30;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .track-btn {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      color: #5C473D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    @media (min-width: 640px) {
+      .track-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+      }
+    }
+
+    .track-btn.active {
+      color: #FFFFFF;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      width: calc(50% - 6px);
+      background: #4A82A3;
+      border-radius: 999px;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s;
+      z-index: 1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-oracle .toggle-slider {
+      background-color: #C74634;
+    }
+
+    .theme-ai .toggle-slider {
+      background-color: #6B4A93;
+      transform: translateX(100%);
+    }
+
+    /* Clean Corporate Catalog Card */
+    .catalog-card {
+      background: #FFFFFF;
+      border: 1px solid #E8E2D9;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .catalog-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      box-shadow: inset 0 0 0 2px transparent;
+      transition: box-shadow 0.3s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .catalog-card:hover {
+      box-shadow: 0 16px 32px -10px rgba(44, 30, 22, 0.12);
+      transform: translateY(-4px);
+      border-color: transparent;
+    }
+
+    .oracle-card:hover::before {
+      box-shadow: inset 0 0 0 2px rgba(199, 70, 52, 0.3);
+    }
+
+    .ai-card:hover::before {
+      box-shadow: inset 0 0 0 2px rgba(107, 74, 147, 0.3);
+    }
+
+    /* Difficulty Indicator Bars */
+    .difficulty-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 12px;
+    }
+
+    .bar {
+      width: 4px;
+      background: #E8E2D9;
+      border-radius: 2px;
+    }
+
+    .bar-1 {
+      height: 6px;
+    }
+
+    .bar-2 {
+      height: 9px;
+    }
+
+    .bar-3 {
+      height: 12px;
+    }
+
+    .level-beginner .bar-1 {
+      background: #4A82A3;
+    }
+
+    .level-intermediate .bar-1,
+    .level-intermediate .bar-2 {
+      background: #4A82A3;
+    }
+
+    .level-advanced .bar {
+      background: #4A82A3;
+    }
+
+    .course-description {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      line-height: 1.35;
+      height: calc(1.35em * 3);
+      overflow: hidden;
+    }
+
+    .course-title {
+      line-height: 1.2;
+      min-height: calc(1.2em * 2);
+    }
+
+    .course-meta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 2rem;
+    }
+
+    .course-meta-details {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .course-meta-level {
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* Bookmark Icon */
+    .bookmark-btn {
+      width: 32px;
+      height: 32px;
+      background: #F9F6F3;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5C473D;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .bookmark-btn:hover {
+      background: #E8E2D9;
+      color: #4A82A3;
+      transform: scale(1.1);
+    }
+
+    /* Badge Label */
+    .badge-label {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Back to Top Button */
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      background: #4A82A3;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(74, 130, 163, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 50;
+      cursor: pointer;
+    }
+
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    #back-to-top:hover {
+      background: #2B4C5E;
+      transform: translateY(-3px);
+    }
+
+    /* Content Switching */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: slideUp 0.4s ease-out forwards;
+    }
+  </style>
+  <link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="antialiased selection:bg-primary/20 selection:text-primary-dark relative">
+
+  <!-- SEAMLESS GLASS NAVIGATION BAR -->
+  <header
+    class="fixed top-0 left-0 right-0 w-full h-16 z-50 bg-white/75 backdrop-blur-md border-b border-white/40 shadow-sm transition-all">
+    <div class="max-w-[1400px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+
+      <div class="flex items-center gap-3 sm:gap-4 shrink-0 page-header-brand-group">
+        <a href="employee_dashboard.html"
+          class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/70 hover:bg-white text-text-secondary border border-white/60 transition-all shadow-sm hover:text-primary"
+          title="Back to Dashboard">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        </a>
+        <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+          class="h-8 w-20 sm:w-24 shrink-0 object-contain">
+        <div class="flex items-center gap-2 sm:gap-3 page-header-brand-title">
+          <div
+            class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-md hidden sm:flex">
+            <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+          </div>
+          <h1 class="text-base sm:text-xl font-black text-text-main tracking-tight whitespace-nowrap">Certifications &
+            Courses</h1>
+        </div>
+      </div>
+
+      <!-- Functional Glass Search Bar -->
+      <div class="relative w-full max-w-[180px] xs:max-w-[220px] sm:max-w-xs md:max-w-sm">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <span class="material-symbols-outlined text-gray-400 text-[18px] sm:text-[20px]">search</span>
+        </div>
+        <input id="search-input"
+          class="w-full pl-9 sm:pl-10 pr-4 py-1.5 sm:py-2 bg-white/80 hover:bg-white focus:bg-white border border-white/80 rounded-full text-xs sm:text-sm font-medium focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none shadow-sm backdrop-blur-sm placeholder:text-gray-400"
+          placeholder="Search catalog..." type="text">
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BACKGROUND -->
+  <div class="hero-container">
+    <img src="assets/certifications.png" class="hero-img" alt="Learning Background"
+      onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000'">
+    <div class="hero-fade"></div>
+  </div>
+
+  <!-- HERO CONTENT & WORKSPACE -->
+  <div class="relative z-10 pt-24">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 text-center">
+      <span
+        class="inline-block bg-white/15 backdrop-blur-md border border-white/25 text-white px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-widest mb-3 shadow-sm">
+        Official Directory
+      </span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-3 drop-shadow-md">
+        Certifications & Courses
+      </h2>
+      <p class="text-sm sm:text-base md:text-lg text-white/95 font-medium max-w-xl mx-auto drop-shadow-sm">
+        Select a specialized track below to access required learning modules, enterprise training, and official
+        credentials.
+      </p>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+
+      <!-- INTUITIVE TOGGLE SWITCH -->
+      <div class="flex justify-center relative z-20 mb-10">
+        <div id="main-toggle" class="track-toggle-container theme-oracle">
+          <div class="toggle-slider"></div>
+          <button onclick="switchTrack('oracle')" id="btn-oracle" class="track-btn active">
+            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">dns</span> Oracle Track
+          </button>
+          <button onclick="switchTrack('ai')" id="btn-ai" class="track-btn">
+            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">psychology</span> AI Track
+          </button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           CONTENT: ORACLE TRACK (Injected via JS)
+           ========================================== -->
+      <div id="track-oracle" class="tab-content active">
+
+        <!-- Resources Block -->
+        <section class="content-block theme-block-oracle">
+          <div class="flex items-center justify-between mb-6 border-b border-oracle-red/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-oracle-red text-[24px] sm:text-[28px]">library_books</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                Oracle Resources
+                <span id="count-oracle-resources"
+                  class="text-xs font-bold text-oracle-red bg-oracle-red/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-oracle-resources" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+        </section>
+
+        <!-- Certifications Block (Horizontally Scrollable) -->
+        <section class="content-block theme-block-oracle">
+          <div class="flex items-center justify-between mb-6 border-b border-oracle-red/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-text-main text-[24px] sm:text-[28px]">workspace_premium</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                Certifications
+                <span id="count-oracle-certifications"
+                  class="text-xs font-bold text-oracle-red bg-oracle-red/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-oracle-certifications"
+            class="flex overflow-x-auto gap-6 pb-6 horizontal-scroll snap-x snap-mandatory items-stretch"></div>
+        </section>
+
+        <!-- Courses Block (Horizontally Scrollable) -->
+        <section class="content-block theme-block-oracle">
+          <div class="flex items-center justify-between mb-6 border-b border-oracle-red/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-text-main text-[24px] sm:text-[28px]">school</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                Courses
+                <span id="count-oracle-courses"
+                  class="text-xs font-bold text-oracle-red bg-oracle-red/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-oracle-courses"
+            class="flex overflow-x-auto gap-6 pb-6 horizontal-scroll snap-x snap-mandatory items-stretch"></div>
+        </section>
+
+      </div>
+
+      <!-- ==========================================
+           CONTENT: AI TRACK (Injected via JS)
+           ========================================== -->
+      <div id="track-ai" class="tab-content">
+
+        <!-- Resources Block -->
+        <section class="content-block theme-block-ai">
+          <div class="flex items-center justify-between mb-6 border-b border-ai-purple/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-ai-purple text-[24px] sm:text-[28px]">library_books</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                AI Resources
+                <span id="count-ai-resources"
+                  class="text-xs font-bold text-ai-purple bg-ai-purple/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-ai-resources" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+        </section>
+
+        <!-- Certifications Block (Horizontally Scrollable) -->
+        <section class="content-block theme-block-ai">
+          <div class="flex items-center justify-between mb-6 border-b border-ai-purple/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-text-main text-[24px] sm:text-[28px]">workspace_premium</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                Certifications
+                <span id="count-ai-certifications"
+                  class="text-xs font-bold text-ai-purple bg-ai-purple/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-ai-certifications"
+            class="flex overflow-x-auto gap-6 pb-6 horizontal-scroll snap-x snap-mandatory items-stretch"></div>
+        </section>
+
+        <!-- Courses Block (Horizontally Scrollable) -->
+        <section class="content-block theme-block-ai">
+          <div class="flex items-center justify-between mb-6 border-b border-ai-purple/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-text-main text-[24px] sm:text-[28px]">school</span>
+              <h3 class="text-xl sm:text-2xl font-black text-text-main tracking-tight flex items-center gap-3">
+                Courses
+                <span id="count-ai-courses"
+                  class="text-xs font-bold text-ai-purple bg-ai-purple/10 px-2.5 py-1 rounded-md"></span>
+              </h3>
+            </div>
+          </div>
+          <div id="grid-ai-courses"
+            class="flex overflow-x-auto gap-6 pb-6 horizontal-scroll snap-x snap-mandatory items-stretch"></div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">
+    <span class="material-symbols-outlined">arrow_upward</span>
+  </button>
+
+  <!-- =======================================================
+       JAVASCRIPT "DATABASE" & SEARCH RENDER ENGINE
+       ======================================================= -->
+  <script>
+    let activeTrack = 'oracle';
+
+    const learningDatabase = {
+      oracle: {
+        resources: [
+          { title: "Oracle Applications Portal", description: "External environment & tools", icon: "cloud_sync", link: "https://oracleapps88.blogspot.com/", iconBg: "bg-red-50", iconColor: "text-oracle-red", hoverBorder: "hover:border-oracle-red" },
+          { title: "Oracle Official Docs", description: "Implementation guides & manuals", icon: "menu_book", link: "https://docs.oracle.com/en/", iconBg: "bg-red-50", iconColor: "text-oracle-red", hoverBorder: "hover:border-oracle-red" }
+        ],
+        certifications: [
+          { title: "Oracle Fusion Cloud Applications ERP Process Essentials", description: "Build foundational knowledge of Oracle Fusion Cloud ERP business processes and validate your understanding through the ERP Process Essentials certification.", link: "https://mylearn.oracle.com/ou/learning-path/get-certified-oracle-fusion-cloud-applications-erp-process-essentials/146907", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "briefcase" },
+          { title: "Oracle Fusion Cloud Applications SCM Process Essentials", description: "Learn the fundamentals of Oracle Fusion Cloud Supply Chain Management processes and validate your knowledge with the SCM Process Essentials certification.", link: "https://mylearn.oracle.com/ou/learning-path/get-certified-oracle-fusion-cloud-applications-scm-process-essentials/146919", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "truck" },
+          { title: "Oracle Agentic AI Foundations Associate", description: "Develop foundational knowledge of agentic AI concepts, technologies, and applications and prepare for the Oracle Agentic AI Foundations Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oracle-agentic-ai-foundations-associate-2026/163239", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "bot" },
+          { title: "OCI AI Foundations Associate", description: "Learn the fundamental concepts of artificial intelligence and machine learning on Oracle Cloud Infrastructure and prepare for the OCI AI Foundations Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oci-ai-foundations-associate-2026/163544", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "brain" },
+          { title: "Oracle AI Agent Studio for Fusion Applications Foundations Associate", description: "Learn the fundamentals of Oracle AI Agent Studio for Fusion Applications and develop the knowledge required for the Foundations Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/oracle-ai-agent-studio-for-fusion-applications-foundations-associate-training-and-certification/151552", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "bot" },
+          { title: "OCI Foundations Associate", description: "Build foundational knowledge of Oracle Cloud Infrastructure services, concepts, architecture, and core cloud technologies while preparing for the OCI Foundations Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oci-foundations-associate-2026/163541", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "cloud" },
+          { title: "Oracle Data Center Operations Foundations Associate", description: "Learn the foundational principles and practices involved in Oracle data center operations and prepare for the Data Center Operations Foundations Associate credential.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oracle-data-center-operations-foundations-associate/165222", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "server" },
+          { title: "Oracle AI Database Foundations Associate", description: "Learn the foundations of Oracle AI Database, including database concepts and AI capabilities, and prepare for the Oracle AI Database Foundations Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oracle-ai-database-foundations-associate-2026/162213", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "database" }
+        ],
+
+        courses: [
+          { title: "Free Training and Certifications from Oracle University", description: "Explore Oracle University's collection of free training and certification opportunities across Oracle Cloud, databases, AI, applications, and other technologies.", link: "https://mylearn.oracle.com/ou/story/163512?filters=Format-Learning%20Path", duration: "Self-paced", modules: "Multiple", level: "Beginner–Advanced", icon: "graduation-cap" },
+          { title: "OCI Architect Associate", description: "Develop the foundational skills needed to design and architect solutions on Oracle Cloud Infrastructure and prepare for the OCI Architect Associate certification.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oci-architect-associate-2026/162234", duration: "Self-paced", modules: "Multiple", level: "Associate", icon: "layers" },
+          { title: "Oracle AI Database Foundations Associate", description: "Learn the fundamentals of Oracle AI Database, database technologies, and AI capabilities through Oracle University's structured learning path.", link: "https://mylearn.oracle.com/ou/learning-path/become-an-oracle-ai-database-foundations-associate-2026/162213", duration: "Self-paced", modules: "Multiple", level: "Foundational", icon: "database" }
+        ]
+      },
+      ai: {
+        resources: [
+          { title: "Prompt Engineering Guide", description: "Internal syntax & frameworks", icon: "code_blocks", link: "https://developers.openai.com/api/docs/guides/prompt-engineering?api-mode=responses", iconBg: "bg-purple-50", iconColor: "text-ai-purple", hoverBorder: "hover:border-ai-purple" },
+          { title: "Lang Chain Agents Documentation", description: "Agents and its working", icon: "api", link: "https://docs.langchain.com/oss/python/langchain/agents", iconBg: "bg-purple-50", iconColor: "text-ai-purple", hoverBorder: "hover:border-ai-purple" }
+        ],
+        certifications: [
+          { title: "Introduction to Generative AI", description: "Foundational overview of Generative AI concepts.", link: "https://www.skills.google/course_templates/536", duration: "45m", modules: 1, level: "Beginner", icon: "auto_awesome" },
+          { title: "Introduction to AI Concepts", description: "Learn the core terminology and concepts behind AI.", link: "https://learn.microsoft.com/en-us/training/modules/get-started-ai-fundamentals/", duration: "45m", modules: 1, level: "Beginner", icon: "lightbulb" },
+          { title: "Introduction to Large Language Models", description: "Explore what large language models (LLMs) are and their use cases.", link: "https://www.skills.google/course_templates/539", duration: "45m", modules: 1, level: "Beginner", icon: "chat" },
+          { title: "Machine Learning Crash Course", description: "Fast-paced introduction to machine learning principles.", link: "https://developers.google.com/machine-learning/crash-course", duration: "1.5h", modules: 3, level: "Intermediate", icon: "speed" },
+          { title: "Attention Mechanism", description: "Understand the Attention Mechanism behind modern transformers.", link: "https://www.skills.google/course_templates/537", duration: "1.0h", modules: 2, level: "Intermediate", icon: "center_focus_strong" },
+          { title: "Encoder-Decoder Architecture", description: "Deep dive into the encoder-decoder models powering NLP.", link: "https://www.skills.google/course_templates/538", duration: "1.0h", modules: 2, level: "Intermediate", icon: "compare_arrows" },
+          { title: "Introduction to Image Generation", description: "Discover how diffusion models generate images from text.", link: "https://www.skills.google/course_templates/541", duration: "1.0h", modules: 1, level: "Beginner", icon: "image" },
+          { title: "Prompt Design in Vertex AI", description: "Crafting effective prompts and using Google Vertex AI.", link: "https://www.skills.google/course_templates/976", duration: "1.0h", modules: 2, level: "Intermediate", icon: "edit_note" },
+          { title: "AI Fluency: Explore Generative AI", description: "Build a strong foundational understanding of Generative AI.", link: "https://learn.microsoft.com/en-us/training/modules/explore-generative-ai/", duration: "2.5h", modules: 5, level: "Beginner", icon: "record_voice_over" },
+          { title: "Intro to Generative AI and AI Agents", description: "Equip Generative AI models with tools to function as agents.", link: "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/", duration: "1.5h", modules: 2, level: "Intermediate", icon: "smart_toy" },
+          { title: "Get Started with AI Applications and Agents on Azure", description: "Build and scale AI agents on Microsoft Azure.", link: "https://learn.microsoft.com/en-us/training/paths/get-started-ai-apps-agents/", duration: "2.0h", modules: 4, level: "Intermediate", icon: "cloud_done" },
+          { title: "AI-900: Azure AI Fundamentals", description: "Foundational knowledge of machine learning and Azure AI services.", link: "https://learn.microsoft.com/en-us/training/courses/ai-901t00", duration: "120m", modules: 6, level: "Beginner", icon: "workspace_premium" }
+        ],
+        courses: [
+          { title: "Generative AI for Beginners", description: "Foundations of GenAI, building apps, and using LLMs.", link: "https://microsoft.github.io/generative-ai-for-beginners/#/", duration: "4.0h", modules: 12, level: "Beginner", icon: "school" },
+          { title: "Computer Vision Learning Path", description: "Image processing, facial recognition, and object detection.", link: "https://learn.microsoft.com/en-us/training/browse/?terms=computer%20vision", duration: "8.0h", modules: 7, level: "Intermediate", icon: "visibility" },
+          { title: "Machine Learning Learning Path", description: "Deep dive into ML algorithms, model training, and deployment.", link: "https://learn.microsoft.com/en-us/training/browse/?terms=machine%20learning", duration: "10.0h", modules: 8, level: "Intermediate", icon: "account_tree" },
+          { title: "Deep Learning Specialization", description: "A comprehensive program taught by Andrew Ng covering Neural Networks, Hyperparameter Tuning, and Sequence Models.", link: "https://www.coursera.org/specializations/deep-learning", duration: "3-4 Months", modules: 5, level: "Intermediate", icon: "psychology" },
+          { title: "Machine Learning Specialization", description: "Beginner-level program aimed at gaining a foundational understanding of machine learning models and Python.", link: "https://www.coursera.org/specializations/machine-learning-introduction", duration: "10 Weeks", modules: 3, level: "Beginner", icon: "model_training" }
+        ]
+      }
+    };
+
+    function getLevelClass(levelStr) {
+      const normalizedLevel = String(levelStr || '').toLowerCase();
+      if (normalizedLevel.includes('beginner') || normalizedLevel.includes('foundational')) {
+        return { cls: 'level-beginner', txt: 'Beginner' };
+      }
+      if (normalizedLevel.includes('intermediate') || normalizedLevel.includes('associate')) {
+        return { cls: 'level-intermediate', txt: 'Intermediate' };
+      }
+      return { cls: 'level-advanced', txt: 'Advanced' };
+    }
+
+    function renderResources(dataArr, containerId, countId) {
+      const container = document.getElementById(containerId);
+      const countSpan = document.getElementById(countId);
+      if (countSpan) countSpan.textContent = `${dataArr.length} Resources`;
+
+      if (!container) return;
+      if (dataArr.length === 0) {
+        container.innerHTML = `<p class="col-span-full text-center text-text-secondary text-sm py-4 italic">No matching resources found.</p>`;
+        return;
+      }
+      container.innerHTML = dataArr.map(item => `
+        <a href="${item.link}" target="_blank" class="bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 flex items-center gap-4 sm:gap-5 group ${item.hoverBorder} hover:shadow-md transition-all">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl ${item.iconBg} ${item.iconColor} flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px] sm:text-[28px] group-hover:scale-110 transition-transform">${item.icon}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-black text-text-main text-base sm:text-lg leading-tight truncate">${item.title}</h4>
+            <p class="text-xs sm:text-sm text-text-secondary font-medium mt-1">${item.description}</p>
+          </div>
+          <span class="material-symbols-outlined text-gray-300 ${item.iconColor.replace('text-', 'group-hover:text-')} transition-colors hidden sm:block">open_in_new</span>
+        </a>
+      `).join('');
+    }
+
+    function renderCards(dataArr, track, category, containerId, countId) {
+      const container = document.getElementById(containerId);
+      const countSpan = document.getElementById(countId);
+
+      const labelText = category === 'certifications' ? 'Certifications' : 'Courses';
+      if (countSpan) countSpan.textContent = `${dataArr.length} ${labelText}`;
+
+      if (!container) return;
+      if (dataArr.length === 0) {
+        container.innerHTML = `<p class="w-full text-center text-text-secondary text-sm py-6 italic">No matching ${category} found.</p>`;
+        return;
+      }
+
+      const trackCardClass = track === 'oracle' ? 'oracle-card' : 'ai-card';
+      const badgeTextClass = category === 'certifications'
+        ? (track === 'oracle' ? 'text-oracle-red bg-red-50' : 'text-ai-purple bg-purple-50')
+        : 'text-text-secondary bg-gray-100';
+      const badgeText = category === 'certifications' ? 'Certification' : 'Course';
+
+      const titleHoverClass = track === 'oracle' ? (category === 'certifications' ? 'group-hover:text-oracle-red' : 'group-hover:text-primary') : (category === 'certifications' ? 'group-hover:text-ai-purple' : 'group-hover:text-primary');
+
+      const bottomTextClass = category === 'certifications' ? (track === 'oracle' ? 'text-oracle-red' : 'text-ai-purple') : 'text-text-main';
+      const bottomHoverClass = category === 'certifications' ? '' : 'group-hover:text-primary';
+      const actionText = category === 'certifications' ? 'Enroll Path' : 'Start Course';
+
+      // Both Certifications and Courses are horizontally scrollable now
+      const sizingClass = 'w-[300px] sm:w-[340px] shrink-0 snap-start h-auto';
+
+      container.innerHTML = dataArr.map(item => {
+        const lvl = getLevelClass(item.level);
+        return `
+        <a href="${item.link}" target="_blank" class="catalog-card ${trackCardClass} group p-5 sm:p-6 flex flex-col ${sizingClass}">
+          <div class="flex items-center justify-between mb-4">
+            <span class="badge-label ${badgeTextClass}">${badgeText}</span>
+            <button class="bookmark-btn"><span class="material-symbols-outlined text-[18px]">bookmark_border</span></button>
+          </div>
+
+          <h4 class="course-title text-base sm:text-xl font-black text-text-main mb-2 ${titleHoverClass} transition-colors line-clamp-2">
+            ${item.title}
+          </h4>
+          <p class="course-description text-xs sm:text-sm text-text-secondary mb-6">
+            ${item.description}
+          </p>
+          
+          <div class="course-meta mb-5">
+            <div class="course-meta-details text-xs font-bold text-text-secondary">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">schedule</span> ${item.duration}</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">format_list_bulleted</span> ${item.modules} Mod</span>
+            </div>
+            <div class="course-meta-level flex items-center gap-1.5 text-[10px] font-black uppercase text-gray-500 ${lvl.cls}">
+              ${lvl.txt}
+              <div class="difficulty-bars"><div class="bar bar-1"></div><div class="bar bar-2"></div><div class="bar bar-3"></div></div>
+            </div>
+          </div>
+
+          <div class="mt-auto flex items-center justify-between pt-4 border-t border-gray-100">
+            <span class="${bottomTextClass} ${bottomHoverClass} font-black text-sm uppercase tracking-wide transition-colors">${actionText}</span>
+            <span class="material-symbols-outlined ${bottomTextClass} ${bottomHoverClass} transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        `;
+      }).join('');
+    }
+
+    function renderTrack(track, query = '') {
+      const q = query.toLowerCase().trim();
+      const filterFn = item => !q || item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q);
+
+      const res = learningDatabase[track].resources.filter(filterFn);
+      const certs = learningDatabase[track].certifications.filter(filterFn);
+      const courses = learningDatabase[track].courses.filter(filterFn);
+
+      renderResources(res, `grid-${track}-resources`, `count-${track}-resources`);
+      renderCards(certs, track, 'certifications', `grid-${track}-certifications`, `count-${track}-certifications`);
+      renderCards(courses, track, 'courses', `grid-${track}-courses`, `count-${track}-courses`);
+    }
+
+    function initializeCatalog() {
+      renderTrack('oracle');
+      renderTrack('ai');
+    }
+
+    function switchTrack(trackId) {
+      activeTrack = trackId;
+      const toggleContainer = document.getElementById('main-toggle');
+      toggleContainer.className = `track-toggle-container theme-${trackId}`;
+
+      document.querySelectorAll('.track-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${trackId}`).classList.add('active');
+
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.getElementById(`track-${trackId}`).classList.add('active');
+
+      const currentQuery = document.getElementById('search-input')?.value || '';
+      renderTrack(trackId, currentQuery);
+    }
+
+    // Live search listener
+    document.getElementById('search-input')?.addEventListener('input', function (e) {
+      renderTrack(activeTrack, e.target.value);
+    });
+
+    // Bookmark click toggle
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.bookmark-btn');
+      if (btn) {
+        e.preventDefault();
+        const icon = btn.querySelector('span');
+        if (icon.textContent === 'bookmark_border') {
+          icon.textContent = 'bookmark';
+          btn.style.color = '#4A82A3';
+        } else {
+          icon.textContent = 'bookmark_border';
+          btn.style.color = '#5C473D';
+        }
+      }
+    });
+
+    // Back to top
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeCatalog);
+  </script>
+  <script src="assets/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-pedia · CES Learning Platform</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Official Fonts & Icons -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4A82A3",
+            "primary-light": "#6BA3C2",
+            "primary-dark": "#2B4C5E",
+            "text-main": "#2C1E16",
+            "text-secondary": "#5C473D",
+            "border-light": "#E8E2D9",
+          },
+          fontFamily: { display: ["Manrope", "sans-serif"] },
+          boxShadow: {
+            "overlap": "0 -10px 40px rgba(0,0,0,0.02), 0 20px 40px -10px rgba(44,30,22,0.12)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Official Global Background Pattern */
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #2C1E16;
+      background-color: #FFFFFF;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(74, 130, 163, 0.05) 0px, transparent 50%),
+        linear-gradient(135deg, #FFFFFF 0%, #F9F6F3 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(74, 130, 163, 0.4); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(74, 130, 163, 0.8); }
+
+    /* Edge-to-Edge Hero Image */
+    .hero-container {
+      position: absolute; top: 0; left: 0; width: 100%; height: 40vh; min-height: 380px; z-index: 0;
+    }
+    .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(62, 43, 34, 0.7) 0%, rgba(92, 71, 61, 0.9) 60%, rgba(255, 255, 255, 1) 100%);
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 246, 243, 0.85) 100%);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px -5px rgba(44, 30, 22, 0.08);
+    }
+
+    /* Top Inner Navigation Pills */
+    .nav-pill { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; }
+    .nav-pill:hover { background: rgba(255, 255, 255, 0.7); }
+    .nav-pill.active { background: #4A82A3; color: #FFFFFF; box-shadow: 0 4px 10px rgba(74, 130, 163, 0.3); }
+    .nav-pill.active .nav-icon { color: #FFFFFF; }
+
+    /* Resource Cards */
+    .resource-card {
+      background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(232, 226, 217, 1); transition: all 0.2s ease;
+    }
+    .resource-card:hover {
+      background: #FFFFFF; transform: translateY(-2px); border-color: rgba(74, 130, 163, 0.4);
+      box-shadow: 0 8px 16px -4px rgba(74, 130, 163, 0.15);
+    }
+
+    /* Content Switching Animation */
+    .fade-enter { animation: fadeIn 0.4s ease-out forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Topic Concept Graphs */
+    .topic-graph{margin-bottom:2.5rem;padding:1.5rem;border-radius:1.5rem;background:linear-gradient(135deg,rgba(74,130,163,.055),rgba(255,255,255,.88));border:1px solid rgba(74,130,163,.16);overflow:hidden}
+    .topic-graph-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+    .topic-graph-title{font-size:.95rem;font-weight:900;color:#2C1E16;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:.5rem}
+    .topic-graph-subtitle{font-size:.72rem;color:#5C473D;font-weight:800;background:rgba(255,255,255,.8);border:1px solid #E8E2D9;padding:.35rem .65rem;border-radius:999px}
+    .concept-svg{width:100%;min-height:245px;display:block}
+    .concept-node{fill:#fff;stroke:#4A82A3;stroke-width:2}.concept-node-soft{fill:#F4F8FA;stroke:#6BA3C2;stroke-width:2}.concept-node-dark{fill:#2B4C5E;stroke:#2B4C5E;stroke-width:2}
+    .concept-text{fill:#2C1E16;font-family:Manrope,sans-serif;font-size:13px;font-weight:800}.concept-text-small{fill:#5C473D;font-family:Manrope,sans-serif;font-size:10px;font-weight:700}.concept-text-white{fill:#fff;font-family:Manrope,sans-serif;font-size:13px;font-weight:800}
+    .concept-line{stroke:#4A82A3;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}.concept-line-soft{stroke:#9ABFD1;stroke-width:2;fill:none;stroke-dasharray:5 5}.concept-dot{fill:#4A82A3}.concept-pulse{animation:conceptPulse 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes conceptPulse{0%,100%{opacity:.65;transform:scale(.94)}50%{opacity:1;transform:scale(1.05)}}.concept-arrow{fill:#4A82A3}.graph-note{margin-top:.75rem;font-size:.72rem;color:#7A665C;font-weight:600;line-height:1.5}
+    @media(max-width:640px){.topic-graph-header{align-items:flex-start;flex-direction:column}.concept-svg{min-height:280px}}
+
+    /* Horizontal Scroll for Videos */
+    .hide-scroll::-webkit-scrollbar { display: none; }
+    .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .video-carousel-controls { display:flex; gap:8px; }
+    .video-carousel-controls button { width:36px; height:36px; display:grid; place-items:center; border:1px solid #E8E2D9; border-radius:10px; background:#fff; color:#2B4C5E; cursor:pointer; transition:background .2s,border-color .2s,transform .2s; }
+    .video-carousel-controls button:hover { background:#EEF5F8; border-color:#9ABFD1; transform:translateY(-1px); }
+    .video-carousel-controls button:focus-visible { outline:3px solid rgba(74,130,163,.3); outline-offset:2px; }
+    .video-carousel-track { scrollbar-width:thin; scrollbar-color:rgba(74,130,163,.65) rgba(74,130,163,.12); }
+    .video-carousel-track::-webkit-scrollbar { height:8px; }
+    .video-carousel-track::-webkit-scrollbar-track { background:rgba(74,130,163,.12); border-radius:999px; }
+    .video-carousel-track::-webkit-scrollbar-thumb { background:rgba(74,130,163,.65); border-radius:999px; }
+    .video-carousel-track::-webkit-scrollbar-thumb:hover { background:#2B4C5E; }
+
+    /* Keep the modal frame and the complete video inside every viewport. */
+    body.video-modal-open { transform: none !important; }
+    .video-modal-shell {
+      width: min(94vw, 1100px);
+      height: min(calc(100dvh - 2rem), calc(min(94vw, 1100px) * 0.5625 + 56px));
+    }
+    .video-modal-stage {
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .video-modal-stage video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    @media (max-width: 640px) {
+      .video-modal-shell {
+        height: min(calc(100dvh - 1rem), calc(94vw * 0.5625 + 56px));
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/common.css">
+
+  <script>
+    // --- SMART IMAGE FALLBACK LOGIC ---
+    window.handleThumbnailError = function(imgElement, originalSrc) {
+      const attempts = parseInt(imgElement.getAttribute('data-attempts') || '0');
+      const fallbackMap = ['.png', '.jpeg'];
+      
+      if (attempts < fallbackMap.length) {
+        imgElement.setAttribute('data-attempts', attempts + 1);
+        const basePath = originalSrc.replace(/\.[^/.]+$/, "");
+        imgElement.src = basePath + fallbackMap[attempts];
+      } else {
+        imgElement.src = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=400';
+      }
+    };
+    // --- VIDEO MODAL LOGIC ---
+    function scrollVideoCarousel(button, direction) {
+      const carousel = button.closest('[data-video-carousel]');
+      const track = carousel && carousel.querySelector('.video-carousel-track');
+      if (!track) return;
+      track.scrollBy({ left: direction * track.clientWidth * 0.8, behavior: 'smooth' });
+    }
+
+    function openVideoModal(videoUrl) {
+      const modal = document.getElementById('video-modal');
+      const content = document.getElementById('video-modal-content');
+      const player = document.getElementById('modal-video-player');
+
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('video-modal-open');
+
+      player.src = videoUrl;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      void modal.offsetWidth;
+      modal.classList.remove('opacity-0');
+      content.classList.remove('scale-95');
+
+      const playPromise = player.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('video-modal');
+      const content = document.getElementById('video-modal-content');
+      const player = document.getElementById('modal-video-player');
+
+      document.body.style.overflow = '';
+
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('video-modal-open');
+        player.pause();
+        player.removeAttribute('src');
+        player.load();
+      }, 300);
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const modal = document.getElementById('video-modal');
+        if (modal && !modal.classList.contains('hidden')) closeVideoModal();
+      }
+    });
+  </script>
+</head>
+
+<body class="antialiased selection:bg-primary/20 selection:text-primary-dark relative">
+<!-- VIDEO MODAL -->
+  <div id="video-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center overflow-hidden p-2 sm:p-4 transition-opacity duration-300 opacity-0"
+       style="background:rgba(10,10,12,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);"
+       onclick="if(event.target === this) closeVideoModal()">
+
+    <!-- Glass Video Frame: exactly the website viewport -->
+    <div id="video-modal-content"
+          class="video-modal-shell rounded-2xl overflow-hidden transform scale-95 transition-transform duration-300"
+          style="background:rgba(24,24,27,.94);border:1px solid rgba(255,255,255,.14);box-shadow:0 25px 70px rgba(0,0,0,.45);display:grid;grid-template-rows:auto minmax(0,1fr);"
+         onclick="event.stopPropagation()">
+
+      <!-- Top Bar -->
+      <div class="w-full min-h-0 px-4 sm:px-5 flex justify-between items-center border-b border-white/10"
+           style="background:rgba(9,9,11,.88);">
+        <span class="text-zinc-400 text-xs font-bold uppercase tracking-widest">Video Player</span>
+        <button onclick="closeVideoModal()"
+                class="text-zinc-300 hover:text-white flex items-center gap-2 bg-white/5 hover:bg-white/10 px-3 sm:px-4 py-2 rounded-lg transition-colors border border-white/5 shrink-0">
+          <span class="text-sm font-bold uppercase tracking-wider">Close</span>
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Video uses only the space below the header -->
+      <div class="video-modal-stage w-full min-w-0 bg-black">
+        <video id="modal-video-player" controls
+               class="block outline-none"
+               controlsList="nodownload">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HERO BACKGROUND -->
+  <div class="hero-container">
+    <img src="assets/aipedia.png" class="hero-img" alt="AI Background"
+      onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1600'">
+    <div class="hero-fade"></div>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-white/50 shadow-sm">
+    <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4 page-header-brand-group">
+        <a href="employee_dashboard.html"
+          class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/60 hover:bg-white text-text-secondary border border-gray-200 transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        </a>
+        <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+          class="h-8 w-20 sm:w-24 shrink-0 object-contain">
+        <div class="flex items-center gap-3 page-header-brand-title">
+          <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-md">
+            <span class="material-symbols-outlined text-[18px]">psychology</span>
+          </div>
+          <h1 class="text-xl font-black text-text-main tracking-tight">AI-pedia</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT WRAPPER -->
+  <main class="relative z-10 w-full pb-24 pt-24 max-w-[1400px] mx-auto px-6">
+
+    <!-- Dynamic Hero Text Content -->
+    <section class="pt-6 pb-12 flex flex-col text-center items-center fade-enter" id="dynamic-hero-text">
+      <!-- Injected dynamically -->
+    </section>
+
+    <!-- INNER TOP NAVIGATION -->
+    <div
+      class="glass-card rounded-[1.5rem] p-2 mb-8 flex items-center gap-2 overflow-x-auto hide-scroll shadow-sm border-[3px] border-white/60"
+      id="inner-nav-container">
+      <!-- Nav buttons injected via JS -->
+    </div>
+
+    <!-- MAIN READING & RESOURCE AREA (REDESIGNED SINGLE COLUMN) -->
+    <div class="flex flex-col gap-6 w-full" id="main-content-grid">
+
+      <!-- Resources Pane (Now a horizontal ribbon at the top) -->
+      <div class="w-full glass-card rounded-[1.5rem] p-5 shadow-overlap" id="resources-container">
+        <h3 class="text-xs font-black text-text-main uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[18px]">data_object</span> Associated Resources
+        </h3>
+        <!-- Horizontal grid for resources -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="resource-pane">
+          <!-- Resources injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Reading Pane (Now full width) -->
+      <div class="w-full glass-card rounded-[2rem] p-8 md:p-12 shadow-overlap flex flex-col min-h-[400px]"
+        id="reading-pane">
+        <!-- Content & Videos injected dynamically -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // --- THE AI KNOWLEDGE BASE DATA ---
+    const aiData = {
+      home: {
+        title: "The AI Knowledge Hub",
+        subtitle: "Your centralized glossary and learning center for Generative AI, Agentic Workflows, and enterprise prompting strategies.",
+        navLabel: "Hub Home",
+        icon: "home",
+        videos: [], // No videos on home page
+        content: `
+          <!-- AI-PEDIA HOME: VISUAL HUB -->
+          <div class="ai-home-hero relative overflow-hidden rounded-[1.75rem] p-7 md:p-9 mb-8 border border-primary/20 bg-gradient-to-br from-[#F4F9FC] via-white to-[#F8F3EF]">
+            <div class="absolute -right-20 -top-20 w-56 h-56 rounded-full bg-primary/10 blur-3xl"></div>
+            <div class="absolute -left-16 -bottom-20 w-48 h-48 rounded-full bg-[#C8A98B]/10 blur-3xl"></div>
+            <div class="relative grid grid-cols-1 xl:grid-cols-[1.05fr_.95fr] gap-8 items-center">
+              <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-primary/20 shadow-sm mb-5">
+                  <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                  <span class="text-[11px] font-black uppercase tracking-[0.18em] text-primary">Explore • Learn • Apply</span>
+                </div>
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="material-symbols-outlined text-primary text-4xl">auto_awesome</span>
+                  <h2 class="text-3xl md:text-4xl font-black text-text-main tracking-tight">Welcome to AI-pedia</h2>
+                </div>
+                <p class="text-[15px] text-text-secondary font-medium leading-relaxed max-w-2xl">
+                  Artificial Intelligence is rapidly evolving from simple chat interfaces to complex, autonomous enterprise workflows. Explore the concepts, patterns, tools, and protocols shaping modern AI.
+                </p>
+                <div class="flex flex-wrap gap-3 mt-6">
+                  <div class="px-4 py-2 rounded-xl bg-white border border-gray-200 shadow-sm text-xs font-bold text-text-secondary">Generative AI</div>
+                  <div class="px-4 py-2 rounded-xl bg-white border border-gray-200 shadow-sm text-xs font-bold text-text-secondary">AI Agents</div>
+                  <div class="px-4 py-2 rounded-xl bg-white border border-gray-200 shadow-sm text-xs font-bold text-text-secondary">RAG</div>
+                  <div class="px-4 py-2 rounded-xl bg-white border border-gray-200 shadow-sm text-xs font-bold text-text-secondary">MCP</div>
+                </div>
+              </div>
+
+              <!-- AI VISUAL / WEBSITE HERO ART -->
+              <div class="relative min-h-[270px] rounded-[1.5rem] bg-[#162B38] overflow-hidden shadow-xl border border-white/40">
+                <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0); background-size: 22px 22px;"></div>
+                <svg viewBox="0 0 620 330" class="relative w-full h-full min-h-[270px]" role="img" aria-label="Abstract artificial intelligence neural network illustration">
+                  <defs>
+                    <linearGradient id="aiGlow" x1="0" x2="1">
+                      <stop offset="0" stop-color="#6BA3C2"/>
+                      <stop offset="1" stop-color="#D6B18E"/>
+                    </linearGradient>
+                    <filter id="softGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  </defs>
+                  <g stroke="url(#aiGlow)" stroke-width="2" opacity=".55">
+                    <line x1="90" y1="90" x2="220" y2="145"/><line x1="90" y1="240" x2="220" y2="185"/>
+                    <line x1="220" y1="145" x2="310" y2="165"/><line x1="220" y1="185" x2="310" y2="165"/>
+                    <line x1="310" y1="165" x2="400" y2="105"/><line x1="310" y1="165" x2="400" y2="225"/>
+                    <line x1="400" y1="105" x2="535" y2="75"/><line x1="400" y1="105" x2="535" y2="165"/>
+                    <line x1="400" y1="225" x2="535" y2="165"/><line x1="400" y1="225" x2="535" y2="255"/>
+                  </g>
+                  <g fill="#F5FBFE" stroke="#6BA3C2" stroke-width="3" filter="url(#softGlow)">
+                    <circle cx="90" cy="90" r="13"/><circle cx="90" cy="240" r="13"/>
+                    <circle cx="220" cy="145" r="15"/><circle cx="220" cy="185" r="15"/>
+                    <circle cx="310" cy="165" r="25" fill="#4A82A3"/><circle cx="400" cy="105" r="15"/><circle cx="400" cy="225" r="15"/>
+                    <circle cx="535" cy="75" r="12"/><circle cx="535" cy="165" r="16"/><circle cx="535" cy="255" r="12"/>
+                  </g>
+                  <g fill="white" font-family="Manrope, sans-serif" text-anchor="middle">
+                    <text x="310" y="170" font-size="13" font-weight="800">AI</text>
+                    <text x="90" y="63" font-size="10" opacity=".85">INPUT</text>
+                    <text x="535" y="50" font-size="10" opacity=".85">OUTPUT</text>
+                    <text x="535" y="145" font-size="10" opacity=".85">TOOLS</text>
+                    <text x="535" y="286" font-size="10" opacity=".85">DATA</text>
+                  </g>
+                  <circle cx="310" cy="165" r="48" fill="none" stroke="#D6B18E" stroke-width="1.5" opacity=".35"/>
+                  <circle cx="310" cy="165" r="62" fill="none" stroke="#6BA3C2" stroke-width="1" opacity=".2"/>
+                </svg>
+                <div class="absolute bottom-4 left-5 right-5 flex items-center justify-between">
+                  <span class="text-[10px] uppercase tracking-[0.2em] font-black text-white/70">AI Ecosystem</span>
+                  <span class="text-[10px] font-bold text-white/60">Concept → Context → Action</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p class="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-1">Explore the hub</p>
+              <h3 class="text-2xl font-black text-text-main">What you can explore</h3>
+            </div>
+            <span class="hidden sm:block text-xs font-bold text-text-secondary">Select a topic from the navigation above</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="group relative overflow-hidden bg-white p-6 rounded-2xl border border-primary/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+              <div class="absolute right-0 top-0 w-28 h-28 rounded-bl-[4rem] bg-primary/5"></div>
+              <span class="material-symbols-outlined text-primary text-3xl mb-4">hub</span>
+              <h3 class="font-black text-text-main mb-2">Foundational AI</h3>
+              <p class="text-sm text-text-secondary font-medium leading-relaxed">Understand Large Language Models, Transformer architectures, tokens, and context windows.</p>
+            </div>
+            <div class="group relative overflow-hidden bg-white p-6 rounded-2xl border border-[#C8A98B]/25 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+              <div class="absolute right-0 top-0 w-28 h-28 rounded-bl-[4rem] bg-[#C8A98B]/10"></div>
+              <span class="material-symbols-outlined text-[#9A7657] text-3xl mb-4">smart_toy</span>
+              <h3 class="font-black text-text-main mb-2">Agentic AI</h3>
+              <p class="text-sm text-text-secondary font-medium leading-relaxed">Explore reasoning loops, tool usage, enterprise automation, RAG, multimodal systems, and MCP.</p>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="rounded-xl bg-[#F4F9FC] border border-primary/10 p-4 text-center"><span class="material-symbols-outlined text-primary">psychology</span><p class="text-xs font-black mt-2 text-text-main">Learn concepts</p></div>
+            <div class="rounded-xl bg-[#F8F3EF] border border-[#C8A98B]/15 p-4 text-center"><span class="material-symbols-outlined text-[#9A7657]">account_tree</span><p class="text-xs font-black mt-2 text-text-main">See workflows</p></div>
+            <div class="rounded-xl bg-[#F4F9FC] border border-primary/10 p-4 text-center"><span class="material-symbols-outlined text-primary">schema</span><p class="text-xs font-black mt-2 text-text-main">Understand systems</p></div>
+            <div class="rounded-xl bg-[#F8F3EF] border border-[#C8A98B]/15 p-4 text-center"><span class="material-symbols-outlined text-[#9A7657]">rocket_launch</span><p class="text-xs font-black mt-2 text-text-main">Apply at work</p></div>
+          </div>
+        `,
+        resources: [] // Home has no resources in this redesign to show off the hiding feature
+      },
+      genai: {
+        title: "Generative AI Basics",
+        subtitle: "Understanding the neural architectures that power modern artificial intelligence.",
+        navLabel: "Generative AI",
+        icon: "psychology",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">Generative AI & Foundation Models</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p>Generative AI represents a paradigm shift in machine learning. While traditional AI was analytical (classifying data, predicting trends), Generative AI creates net-new content—including text, images, code, and audio—by predicting statistical patterns.</p>
+            
+            <h3 class="text-xl font-black text-text-main mt-8 mb-3">The Transformer Architecture</h3>
+            <p>Modern Large Language Models (LLMs) like GPT-4, Gemini, and Claude are built on the <strong>Transformer architecture</strong>, introduced by Google in 2017. The key innovation is the <em>Self-Attention Mechanism</em>, which allows the model to weigh the importance of every word in a sentence relative to every other word, granting it profound contextual understanding.</p>
+            
+            <h3 class="text-xl font-black text-text-main mt-8 mb-3">Tokens vs. Words</h3>
+            <p>AI models do not read words; they read <strong>Tokens</strong>. A token can be a single character, a chunk of a word, or an entire word. Roughly, 100 tokens equal 75 English words. Understanding token limits is critical for enterprise applications to avoid exceeding context windows or incurring high API costs.</p>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'article', color: 'text-red-600', name: 'Attention Is All You Need paper', size: 'Research paper', url: 'https://arxiv.org/abs/1706.03762' },
+          { type: 'link', icon: 'school', color: 'text-blue-600', name: 'Hugging Face NLP Course', size: 'Learning course', url: 'https://huggingface.co/learn/nlp-course/chapter1/1' }
+        ]
+      },
+      prompting: {
+        title: "Prompt Engineering",
+        subtitle: "The science of structuring inputs to achieve optimal, deterministic AI outputs.",
+        navLabel: "Prompt Engineering",
+        icon: "edit_note",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">Prompt Engineering</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p>Prompt engineering moves beyond simply asking a chatbot a question. In an enterprise environment, prompts are hard-coded into applications to act as the logical bridge between user intent and model execution.</p>
+            
+            <h3 class="text-xl font-black text-text-main mt-8 mb-3">Core Prompting Strategies</h3>
+            <ul class="space-y-3 list-disc pl-5">
+              <li><strong>Zero-Shot Prompting:</strong> Providing the model with a task but zero examples. It relies entirely on its pre-trained knowledge.</li>
+              <li><strong>Few-Shot Prompting:</strong> Providing the model with 2 to 5 examples of the exact input-output format you expect. This drastically forces the model to adhere to strict JSON or structural guidelines.</li>
+              <li><strong>Chain-of-Thought (CoT):</strong> Appending phrases like <em>"Let's think step-by-step"</em>. This forces the LLM to output its intermediate reasoning logic before arriving at an answer, significantly reducing mathematical and logical errors.</li>
+              <li><strong>System Prompts:</strong> The foundational, hidden instructions given to an AI via the API. This dictates its persona, rules, and constraints.</li>
+            </ul>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'menu_book', color: 'text-orange-500', name: 'OpenAI Prompt Engineering Guide', size: 'Official guide', url: 'https://platform.openai.com/docs/guides/prompt-engineering' },
+          { type: 'link', icon: 'link', color: 'text-gray-600', name: 'Anthropic Prompt Engineering Guide', size: 'Official guide', url: 'https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview' }
+        ]
+      },
+      agents: {
+        title: "AI Agents & Workflows",
+        subtitle: "Equipping Large Language Models with tools and autonomy to execute multi-step tasks.",
+        navLabel: "AI Agents",
+        icon: "smart_toy",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">AI Agents & Workflows</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p>An LLM on its own is confined to the text window. An <strong>AI Agent</strong> is an LLM that has been wrapped in a cognitive architecture and provided with <em>Tools</em> (APIs, calculators, database access). The model acts as the "brain," deciding which tool to use, executing it, and reading the results to plan its next move.</p>
+            
+            <h3 class="text-xl font-black text-text-main mt-8 mb-3">The ReAct Framework</h3>
+            <p>Agents typically operate on the ReAct (Reasoning and Acting) loop. The agent encounters a problem, formulates a <strong>Thought</strong>, takes an <strong>Action</strong> (calling a tool), and processes the <strong>Observation</strong> (the tool's output). It loops this process until it achieves the final goal.</p>
+            
+            <div class="bg-primary/5 border-l-4 border-primary p-6 rounded-r-xl my-8">
+              <h4 class="font-black text-text-main mb-2">Enterprise Workflow: ITSM Governance</h4>
+              <p class="text-sm text-text-secondary">Consider an AI agent deployed within an IT Service Management (ITSM) governance framework designed to automate lifecycles across tech platforms. Rather than a human orchestrating operations, an agent can be triggered by a service failure. It autonomously queries system logs via an API tool, isolates the failed module, generates a resolution ticket, and executes a script to reboot the service—drastically reducing manual service operations timelines.</p>
+            </div>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'menu_book', color: 'text-red-600', name: 'LangChain Agents Documentation', size: 'Official docs', url: 'https://docs.langchain.com/oss/python/langchain/agents' }
+        ]
+      },
+      rag: {
+        title: "Contextual AI (RAG)",
+        subtitle: "Connecting proprietary enterprise data to LLMs securely and accurately.",
+        navLabel: "Contextual AI (RAG)",
+        icon: "library_books",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">Retrieval-Augmented Generation</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p><strong>Retrieval-Augmented Generation (RAG)</strong> solves the core limitations of standard LLMs: they hallucinate facts, and they do not know your private company data.</p>
+            
+            <h3 class="text-xl font-black text-text-main mt-8 mb-3">The RAG Pipeline</h3>
+            <ol class="space-y-3 list-decimal pl-5">
+              <li><strong>Data Ingestion & Chunking:</strong> Thousands of enterprise PDFs, Word docs, and databases are chopped into small "chunks" of text.</li>
+              <li><strong>Embeddings:</strong> These chunks are converted into lists of numbers (vector embeddings) that represent their semantic meaning, and stored in a Vector Database (like Pinecone or Milvus).</li>
+              <li><strong>Retrieval:</strong> When a user asks a question, the system searches the Vector Database for the chunks that semantically match the user's query.</li>
+              <li><strong>Generation:</strong> The retrieved text is secretly injected into the LLM's prompt. The model is instructed: <em>"Answer the user's question using ONLY the provided context."</em> This guarantees factual accuracy.</li>
+            </ol>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'storage', color: 'text-orange-500', name: 'Pinecone: What is RAG?', size: 'Technical guide', url: 'https://www.pinecone.io/learn/retrieval-augmented-generation/' }
+        ]
+      },
+      multimodal: {
+        title: "Multimodal AI & APIs",
+        subtitle: "Processing audio, vision, and dynamic translations simultaneously.",
+        navLabel: "Multimodal AI",
+        icon: "graphic_eq",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">Multimodal AI & APIs</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p>Modern AI is multimodal, meaning models can natively read images, listen to audio files, and watch videos. Instead of converting a picture to text using OCR and then feeding it to an AI, models like GPT-4o and Gemini 1.5 Pro process the raw visual data directly, allowing for spatial and auditory reasoning.</p>
+            
+            <div class="bg-primary/5 border-l-4 border-primary p-6 rounded-r-xl my-8">
+              <h4 class="font-black text-text-main mb-2">Real-World Application: Public Infrastructure Redressal</h4>
+              <p class="text-sm text-text-secondary">Consider a Public Infrastructure Grievance Redressal project. Citizens can submit complaints by uploading photos of damaged roads or leaving voice memos. The system utilizes speech-to-text models to transcribe the audio, vision models to assess the severity of the road damage in the photo, and translation APIs to normalize complaints from various regional dialects into a unified dataset for the specific department to action.</p>
+            </div>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'link', color: 'text-gray-600', name: 'Google Cloud Vision API Docs', size: 'External API', url: 'https://cloud.google.com/vision/docs' }
+        ]
+      },
+      mcp: {
+        title: "Model Context Protocol (MCP)",
+        subtitle: "The open standard for universal AI tool integration.",
+        navLabel: "MCP Standard",
+        icon: "cable",
+        videos: [],
+        content: `
+          <div class="mb-8 border-b border-gray-200 pb-6">
+            <h2 class="text-3xl font-black text-text-main mb-2">Model Context Protocol (MCP)</h2>
+          </div>
+          <div class="prose prose-slate max-w-none text-text-main font-medium leading-relaxed">
+            <p>The Model Context Protocol (MCP) is an open-source standard introduced by Anthropic. Historically, if you wanted an AI to talk to Slack, Jira, and GitHub, you had to write three entirely different, proprietary API integrations.</p>
+            
+            <p class="mt-4">MCP acts like a "USB-C cable" for AI applications. It defines a standardized client-server architecture. You build an MCP Server for your internal database once. After that, any MCP-compatible AI client (whether it is an agent, a desktop IDE, or a chat interface) can instantly connect to that server, understand its tools, and retrieve data securely.</p>
+          </div>
+        `,
+        resources: [
+          { type: 'link', icon: 'open_in_new', color: 'text-indigo-600', name: 'MCP Official Documentation', size: 'External Standard', url: 'https://modelcontextprotocol.io/docs/getting-started/intro' }
+        ]
+      }
+    };
+
+    // --- TOPIC CONCEPT GRAPHS (VALID SVG PATHS RESTORED) ---
+    const topicGraphs = {
+      genai:{title:"Generative AI: From Prompt to Output",icon:"account_tree",subtitle:"Concept graph",note:"The core transformation from a human instruction through tokens and a Transformer model into newly generated content.",svg:`<svg class="concept-svg" viewBox="0 0 900 260"><defs><marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><rect x="25" y="88" width="150" height="76" rx="18" class="concept-node"/><text x="100" y="119" text-anchor="middle" class="concept-text">Human Prompt</text><text x="100" y="141" text-anchor="middle" class="concept-text-small">instruction + context</text><path d="M175 126 H245" class="concept-line" marker-end="url(#ag)"/><rect x="245" y="88" width="145" height="76" rx="18" class="concept-node-soft"/><text x="317" y="119" text-anchor="middle" class="concept-text">Tokenization</text><text x="317" y="141" text-anchor="middle" class="concept-text-small">text → tokens</text><path d="M390 126 H460" class="concept-line" marker-end="url(#ag)"/><rect x="460" y="68" width="180" height="116" rx="22" class="concept-node-dark"/><text x="550" y="105" text-anchor="middle" class="concept-text-white">Transformer</text><text x="550" y="128" text-anchor="middle" class="concept-text-white">Self-Attention</text><text x="550" y="151" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">context → next-token prediction</text><path d="M640 126 H710" class="concept-line" marker-end="url(#ag)"/><rect x="710" y="88" width="165" height="76" rx="18" class="concept-node"/><text x="792" y="119" text-anchor="middle" class="concept-text">Generated Output</text><text x="792" y="141" text-anchor="middle" class="concept-text-small">text · code · image · audio</text><circle cx="550" cy="205" r="7" class="concept-dot concept-pulse"/><text x="550" y="232" text-anchor="middle" class="concept-text-small">model repeatedly predicts the next token</text></svg>`},
+      prompting:{title:"Prompt Engineering: Structure Controls the Task",icon:"account_tree",subtitle:"Concept graph",note:"A prompt can be built from intent and context into constraints and examples before the model produces an output.",svg:`<svg class="concept-svg" viewBox="0 0 900 270"><defs><marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><rect x="30" y="96" width="125" height="65" rx="16" class="concept-node"/><text x="92" y="123" text-anchor="middle" class="concept-text">Intent</text><text x="92" y="144" text-anchor="middle" class="concept-text-small">What is the task?</text><path d="M155 128 H220" class="concept-line" marker-end="url(#ap)"/><rect x="220" y="96" width="125" height="65" rx="16" class="concept-node-soft"/><text x="282" y="123" text-anchor="middle" class="concept-text">Context</text><text x="282" y="144" text-anchor="middle" class="concept-text-small">What does it know?</text><path d="M345 128 H410" class="concept-line" marker-end="url(#ap)"/><rect x="410" y="78" width="145" height="100" rx="18" class="concept-node-dark"/><text x="482" y="108" text-anchor="middle" class="concept-text-white">Instructions</text><text x="482" y="132" text-anchor="middle" class="concept-text-white">+ Constraints</text><text x="482" y="154" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">format · rules · boundaries</text><path d="M555 128 H620" class="concept-line" marker-end="url(#ap)"/><rect x="620" y="96" width="120" height="65" rx="16" class="concept-node-soft"/><text x="680" y="123" text-anchor="middle" class="concept-text">Examples</text><text x="680" y="144" text-anchor="middle" class="concept-text-small">optional few-shot</text><path d="M740 128 H805" class="concept-line" marker-end="url(#ap)"/><rect x="805" y="96" width="70" height="65" rx="16" class="concept-node"/><text x="840" y="133" text-anchor="middle" class="concept-text">Output</text></svg>`},
+      agents:{title:"AI Agents: Reason → Act → Observe → Repeat",icon:"sync_alt",subtitle:"Execution loop",note:"The loop illustrates the ReAct-style pattern: plan, select a tool, act, observe the result, and continue until the goal is reached.",svg:`<svg class="concept-svg" viewBox="0 0 900 300"><defs><marker id="aa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><circle cx="450" cy="150" r="45" class="concept-node-dark"/><text x="450" y="146" text-anchor="middle" class="concept-text-white">Goal</text><text x="450" y="164" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">desired outcome</text><rect x="110" y="55" width="160" height="65" rx="18" class="concept-node"/><text x="190" y="82" text-anchor="middle" class="concept-text">Reason / Plan</text><text x="190" y="103" text-anchor="middle" class="concept-text-small">decide next step</text><rect x="630" y="55" width="160" height="65" rx="18" class="concept-node-soft"/><text x="710" y="82" text-anchor="middle" class="concept-text">Choose Tool</text><text x="710" y="103" text-anchor="middle" class="concept-text-small">API · database · code</text><rect x="630" y="185" width="160" height="65" rx="18" class="concept-node"/><text x="710" y="212" text-anchor="middle" class="concept-text">Act</text><text x="710" y="233" text-anchor="middle" class="concept-text-small">execute the tool</text><rect x="110" y="185" width="160" height="65" rx="18" class="concept-node-soft"/><text x="190" y="212" text-anchor="middle" class="concept-text">Observe</text><text x="190" y="233" text-anchor="middle" class="concept-text-small">read the result</text><path d="M270 87 C330 55 380 90 407 122" class="concept-line" marker-end="url(#aa)"/><path d="M495 122 C545 90 585 70 630 87" class="concept-line" marker-end="url(#aa)"/><path d="M710 120 V185" class="concept-line" marker-end="url(#aa)"/><path d="M630 217 C540 275 360 275 270 217" class="concept-line" marker-end="url(#aa)"/><path d="M190 185 C205 145 240 132 320 140" class="concept-line" marker-end="url(#aa)"/></svg>`},
+      rag:{title:"RAG: Retrieve Before You Generate",icon:"conversion_path",subtitle:"Pipeline graph",note:"Enterprise documents are prepared for retrieval and then supplied as context to the language model before generation.",svg:`<svg class="concept-svg" viewBox="0 0 900 270"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><rect x="25" y="98" width="135" height="65" rx="17" class="concept-node"/><text x="92" y="125" text-anchor="middle" class="concept-text">Documents</text><text x="92" y="146" text-anchor="middle" class="concept-text-small">PDF · Word · DB</text><path d="M160 130 H220" class="concept-line" marker-end="url(#ar)"/><rect x="220" y="98" width="130" height="65" rx="17" class="concept-node-soft"/><text x="285" y="125" text-anchor="middle" class="concept-text">Chunk</text><text x="285" y="146" text-anchor="middle" class="concept-text-small">small passages</text><path d="M350 130 H410" class="concept-line" marker-end="url(#ar)"/><rect x="410" y="98" width="130" height="65" rx="17" class="concept-node-soft"/><text x="475" y="125" text-anchor="middle" class="concept-text">Embeddings</text><text x="475" y="146" text-anchor="middle" class="concept-text-small">semantic vectors</text><path d="M540 130 H600" class="concept-line" marker-end="url(#ar)"/><rect x="600" y="98" width="125" height="65" rx="17" class="concept-node"/><text x="662" y="125" text-anchor="middle" class="concept-text">Retrieve</text><text x="662" y="146" text-anchor="middle" class="concept-text-small">relevant context</text><path d="M725 130 H790" class="concept-line" marker-end="url(#ar)"/><rect x="790" y="80" width="85" height="100" rx="18" class="concept-node-dark"/><text x="832" y="120" text-anchor="middle" class="concept-text-white">LLM</text><text x="832" y="143" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">answer</text><path d="M662 98 C662 35 832 35 832 80" class="concept-line-soft" marker-end="url(#ar)"/><text x="745" y="40" text-anchor="middle" class="concept-text-small">user query</text></svg>`},
+      multimodal:{title:"Multimodal AI: Many Inputs → One Model",icon:"hub",subtitle:"Architecture graph",note:"Text, images, audio, and video converge into a multimodal model that can reason across the combined inputs.",svg:`<svg class="concept-svg" viewBox="0 0 900 285"><defs><marker id="am" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><rect x="35" y="30" width="145" height="50" rx="15" class="concept-node"/><text x="107" y="61" text-anchor="middle" class="concept-text">Text</text><rect x="35" y="95" width="145" height="50" rx="15" class="concept-node-soft"/><text x="107" y="126" text-anchor="middle" class="concept-text">Image</text><rect x="35" y="160" width="145" height="50" rx="15" class="concept-node"/><text x="107" y="191" text-anchor="middle" class="concept-text">Audio</text><rect x="35" y="225" width="145" height="50" rx="15" class="concept-node-soft"/><text x="107" y="256" text-anchor="middle" class="concept-text">Video</text><path d="M180 55 C290 55 290 130 405 130" class="concept-line" marker-end="url(#am)"/><path d="M180 120 H405" class="concept-line" marker-end="url(#am)"/><path d="M180 185 C290 185 290 145 405 145" class="concept-line" marker-end="url(#am)"/><path d="M180 250 C290 250 290 160 405 160" class="concept-line" marker-end="url(#am)"/><rect x="405" y="83" width="190" height="105" rx="22" class="concept-node-dark"/><text x="500" y="119" text-anchor="middle" class="concept-text-white">Multimodal Model</text><text x="500" y="143" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">joint understanding + reasoning</text><path d="M595 135 H690" class="concept-line" marker-end="url(#am)"/><rect x="690" y="83" width="170" height="105" rx="22" class="concept-node"/><text x="775" y="119" text-anchor="middle" class="concept-text">Output</text><text x="775" y="143" text-anchor="middle" class="concept-text-small">answer · action · translation</text></svg>`},
+      mcp:{title:"MCP: Standardized AI ↔ Tool Connection",icon:"lan",subtitle:"Architecture graph",note:"MCP sits between an AI client and tool servers, exposing tools and enterprise systems through a common protocol.",svg:`<svg class="concept-svg" viewBox="0 0 900 285"><defs><marker id="ac" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="concept-arrow"/></marker></defs><rect x="45" y="95" width="180" height="90" rx="22" class="concept-node"/><text x="135" y="130" text-anchor="middle" class="concept-text">AI Client</text><text x="135" y="153" text-anchor="middle" class="concept-text-small">agent · IDE · chat app</text><path d="M225 140 H330" class="concept-line" marker-end="url(#ac)"/><path d="M330 160 H225" class="concept-line-soft" marker-end="url(#ac)"/><rect x="330" y="72" width="210" height="135" rx="25" class="concept-node-dark"/><text x="435" y="115" text-anchor="middle" class="concept-text-white">MCP</text><text x="435" y="139" text-anchor="middle" class="concept-text-white">Standard Protocol</text><text x="435" y="164" text-anchor="middle" fill="#D7EAF3" font-family="Manrope" font-size="10" font-weight="700">discover · call · return</text><path d="M540 115 H620" class="concept-line" marker-end="url(#ac)"/><path d="M620 165 H540" class="concept-line-soft" marker-end="url(#ac)"/><rect x="620" y="45" width="110" height="60" rx="17" class="concept-node-soft"/><text x="675" y="81" text-anchor="middle" class="concept-text">Tools</text><rect x="760" y="45" width="110" height="60" rx="17" class="concept-node"/><text x="815" y="81" text-anchor="middle" class="concept-text">APIs</text><rect x="620" y="180" width="110" height="60" rx="17" class="concept-node"/><text x="675" y="216" text-anchor="middle" class="concept-text">Database</text><rect x="760" y="180" width="110" height="60" rx="17" class="concept-node-soft"/><text x="815" y="216" text-anchor="middle" class="concept-text">Enterprise</text><path d="M620 115 L675 105" class="concept-line"/><path d="M620 115 L815 105" class="concept-line"/><path d="M620 165 L675 180" class="concept-line"/><path d="M620 165 L815 180" class="concept-line"/></svg>`}
+    };
+
+    function buildTopicGraph(key){const graph=topicGraphs[key];if(!graph)return '';return `<section class="topic-graph fade-enter" aria-label="${graph.title}"><div class="topic-graph-header"><div class="topic-graph-title"><span class="material-symbols-outlined text-primary text-[20px]">${graph.icon}</span>${graph.title}</div><span class="topic-graph-subtitle">${graph.subtitle}</span></div>${graph.svg}<p class="graph-note">${graph.note}</p></section>`;}
+
+    // --- INITIALIZATION ---
+    const API_BASE_URL = 'http://127.0.0.1:8000';
+    const videoTopicMap = {
+      'ai agents': 'agents',
+      'contextual ai (rag)': 'rag',
+      'generative ai': 'genai',
+      'mcp standard': 'mcp',
+      'multimodal ai': 'multimodal',
+      'prompt engineering': 'prompting'
+    };
+
+    async function fetchVideoCatalog() {
+      const apiUrls = ['/api/videos/', `${API_BASE_URL}/api/videos/`]
+        .filter((url, index, urls) => urls.indexOf(url) === index);
+
+      for (const apiUrl of apiUrls) {
+        try {
+          const response = await fetch(apiUrl, { cache: 'no-store' });
+          if (response.ok) {
+            return {
+              data: await response.json(),
+              baseUrl: new URL(response.url).origin
+            };
+          }
+        } catch (error) {
+          console.warn(`Video API unavailable at ${apiUrl}`, error);
+        }
+      }
+
+      throw new Error('No video API endpoint is available');
+    }
+
+    async function initApp() {
+      // Fetch dynamic videos from backend
+      try {
+        const catalog = await fetchVideoCatalog();
+        const videoBaseUrl = catalog.baseUrl || API_BASE_URL;
+        catalog.data.videos.forEach(video => {
+          const parts = video.blob_name.split('/');
+          if (parts.length > 0) {
+            const category = videoTopicMap[parts[0].trim().toLowerCase()];
+            if (category && aiData[category]) {
+              aiData[category].videos.push({
+                title: video.title,
+                img: new URL(video.thumbnail_url, videoBaseUrl).href,
+                url: new URL(video.video_url, videoBaseUrl).href
+              });
+            }
+          }
+        });
+      } catch (error) {
+        console.error("Failed to load local AI videos from API:", error);
+      }
+
+      const navContainer = document.getElementById('inner-nav-container');
+
+      // Build Top Inner Navigation
+      Object.keys(aiData).forEach(key => {
+        const item = aiData[key];
+        const btn = document.createElement('button');
+        btn.className = `nav-pill flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold border border-transparent ${key === 'home' ? 'active' : 'text-text-secondary hover:border-white'}`;
+        btn.id = `nav-${key}`;
+        btn.onclick = () => loadTopic(key);
+
+        btn.innerHTML = `
+          <span class="material-symbols-outlined nav-icon text-[18px] ${key === 'home' ? 'text-white' : 'text-text-secondary'}">${item.icon}</span>
+          ${item.navLabel}
+        `;
+        navContainer.appendChild(btn);
+      });
+
+      // Load initial state
+      loadTopic('home');
+    }
+
+    // --- CONTENT SWITCHING LOGIC ---
+    function loadTopic(key) {
+      const data = aiData[key];
+      const heroContainer = document.getElementById('dynamic-hero-text');
+      const readingPane = document.getElementById('reading-pane');
+      const resourcePane = document.getElementById('resource-pane');
+      const resourceContainer = document.getElementById('resources-container'); // Grab the new container
+
+      // 1. Update Navigation Styles
+      document.querySelectorAll('.nav-pill').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-text-secondary', 'hover:border-white');
+        btn.querySelector('.nav-icon').classList.remove('text-white');
+        btn.querySelector('.nav-icon').classList.add('text-text-secondary');
+      });
+      const activeBtn = document.getElementById(`nav-${key}`);
+      activeBtn.classList.add('active');
+      activeBtn.classList.remove('text-text-secondary', 'hover:border-white');
+      activeBtn.querySelector('.nav-icon').classList.add('text-white');
+      activeBtn.querySelector('.nav-icon').classList.remove('text-text-secondary');
+
+      // 2. Update Hero Text Dynamically
+      heroContainer.innerHTML = `
+        <div class="max-w-3xl fade-enter">
+          <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 text-white leading-tight drop-shadow-md">
+            ${data.title}
+          </h1>
+          <p class="text-lg text-white/95 leading-relaxed font-bold mb-6 drop-shadow-sm">
+            ${data.subtitle}
+          </p>
+        </div>
+      `;
+
+      // 3. Build Video Carousel HTML if videos exist
+      let videoHTML = '';
+      if (data.videos && data.videos.length > 0) {
+        let cards = data.videos.map(vid => `
+          <!-- FIXED WIDTH AND MODAL ONCLICK -->
+          <div onclick="openVideoModal('${vid.url}')" class="block w-[280px] sm:w-[320px] flex-none bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden group cursor-pointer snap-start relative transition-transform hover:-translate-y-1">
+            <div class="relative w-full h-40 bg-gray-900 overflow-hidden">
+              <img src="${vid.img}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500" onerror="handleThumbnailError(this, '${vid.img}')" />
+              <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-[48px] opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all drop-shadow-md">play_circle</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-bold text-text-main text-sm line-clamp-2 group-hover:text-primary transition-colors leading-snug">${vid.title}</h4>
+            </div>
+          </div>
+        `).join('');
+
+        videoHTML = `
+          <div class="mb-10 fade-enter" data-video-carousel>
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="text-sm font-black text-text-main uppercase tracking-widest flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">smart_display</span> Micro-Lessons
+              </h3>
+              <div class="video-carousel-controls" role="group" aria-label="Micro-Lessons navigation">
+                <button type="button" aria-label="Scroll videos left" title="Scroll videos left" onclick="scrollVideoCarousel(this, -1)">
+                  <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+                </button>
+                <button type="button" aria-label="Scroll videos right" title="Scroll videos right" onclick="scrollVideoCarousel(this, 1)">
+                  <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+                </button>
+              </div>
+            </div>
+            <div class="video-carousel-track flex gap-4 overflow-x-auto pb-2 snap-x custom-scrollbar">
+              ${cards}
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. Inject Video Carousel + Reading Pane Content
+      readingPane.innerHTML = `
+        <div class="h-full flex flex-col">
+          ${videoHTML}
+          ${key !== 'home' ? buildTopicGraph(key) : ''}
+          <div class="fade-enter" style="animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards;">
+            ${data.content}
+          </div>
+        </div>
+      `;
+
+      // 5. Inject Resource Pane Content & Toggle Visibility
+      resourcePane.innerHTML = '';
+      if (data.resources && data.resources.length > 0) {
+        resourceContainer.style.display = 'block'; // Show if resources exist
+        data.resources.forEach((res, index) => {
+          const delay = index * 0.1;
+          resourcePane.innerHTML += `
+            <a href="${res.url || '#'}" ${res.url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="resource-card px-4 py-3 rounded-2xl flex items-center gap-3 fade-enter" style="animation-delay: ${delay}s; opacity: 0;">
+              <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-gray-100">
+                <span class="material-symbols-outlined ${res.color} text-[20px]">${res.icon}</span>
+              </div>
+              <div class="flex flex-col justify-center overflow-hidden">
+                <h4 class="text-[13px] font-bold text-text-main leading-tight truncate">${res.name}</h4>
+                <p class="text-[11px] text-text-secondary font-medium mt-0.5">${res.size}</p>
+              </div>
+            </a>
+          `;
+        });
+      } else {
+        resourceContainer.style.display = 'none'; // Hide entirely if no resources
+      }
+    }
+
+    // Boot App
+    window.onload = initApp;
+  </script>
+
+  <script src="assets/common.js"></script>
+</body>
+
+</html>

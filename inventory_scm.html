@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCM - Inventory Management – CES Technical</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#2B4C5E",
+
+        "bg": "#FFFFFF",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+
+        "text-main": "#2C1E16",
+        "text-secondary": "#5C473D",
+        "border-light": "#E8E2D9",
+      },
+
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5C473D, #2C1E16);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+/* Vertical Tab Buttons */
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+  color: #5C473D;
+}
+
+.vtab-btn:hover {
+  background: #E8E2D9;
+  color: #4A82A3;
+}
+
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 130, 163, 0.2);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Content Card */
+.content-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid #E8E2D9;
+  box-shadow: 0 10px 30px rgba(74, 130, 163, 0.07);
+}
+
+/* Section Title (Glossy & High Contrast) */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #1A120D;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs */
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Bright & Glossy Pulse Button */
+.pulse-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+  color: #FFFFFF;
+  border: 1px solid #1C3644;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Inner white highlight for a glossy glass look + deep outer shadow */
+  box-shadow: 
+      0 6px 12px rgba(43, 76, 94, 0.4),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+      
+  /* Bright glossy text effect */
+  text-shadow: 
+      0px 2px 3px rgba(0, 0, 0, 0.8), 
+      0px -1px 1px rgba(255, 255, 255, 0.4);
+      
+  letter-spacing: 0.5px;
+}
+
+.pulse-btn:hover {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+  transform: scale(1.05);
+  animation: pulse 1s infinite;
+  
+  box-shadow: 
+      0 8px 16px rgba(43, 76, 94, 0.5),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.3),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0.6),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    box-shadow: 
+      0 0 0 15px rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-bg font-sans h-screen flex overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto">
+<h1 class="text-xl font-bold mb-6">SCM – Inventory Management</h1>
+
+<div class="space-y-1">
+  <div class="vtab-btn active" onclick="openTab('overview',this)">
+    <span class="material-icons">dashboard_customize</span> Overview
+  </div>
+  <div class="vtab-btn" onclick="openTab('main',this)">
+    <span class="material-icons">fact_check</span> Main Points
+  </div>
+  <div class="vtab-btn" onclick="openTab('subtopics',this)">
+    <span class="material-icons">list_alt</span> Subtopics
+  </div>
+  <div class="vtab-btn" onclick="openTab('videos',this)">
+    <span class="material-icons">play_circle_filled</span> Video Lessons
+  </div>
+  <div class="vtab-btn" onclick="openTab('concepts',this)">
+    <span class="material-icons">psychology</span> Core Concepts
+  </div>
+  <div class="vtab-btn" onclick="openTab('architecture',this)">
+    <span class="material-icons">account_tree</span> Architecture & Flow
+  </div>
+  <div class="vtab-btn" onclick="openTab('handson',this)">
+    <span class="material-icons">build_circle</span> Hands-on Practice
+  </div>
+  <div class="vtab-btn" onclick="openTab('applications',this)">
+    <span class="material-icons">rocket_launch</span> Real-Time Applications
+  </div>
+  <div class="vtab-btn" onclick="openTab('notes',this)">
+    <span class="material-icons">edit_note</span> Notes
+  </div>
+  <div class="vtab-btn" onclick="openTab('interview',this)">
+    <span class="material-icons">help_center</span> Interview
+  </div>
+  <div class="vtab-btn" onclick="openTab('checklist',this)">
+    <span class="material-icons">checklist</span> Checklist
+  </div>
+</div>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10">
+    <div class="mb-6">
+        <nav class="flex items-center text-sm text-slate-500 gap-2">
+          <a href="employee_dashboard.html" class="hover:text-primary font-medium">
+            Dashboard
+          </a>
+          <span>/</span>
+          <a href="scm.html" class="hover:text-primary font-medium">
+SCM page          </a>
+          <span>/</span>
+          <span class="text-slate-700 font-semibold">
+            SCM - Inventory Management
+          </span>
+        </nav>
+      </div>
+    
+      <div class="max-w-6xl mx-auto space-y-10">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab active">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">dashboard_customize</span>
+      Inventory Management Overview
+    </div>
+
+    <p class="text-slate-600 leading-relaxed">
+      Inventory Management in Oracle Fusion SCM controls stock levels, tracks material movements, supports multiple inventory organizations, and enables accurate valuation and visibility across the supply chain.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed mt-4">
+      It integrates tightly with Procurement, Manufacturing, Order Management, and Costing to ensure real-time stock accuracy and efficient material handling.
+    </p>
+
+    <div class="grid grid-cols-2 gap-6 mt-8">
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Used In</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Receiving & Put-away</li>
+          <li>Cycle Counting & Physical Inventory</li>
+          <li>Material Transactions</li>
+        </ul>
+      </div>
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Who Needs Inventory Mgmt?</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Inventory Controllers</li>
+          <li>Warehouse Supervisors</li>
+          <li>Supply Chain Analysts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN POINTS -->
+<section id="main" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">fact_check</span>
+      Main Inventory Principles
+    </div>
+
+    <ul class="list-disc pl-6 space-y-3 text-slate-600">
+      <li><strong>Multi-org Structure:</strong> Supports multiple inventory organizations with different controls</li>
+      <li><strong>Subinventories & Locators:</strong> Granular storage control</li>
+      <li><strong>Transaction Types:</strong> Receipts, issues, transfers, adjustments</li>
+      <li><strong>ABC / Cycle Counting:</strong> Prioritized inventory accuracy checks</li>
+      <li><strong>Min-Max & Replenishment:</strong> Automated stock level management</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUBTOPICS -->
+<section id="subtopics" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">list_alt</span>
+      Inventory Subtopics
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-slate-600">
+      <div>Subinventories & Locators</div>
+      <div>Item Attributes (Inventory)</div>
+      <div>Material Statuses</div>
+      <div>Transaction Types</div>
+      <div>Inter-Org Transfers</div>
+      <div>Intra-Org Transfers</div>
+      <div>Cycle Counting</div>
+      <div>Physical Inventory</div>
+      <div>Min-Max Planning</div>
+      <div>Replenishment Counting</div>
+      <div>Inventory Accuracy Reports</div>
+      <div>Transaction Open Interface</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">play_circle_filled</span>
+      Video Lessons – Inventory Management
+    </div>
+
+    <p class="text-slate-600 mb-6">
+      These videos are aligned to <strong>real SCM inventory scenarios</strong>.
+      Watch them sequentially for best understanding.
+    </p>
+
+    <div class="space-y-5">
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Inventory Fundamentals</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Organizations, subinventories, locators, and basic transactions
+        </p>
+        <span class="text-xs text-slate-500">⏱ 20 mins · Beginner</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Inventory Transactions & Controls</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Receipts, issues, transfers, material statuses
+        </p>
+        <span class="text-xs text-slate-500">⏱ 24 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Cycle Counting & Accuracy</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          ABC analysis, cycle count setup, and reconciliation
+        </p>
+        <span class="text-xs text-slate-500">⏱ 22 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Advanced Inventory Features</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Min-Max planning, replenishment, and lot/serial control
+        </p>
+        <span class="text-xs text-slate-500">⏱ 28 mins · Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">psychology</span>
+      Core Concepts
+    </div>
+
+    <ul class="list-disc pl-6 space-y-2 text-slate-600">
+      <li>Inventory Organization vs Master Org</li>
+      <li>Subinventory vs Locator</li>
+      <li>Material Status & Restrictions</li>
+      <li>Lot / Serial Number Control</li>
+      <li>Negative Inventory Allowed</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">account_tree</span>
+      Architecture & Flow
+    </div>
+
+    <p class="font-medium text-slate-700 mt-2">
+      Receipt → Put-away → Subinventory / Locator → Transaction (Issue/Transfer/Adjustment) → On-hand Update → Valuation & Reporting
+    </p>
+
+    <ul class="list-disc pl-6 mt-4 text-slate-600">
+      <li>Real-time on-hand visibility</li>
+      <li>Multi-org access control</li>
+      <li>Integration with WMS & Costing</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HANDSON -->
+<section id="handson" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">build_circle</span>
+      Hands-on Practice
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Create subinventories and locators</li>
+      <li>Perform miscellaneous receipts/issues</li>
+      <li>Set up and run cycle count</li>
+      <li>Configure min-max planning rules</li>
+      <button class="pulse-btn" onclick="window.location.href='https://docs.oracle.com/en/cloud/saas/supply-chain-management/24c/faims/index.html'">
+        Open Official Inventory Guide
+      </button>
+    </ul>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section id="applications" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">rocket_launch</span>
+      Real-Time Applications
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Maintaining accurate stock levels</li>
+      <li>Supporting manufacturing material issues</li>
+      <li>Enabling order fulfillment</li>
+      <li>Reducing inventory discrepancies</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">edit_note</span>
+      Best Practices
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Use meaningful locator naming conventions</li>
+      <li>Restrict negative inventory when possible</li>
+      <li>Perform regular cycle counts for A items</li>
+      <li>Monitor aging inventory reports</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">help_center</span>
+      Interview Questions
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>What is the difference between Subinventory and Locator?</li>
+      <li>How does cycle counting work in Fusion?</li>
+      <li>What are Material Statuses and when are they used?</li>
+      <li>How to handle inter-organization transfers?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">checklist</span>
+      Completion Checklist
+    </div>
+
+    <ul class="space-y-2 text-slate-600">
+      <li>⬜ Inventory basics understood</li>
+      <li>⬜ Confident with transactions & controls</li>
+      <li>⬜ Able to manage cycle counts</li>
+      <li>⬜ Ready for SCM inventory projects</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('.vtab-btn').forEach(b=>b.classList.remove('active'))
+  btn.classList.add('active')
+}
+</script>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

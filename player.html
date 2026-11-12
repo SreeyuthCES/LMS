@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Course Player · CES Learning Platform</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+
+  <!-- Official Fonts & Icons -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4A82A3",
+            "primary-light": "#6BA3C2",
+            "primary-dark": "#2B4C5E",
+            "text-main": "#2C1E16",
+            "text-muted": "#5C473D",
+            "background-light": "#FFFFFF",
+            "background-secondary": "#F9F6F3",
+          },
+          fontFamily: { display: ["Manrope", "sans-serif"] }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #2C1E16;
+      background-color: #FFFFFF;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(74, 130, 163, 0.05) 0px, transparent 50%),
+        linear-gradient(135deg, #FFFFFF 0%, #F9F6F3 100%);
+      background-attachment: fixed;
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 246, 243, 0.85) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(74, 130, 163, 0.08);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(74, 130, 163, 0.05);
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(74, 130, 163, 0.3);
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 130, 163, 0.6);
+    }
+
+    .glass-btn {
+      background: #4A82A3;
+      border: none;
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(74, 130, 163, 0.2);
+    }
+
+    .glass-btn:hover {
+      background: #2B4C5E;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(74, 130, 163, 0.3);
+    }
+
+    .glass-btn-outline {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(74, 130, 163, 0.3);
+      color: #5C473D;
+      transition: all 0.3s ease;
+    }
+
+    .glass-btn-outline:hover {
+      background: #FFFFFF;
+      color: #4A82A3;
+      border-color: #4A82A3;
+    }
+
+    .playlist-item {
+      transition: all 0.3s ease;
+    }
+
+    .playlist-item.is-completed {
+      opacity: 0.5;
+    }
+
+    .playlist-item.is-completed .item-title {
+      text-decoration: line-through;
+      color: #8A756B;
+    }
+
+    .playlist-item.is-active {
+      opacity: 1 !important;
+      background: #FFFFFF;
+      border-color: rgba(74, 130, 163, 0.4);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .playlist-item.is-active .item-title {
+      color: #2B4C5E;
+      font-weight: 900;
+      text-decoration: none !important;
+    }
+
+    video::-webkit-media-controls-panel {
+      background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    }
+
+    .video-player-shell {
+      aspect-ratio: 16 / 9;
+      background: #1a1a1a;
+    }
+
+    .welcome-player {
+      background:
+        linear-gradient(120deg, rgba(14, 38, 51, 0.96), rgba(43, 76, 94, 0.9)),
+        radial-gradient(circle at 82% 18%, rgba(107, 163, 194, 0.55), transparent 34%);
+    }
+
+    .welcome-mark {
+      box-shadow: 0 0 0 10px rgba(107, 163, 194, 0.12), 0 18px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .transcript-segment {
+      scroll-margin: 0.5rem;
+    }
+
+    .transcript-segment.active {
+      background: rgba(74, 130, 163, 0.12);
+      border-color: rgba(74, 130, 163, 0.35);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="antialiased overflow-y-auto selection:bg-primary/20 selection:text-primary-dark">
+
+  <!-- Upgraded Navbar with Centered Progress -->
+  <nav
+    class="w-full bg-white/80 backdrop-blur-md border-b border-white/50 px-6 py-2.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="max-w-[1600px] mx-auto w-full flex items-center justify-between">
+
+      <div class="flex-1 flex items-center page-header-brand-group">
+        <a id="back-to-course-btn" href="technicalpage.html"
+          class="hover:text-primary flex items-center gap-1 transition-colors bg-white/60 px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-bold text-text-muted">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span> Back
+        </a>
+        <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+          class="h-8 w-20 sm:w-24 shrink-0 object-contain ml-3">
+      </div>
+
+      <div class="flex-1 flex flex-col items-center justify-center text-center">
+        <h1 id="nav-track-name" class="text-base font-black text-text-main flex items-center gap-1">
+          <span class="material-symbols-outlined text-[18px] text-primary">smart_display</span> Loading Track...
+        </h1>
+        <div class="flex items-center gap-2 mt-1">
+          <span id="nav-progress-text" class="text-[11px] font-bold text-text-muted tracking-wide">0/0 Videos • 0%
+            Complete</span>
+          <div class="w-20 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+            <div id="nav-progress-fill"
+              class="bg-gradient-to-r from-primary to-primary-dark h-full rounded-full transition-all duration-700"
+              style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 flex items-center justify-end">
+        <span id="db-status-indicator"
+          class="text-[11px] font-bold px-2 py-1 rounded-md bg-gray-100 text-gray-500 border border-gray-200">Checking
+          DB...</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN WORKSPACE -->
+  <main
+    class="flex-1 w-full max-w-[1600px] mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[calc(100vh-80px)] mt-2">
+
+    <!-- LEFT COLUMN (70%) -->
+    <div class="col-span-1 lg:col-span-8 flex flex-col gap-6 overflow-y-auto custom-scrollbar pb-10 pr-2">
+
+      <div
+        class="video-player-shell w-full rounded-3xl overflow-hidden shadow-2xl relative border border-slate-800/50 flex flex-col items-center justify-center"
+        id="player-container">
+        <div id="video-placeholder"
+          class="welcome-player absolute inset-0 flex flex-col items-center justify-center text-center p-6 md:p-10 text-white z-10 overflow-hidden">
+          <div class="absolute -right-20 -top-24 w-72 h-72 rounded-full border border-white/10"></div>
+          <div class="absolute -right-8 -top-12 w-48 h-48 rounded-full border border-white/10"></div>
+          <div class="relative z-10 flex flex-col items-center max-w-xl">
+            <div class="welcome-mark w-16 h-16 rounded-2xl bg-primary-light/90 flex items-center justify-center mb-7">
+              <span class="material-symbols-outlined text-4xl text-white">school</span>
+            </div>
+            <p class="text-primary-light text-xs md:text-sm font-black uppercase tracking-[0.22em] mb-3">Welcome back
+            </p>
+            <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-3">Continue your learning journey</h2>
+            <p id="welcome-track-text" class="text-white/70 font-medium max-w-md mb-7">Your next lesson is ready in this
+              course.</p>
+            <button id="start-learning-btn"
+              class="glass-btn px-6 py-3 rounded-xl text-sm font-black flex items-center gap-2">
+              <span class="material-symbols-outlined text-[20px]">play_arrow</span> Start learning
+            </button>
+            <p id="welcome-module-count" class="text-white/50 text-xs font-bold mt-5">Loading modules...</p>
+          </div>
+        </div>
+        <video id="main-video-player" controls controlsList="nodownload" preload="metadata"
+          class="w-full h-full object-contain hidden z-20"></video>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <button id="prev-btn"
+            class="glass-btn-outline flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span> Previous
+          </button>
+          <button id="next-btn"
+            class="glass-btn-outline flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold">
+            Next <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          </button>
+        </div>
+        <button id="mark-complete-btn"
+          class="w-full sm:w-auto glass-btn px-6 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[20px]">check_circle</span> Mark as Complete
+        </button>
+      </div>
+
+      <!-- Content Tabs -->
+      <div class="glass-card rounded-[2rem] flex flex-col min-h-[300px]">
+        <div class="flex flex-wrap items-center gap-4 md:gap-8 px-6 md:px-8 border-b border-white/50 pt-6">
+          <button onclick="switchTab('overview', event)"
+            class="tab-btn active pb-4 text-sm font-bold text-primary border-b-[3px] border-primary transition-colors">Module
+            Overview</button>
+          <button onclick="switchTab('notes', event)"
+            class="tab-btn pb-4 text-sm font-bold text-text-muted hover:text-primary border-b-[3px] border-transparent transition-colors">Instructor
+            Notes</button>
+          <button onclick="switchTab('transcript', event)"
+            class="tab-btn pb-4 text-sm font-bold text-text-muted hover:text-primary border-b-[3px] border-transparent transition-colors">Transcript</button>
+        </div>
+
+        <div class="p-6 md:p-8">
+          <div id="tab-overview" class="tab-content active space-y-4">
+            <p id="dynamic-video-folder" class="text-xs font-bold text-primary hidden"></p>
+            <h2 id="dynamic-video-title" class="text-2xl md:text-3xl font-black text-text-main leading-tight">Welcome to
+              the Course</h2>
+            <div id="dynamic-video-desc"
+              class="text-text-muted font-medium leading-relaxed text-[15px] prose max-w-none">
+              Please select a module from the course curriculum on the right to view its details.
+            </div>
+          </div>
+          <div id="tab-notes" class="tab-content">
+            <h3 class="text-lg font-black text-text-main mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">edit_note</span> Instructor Insights
+            </h3>
+            <div id="dynamic-notes-content"
+              class="text-text-muted font-medium leading-relaxed text-[15px] bg-white/50 p-6 rounded-2xl border border-white/60">
+              No notes available until a video is selected.
+            </div>
+          </div>
+          <div id="tab-transcript" class="tab-content -mt-4">
+            <h3 class="text-lg font-black text-text-main mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">closed_caption</span> Video Transcript
+            </h3>
+            <div id="dynamic-transcript-content"
+              class="text-text-muted font-medium leading-relaxed text-[14px] bg-white/30 p-3 rounded-2xl border border-white/60 max-h-[300px] overflow-y-auto custom-scrollbar space-y-1">
+              Transcript will load when a video is selected.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (30%) -->
+    <div class="col-span-1 lg:col-span-4 flex flex-col gap-6">
+
+      <!-- Course Curriculum -->
+      <div
+        class="flex flex-col glass-card rounded-[2rem] overflow-hidden border-[3px] border-white/60 h-[400px] lg:h-[500px] shrink-0">
+        <div class="p-5 bg-white/40 border-b border-white/60 shadow-sm shrink-0">
+          <h2 class="text-xl font-black text-text-main">Course Modules</h2>
+        </div>
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-3" id="playlist-container">
+          <div class="text-center p-8 text-text-muted font-medium">Loading courses...</div>
+        </div>
+      </div>
+
+      <!-- Key Takeaways -->
+      <div class="glass-card rounded-[2rem] p-6 shadow-sm border-[2px] border-white/60">
+        <h3 class="font-black text-text-main mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">bookmark</span> Key Takeaways
+        </h3>
+        <ul id="dynamic-takeaways-content" class="space-y-3">
+          <li class="text-sm text-text-muted font-medium italic">Select a video to view key takeaways.</li>
+        </ul>
+      </div>
+
+      <!-- Dynamic Resources -->
+      <div class="glass-card rounded-[2rem] p-6 shadow-sm border-[2px] border-white/60">
+        <h3 class="font-black text-text-main mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">download</span> Resources
+        </h3>
+        <div id="dynamic-resources-content" class="flex flex-col gap-3">
+          <span class="text-sm text-text-muted font-medium italic">No resources attached to this module.</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let currentVideoIndex = null;
+    let currentTranscriptSegments = [];
+    let activeTranscriptIndex = -1;
+    let visibleTranscriptIndex = -1;
+
+    // --- MOCK DATA FALLBACK ---
+    let allCourseVideos = [
+      {
+        blob_name: 'BIP REPORTS/1. Introduction to fusion.mp4',
+        title: 'Introduction to Fusion',
+        description: '<p>Understand the core architecture of Oracle Fusion reporting.</p>',
+        overview: '<p>Understand the core architecture of Oracle Fusion reporting.</p>',
+        notes: '<p><strong>Instructor Tip:</strong> Pay close attention to the structural differences discussed here.</p>',
+        transcript: '<p>Welcome to the introduction module...</p>',
+        takeaways: ['Understand the Fusion framework.', 'Navigate basic UI concepts.'],
+        resources: [{ name: 'Architecture_Diagram.pdf', link: '#' }],
+        video_url: 'https://www.w3schools.com/html/mov_bbb.mp4'
+      },
+      {
+        blob_name: 'BIP REPORTS/Advanced/2. RTF Deep Dive.mp4',
+        title: 'RTF Deep Dive',
+        description: '<p>Learn advanced formatting techniques.</p>',
+        overview: '<p>Learn advanced formatting techniques.</p>',
+        notes: '<p>Use MS Word effectively.</p>',
+        transcript: '<p>Let us begin with RTF...</p>',
+        takeaways: ['Use looping logic.', 'Apply conditional formatting.'],
+        resources: [{ name: 'RTF_Cheat_Sheet.pdf', link: '#' }],
+        video_url: 'https://www.w3schools.com/html/mov_bbb.mp4'
+      }
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentTrack = (urlParams.get('track') || 'bip').toLowerCase();
+
+    const trackTitles = { sql: 'SQL Fundamentals', bip: 'BIP Reports', oic: 'OIC & VBCS', finance: 'Finance (FIN)', hcm: 'Human Capital (HCM)' };
+    const trackBlobFolders = {
+      oic: ['oic + vbcs'],
+      bip: ['bip reports'],
+      sql: ['sql'],
+      finance: ['fin', 'finance'],
+      hcm: ['hcm']
+    };
+    document.getElementById('nav-track-name').innerHTML = `<span class="material-symbols-outlined text-[18px] text-primary">smart_display</span> ${trackTitles[currentTrack] || 'Course Player'}`;
+    const trackParentPages = {
+      finance: 'functional.html',
+      hcm: 'functional.html'
+    };
+    const parentPage = trackParentPages[currentTrack] || 'technicalpage.html';
+    document.getElementById('back-to-course-btn').href = `${parentPage}?track=${currentTrack}`;
+
+    function updateWelcomeState() {
+      const moduleCount = allCourseVideos.length;
+      document.getElementById('welcome-track-text').textContent =
+        `${trackTitles[currentTrack] || 'This course'} is ready whenever you are. Pick up where you left off or begin with the first lesson.`;
+      document.getElementById('welcome-module-count').textContent =
+        `${moduleCount} ${moduleCount === 1 ? 'module' : 'modules'} available`;
+      document.getElementById('start-learning-btn').disabled = moduleCount === 0;
+    }
+
+    document.getElementById('start-learning-btn').addEventListener('click', () => {
+      const firstItem = document.querySelector('.playlist-item[data-index="0"]');
+      if (firstItem) {
+        playVideo(0, firstItem);
+      }
+    });
+
+    // --- HYBRID DATA FETCH (Database Connection) ---
+    async function loadCourseVideos() {
+      const dbIndicator = document.getElementById('db-status-indicator');
+      try {
+        const response = await fetch(`/api/videos/?t=${Date.now()}`);
+        if (!response.ok) throw new Error("Backend unavailable");
+        const data = await response.json();
+
+        const validFolders = trackBlobFolders[currentTrack] || [currentTrack];
+        const fetchedVideos = data.videos.filter(video => {
+          const pathParts = getBlobPathParts(video.blob_name);
+          return validFolders.includes((pathParts[0] || '').toLowerCase());
+        });
+        if (fetchedVideos.length > 0) {
+          allCourseVideos = sortVideos(fetchedVideos);
+          dbIndicator.className = "text-[11px] font-bold px-2 py-1 rounded-md bg-green-100 text-green-700 border border-green-200";
+          dbIndicator.innerHTML = '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">database</span> DB Connected</span>';
+        } else {
+          throw new Error("No videos for track");
+        }
+      } catch (error) {
+        console.log("Using local mock data (Database not connected)");
+        dbIndicator.className = "text-[11px] font-bold px-2 py-1 rounded-md bg-amber-100 text-amber-700 border border-amber-200";
+        dbIndicator.innerHTML = '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_off</span> Offline Mode</span>';
+      }
+
+      buildPlaylistUI(allCourseVideos);
+      updateProgressBar();
+      updateWelcomeState();
+    }
+
+    function getBlobPathParts(blobName = '') {
+      return blobName.replace(/\\/g, '/').split('/').filter(Boolean);
+    }
+
+    function getVideoTitle(video) {
+      const pathParts = getBlobPathParts(video.blob_name);
+      const fileName = pathParts.pop() || video.title || 'Untitled video';
+      const title = fileName.replace(/\.mp4$/i, '').trim();
+      return title.replace(/^\d+\s*(?:[-.)]\s*|\s+)/, '').trim();
+    }
+
+    function getBlobFolderPath(video) {
+      return getBlobPathParts(video.blob_name).slice(1, -1).join('/');
+    }
+
+    function getVideoNumber(video) {
+      const folderPath = getBlobFolderPath(video);
+      const folderVideos = sortVideos(allCourseVideos.filter(candidate =>
+        getBlobFolderPath(candidate) === folderPath
+      ));
+      return folderVideos.indexOf(video) + 1;
+    }
+
+    function formatFolderName(folderPath) {
+      return folderPath.split('/').map(part =>
+        part.replace(/^\d+\s*(?:[-.)]\s*|\s+)/, '').trim()
+      ).join(' / ');
+    }
+
+    function normalizeMetadataList(value) {
+      if (Array.isArray(value)) return value;
+      if (typeof value !== 'string' || !value.trim()) return [];
+      try {
+        const parsedValue = JSON.parse(value);
+        return Array.isArray(parsedValue) ? parsedValue : [];
+      } catch (error) {
+        console.warn('Unable to parse video metadata:', error);
+        return [];
+      }
+    }
+
+    function parseTranscriptSegments(transcript) {
+      if (typeof transcript !== 'string' || !transcript.trim()) return [];
+
+      try {
+        const parsedTranscript = JSON.parse(transcript);
+        if (!Array.isArray(parsedTranscript)) return [];
+
+        return parsedTranscript
+          .filter(segment =>
+            segment &&
+            Number.isFinite(Number(segment.start)) &&
+            Number.isFinite(Number(segment.end)) &&
+            Number(segment.start) >= 0 &&
+            Number(segment.end) >= Number(segment.start) &&
+            typeof segment.text === 'string' &&
+            segment.text.trim()
+          )
+          .map(segment => ({
+            start: Number(segment.start),
+            end: Number(segment.end),
+            text: segment.text.trim()
+          }))
+          .sort((first, second) => first.start - second.start);
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function formatVideoTime(seconds) {
+      if (!Number.isFinite(seconds) || seconds < 0) return '--:--';
+      const totalSeconds = Math.floor(seconds);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const remainingSeconds = totalSeconds % 60;
+      const formattedMinutes = String(minutes).padStart(2, '0');
+      const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+      return hours > 0
+        ? `${hours}:${formattedMinutes}:${formattedSeconds}`
+        : `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function renderTranscript(transcript) {
+      const transcriptContent = document.getElementById('dynamic-transcript-content');
+      currentTranscriptSegments = parseTranscriptSegments(transcript);
+      activeTranscriptIndex = -1;
+      visibleTranscriptIndex = -1;
+      transcriptContent.replaceChildren();
+
+      if (currentTranscriptSegments.length === 0) {
+        const message = document.createElement('p');
+        message.className = 'text-text-muted font-medium leading-relaxed p-3';
+        message.textContent = transcript || 'No transcript available for this video.';
+        transcriptContent.appendChild(message);
+        return;
+      }
+
+      currentTranscriptSegments.forEach((segment, index) => {
+        const row = document.createElement('div');
+        row.className = 'transcript-segment rounded-xl border border-transparent transition-colors';
+        row.dataset.segmentIndex = index;
+        row.hidden = true;
+
+        const seekButton = document.createElement('button');
+        seekButton.type = 'button';
+        seekButton.className = 'w-full text-left p-3 flex items-start gap-3 rounded-xl cursor-pointer hover:bg-white/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary';
+        seekButton.setAttribute(
+          'aria-label',
+          `Seek to ${formatVideoTime(segment.start)}`
+        );
+        seekButton.addEventListener('click', () => {
+          const player = document.getElementById('main-video-player');
+          player.currentTime = segment.start;
+          updateTranscriptProgress();
+        });
+
+        const timestamp = document.createElement('span');
+        timestamp.className = 'shrink-0 text-xs font-black text-primary pt-0.5';
+        timestamp.textContent = formatVideoTime(segment.start);
+
+        const text = document.createElement('span');
+        text.className = 'text-text-muted font-medium';
+        text.textContent = segment.text;
+
+        seekButton.append(timestamp, text);
+        row.appendChild(seekButton);
+        transcriptContent.appendChild(row);
+      });
+
+      updateTranscriptFromPlayback();
+    }
+
+    function updateTranscriptFromPlayback() {
+      const player = document.getElementById('main-video-player');
+      const currentTime = Number.isFinite(player.currentTime) ? player.currentTime : 0;
+
+      let low = 0;
+      let high = currentTranscriptSegments.length - 1;
+      let revealedThrough = -1;
+      while (low <= high) {
+        const middle = Math.floor((low + high) / 2);
+        if (currentTranscriptSegments[middle].start <= currentTime) {
+          revealedThrough = middle;
+          low = middle + 1;
+        } else {
+          high = middle - 1;
+        }
+      }
+
+      const transcriptContent = document.getElementById('dynamic-transcript-content');
+      const start = Math.min(visibleTranscriptIndex, revealedThrough) + 1;
+      const end = Math.max(visibleTranscriptIndex, revealedThrough);
+      for (let index = start; index <= end; index += 1) {
+        const segment = transcriptContent.querySelector(`[data-segment-index="${index}"]`);
+        if (segment) segment.hidden = index > revealedThrough;
+      }
+      visibleTranscriptIndex = revealedThrough;
+
+      const candidate = currentTranscriptSegments[revealedThrough];
+      const nextActiveIndex = candidate && currentTime <= candidate.end
+        ? revealedThrough
+        : -1;
+      if (nextActiveIndex !== activeTranscriptIndex) {
+        const previousActiveSegment = transcriptContent.querySelector(
+          `[data-segment-index="${activeTranscriptIndex}"]`
+        );
+        previousActiveSegment?.classList.remove('active');
+        previousActiveSegment?.removeAttribute('aria-current');
+        activeTranscriptIndex = nextActiveIndex;
+
+        const activeSegment = transcriptContent.querySelector(
+          `[data-segment-index="${activeTranscriptIndex}"]`
+        );
+        activeSegment?.classList.add('active');
+        activeSegment?.setAttribute('aria-current', 'true');
+
+        if (activeSegment &&
+            document.getElementById('tab-transcript').classList.contains('active')) {
+          const containerTop = transcriptContent.getBoundingClientRect().top;
+          const segmentTop = activeSegment.getBoundingClientRect().top;
+          transcriptContent.scrollTo({
+            top: transcriptContent.scrollTop + segmentTop - containerTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+    }
+
+    function getBlobSequence(video) {
+      const fileName = getBlobPathParts(video.blob_name).pop() || '';
+      const numberMatch = fileName.match(/^(\d+)/);
+      return numberMatch ? Number(numberMatch[1]) : null;
+    }
+
+    function sortVideos(videos) {
+      return [...videos].sort((first, second) => {
+        const folderOrder = getBlobFolderPath(first).localeCompare(
+          getBlobFolderPath(second),
+          undefined,
+          { numeric: true, sensitivity: 'base' }
+        );
+        if (folderOrder !== 0) return folderOrder;
+
+        const firstSequence = getBlobSequence(first);
+        const secondSequence = getBlobSequence(second);
+        if (firstSequence !== null && secondSequence !== null && firstSequence !== secondSequence) {
+          return firstSequence - secondSequence;
+        }
+        if (firstSequence !== null && secondSequence === null) return -1;
+        if (firstSequence === null && secondSequence !== null) return 1;
+        return getVideoTitle(first).localeCompare(getVideoTitle(second), undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        });
+      });
+    }
+
+    // Top-level folders identify tracks; only nested folders become playlist modules.
+    function buildPlaylistUI(videos) {
+      const container = document.getElementById('playlist-container');
+      container.innerHTML = '';
+
+      const groupedVideos = {};
+      sortVideos(videos).forEach(video => {
+        const parts = getBlobPathParts(video.blob_name);
+        const folderPath = parts.length > 2 ? getBlobFolderPath(video) : 'General';
+        if (!groupedVideos[folderPath]) {
+          groupedVideos[folderPath] = [];
+        }
+        groupedVideos[folderPath].push(video);
+      });
+
+      const folderNames = Object.keys(groupedVideos);
+
+      if (folderNames.length === 1 && folderNames[0] === 'General') {
+        const videoListWrapper = document.createElement('div');
+        videoListWrapper.className = "space-y-2";
+        sortVideos(groupedVideos['General']).forEach(video => {
+          videoListWrapper.appendChild(createVideoItemElement(video, allCourseVideos.indexOf(video), 'root'));
+        });
+        container.appendChild(videoListWrapper);
+        return;
+      }
+
+      // Build Accordion Folders
+      for (const [folderPath, folderVideos] of Object.entries(groupedVideos).sort(([first], [second]) => first.localeCompare(second, undefined, { numeric: true, sensitivity: 'base' }))) {
+        if (folderPath === 'General') {
+          folderVideos.forEach(video => {
+            container.appendChild(createVideoItemElement(video, allCourseVideos.indexOf(video), 'root'));
+          });
+          continue;
+        }
+        const folderName = formatFolderName(folderPath);
+        const safeId = folderPath.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+
+        const folderWrapper = document.createElement('div');
+        folderWrapper.className = "bg-white/40 border border-white/60 rounded-2xl overflow-hidden transition-all shadow-sm mb-3";
+
+        const header = document.createElement('button');
+        header.className = "w-full flex items-center justify-between p-4 hover:bg-white/60 transition-colors focus:outline-none";
+        header.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">folder</span>
+            </div>
+            <h3 class="font-bold text-text-main text-sm text-left">${folderName}</h3>
+            <span class="text-xs font-semibold text-text-muted whitespace-nowrap">${folderVideos.length} ${folderVideos.length === 1 ? 'video' : 'videos'}</span>
+          </div>
+          <span id="chevron-${safeId}" class="material-symbols-outlined text-text-muted transition-transform duration-300 transform">expand_more</span>
+        `;
+
+        const videoListWrapper = document.createElement('div');
+        videoListWrapper.id = safeId;
+        videoListWrapper.className = "folder-video-list space-y-1 p-2 pt-0 transition-all hidden";
+        header.onclick = () => {
+          const isOpening = videoListWrapper.classList.contains('hidden');
+          setOpenFolder(isOpening ? safeId : null);
+          if (!isOpening) return;
+
+          const firstIncompleteVideo = folderVideos.find(video =>
+            localStorage.getItem(`completed_${video.blob_name}`) !== 'true'
+          );
+          if (!firstIncompleteVideo) return;
+
+          const videoIndex = allCourseVideos.indexOf(firstIncompleteVideo);
+          const videoItem = videoListWrapper.querySelector(`.playlist-item[data-index="${videoIndex}"]`);
+          if (videoIndex !== -1 && videoItem) {
+            videoItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        };
+
+        sortVideos(folderVideos).forEach(video => {
+          videoListWrapper.appendChild(createVideoItemElement(video, allCourseVideos.indexOf(video), safeId));
+        });
+
+        folderWrapper.appendChild(header);
+        folderWrapper.appendChild(videoListWrapper);
+        container.appendChild(folderWrapper);
+      }
+    }
+
+    function setOpenFolder(folderId) {
+      const container = document.getElementById('playlist-container');
+      container.querySelectorAll('.folder-video-list').forEach(videoList => {
+        const isOpen = videoList.id === folderId;
+        videoList.classList.toggle('hidden', !isOpen);
+        document.getElementById(`chevron-${videoList.id}`)?.classList.toggle('rotate-180', isOpen);
+      });
+    }
+
+    function createVideoItemElement(video, index, folderId) {
+      const isCompleted = localStorage.getItem(`completed_${video.blob_name}`) === 'true';
+      const videoItem = document.createElement('div');
+
+      videoItem.className = `flex items-start gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/80 border border-transparent hover:border-white shadow-sm transition-all playlist-item group ${isCompleted ? 'is-completed' : ''}`;
+      videoItem.dataset.index = index;
+      videoItem.dataset.folderId = folderId;
+
+      // Fallback to SQLite description if overview/notes aren't provided yet
+      const displayTitle = getVideoTitle(video);
+
+      videoItem.innerHTML = `
+        <div class="w-6 h-6 rounded-full ${isCompleted ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'} flex items-center justify-center shrink-0 mt-0.5 status-icon transition-colors">
+          <span class="material-symbols-outlined text-[14px]">${isCompleted ? 'check' : 'play_arrow'}</span>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-text-muted group-hover:text-text-main transition-colors item-title leading-tight">${getVideoNumber(video)}. ${displayTitle}</h4>
+        </div>
+      `;
+      videoItem.addEventListener('click', () => playVideo(index, videoItem));
+      return videoItem;
+    }
+
+    // --- PLAYBACK & DYNAMIC INJECTION ---
+    function playVideo(index, element = null) {
+      currentVideoIndex = index;
+      const videoData = allCourseVideos[index];
+
+      if (!element) element = document.querySelector(`.playlist-item[data-index="${index}"]`);
+
+      document.getElementById('video-placeholder').classList.add('hidden');
+      const player = document.getElementById('main-video-player');
+      player.classList.remove('hidden');
+
+      document.querySelectorAll('.playlist-item').forEach(item => {
+        item.classList.remove('is-active', 'relative', 'overflow-hidden');
+        item.querySelector('.active-bar')?.remove();
+      });
+
+      element.classList.add('is-active', 'relative', 'overflow-hidden');
+      const activeBar = document.createElement('div');
+      activeBar.className = 'absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary-dark active-bar';
+      element.prepend(activeBar);
+
+      const folderId = element.dataset.folderId;
+      setOpenFolder(folderId && folderId !== 'root' ? folderId : null);
+
+      player.pause();
+      player.removeAttribute('src');
+      player.replaceChildren();
+      const source = document.createElement('source');
+      source.src = videoData.video_url;
+      source.type = 'video/mp4';
+      player.appendChild(source);
+      player.load();
+      player.play().catch(e => console.log("Autoplay blocked"));
+
+      // INJECT DYNAMIC TEXT TABS
+      // Prioritize explicit fields (overview), fallback to SQLite description column
+      const displayTitle = getVideoTitle(videoData);
+      const displayDesc = videoData.overview || videoData.description || 'No overview provided.';
+      const folderPath = getBlobFolderPath(videoData);
+      const folderHeading = document.getElementById('dynamic-video-folder');
+      folderHeading.textContent = folderPath ? formatFolderName(folderPath) : '';
+      folderHeading.classList.toggle('hidden', !folderPath);
+
+      document.getElementById('dynamic-video-title').textContent = `${getVideoNumber(videoData)}. ${displayTitle}`;
+      document.getElementById('dynamic-video-desc').innerHTML = displayDesc;
+      document.getElementById('dynamic-notes-content').innerHTML = videoData.notes || 'No notes available for this session.';
+      renderTranscript(videoData.transcript);
+
+      // INJECT DYNAMIC TAKEAWAYS
+      const takeawaysList = document.getElementById('dynamic-takeaways-content');
+      const takeaways = normalizeMetadataList(videoData.takeaways);
+      if (takeaways.length > 0) {
+        takeawaysList.innerHTML = takeaways.map(t => `
+          <li class="flex items-start gap-2 text-sm text-text-muted font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span> ${t}
+          </li>`).join('');
+      } else {
+        takeawaysList.innerHTML = '<li class="text-sm text-text-muted font-medium italic">No key takeaways listed.</li>';
+      }
+
+      // INJECT DYNAMIC RESOURCES
+      const resourcesList = document.getElementById('dynamic-resources-content');
+      const resources = normalizeMetadataList(videoData.resources);
+      if (resources.length > 0) {
+        resourcesList.innerHTML = resources.map(resource => `
+          <a class="flex items-center gap-2 text-sm text-primary font-bold hover:underline group" href="${resource.link || '#'}" target="_blank" rel="noopener noreferrer">
+            <span class="material-symbols-outlined text-[18px]">description</span> ${resource.name || resource.title || resource}
+          </a>`).join('');
+      } else {
+        resourcesList.innerHTML = '<span class="text-sm text-text-muted font-medium italic">No resources attached.</span>';
+      }
+
+      updateCompleteButtonState();
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // --- TOGGLE COMPLETE LOGIC ---
+    function updateCompleteButtonState() {
+      if (currentVideoIndex === null) return;
+      const videoData = allCourseVideos[currentVideoIndex];
+      const isCompleted = localStorage.getItem(`completed_${videoData.blob_name}`) === 'true';
+
+      const btn = document.getElementById('mark-complete-btn');
+      if (isCompleted) {
+        btn.className = "w-full sm:w-auto glass-btn-outline px-6 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2";
+        btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">remove_done</span> Unmark as Complete`;
+      } else {
+        btn.className = "w-full sm:w-auto glass-btn px-6 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2";
+        btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">check_circle</span> Mark as Complete`;
+      }
+    }
+
+    document.getElementById('mark-complete-btn').addEventListener('click', () => {
+      if (currentVideoIndex === null) return;
+      const videoData = allCourseVideos[currentVideoIndex];
+      const storageKey = `completed_${videoData.blob_name}`;
+      const isCurrentlyCompleted = localStorage.getItem(storageKey) === 'true';
+      const activeItem = document.querySelector(`.playlist-item[data-index="${currentVideoIndex}"]`);
+      const iconDiv = activeItem.querySelector('.status-icon');
+
+      if (isCurrentlyCompleted) {
+        localStorage.removeItem(storageKey);
+        activeItem.classList.remove('is-completed');
+        iconDiv.className = "w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center shrink-0 mt-0.5 status-icon transition-colors";
+        iconDiv.innerHTML = '<span class="material-symbols-outlined text-[14px]">play_arrow</span>';
+      } else {
+        localStorage.setItem(storageKey, 'true');
+        activeItem.classList.add('is-completed');
+        iconDiv.className = "w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center shrink-0 mt-0.5 status-icon transition-colors shadow-sm";
+        iconDiv.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span>';
+        if (currentVideoIndex < allCourseVideos.length - 1) playVideo(currentVideoIndex + 1);
+      }
+
+      updateCompleteButtonState();
+      updateProgressBar();
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentVideoIndex > 0) playVideo(currentVideoIndex - 1);
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentVideoIndex === null && allCourseVideos.length > 0) playVideo(0);
+      else if (currentVideoIndex < allCourseVideos.length - 1) playVideo(currentVideoIndex + 1);
+    });
+
+    function updateProgressBar() {
+      if (allCourseVideos.length === 0) return;
+      let completedCount = 0;
+      allCourseVideos.forEach(video => {
+        if (localStorage.getItem(`completed_${video.blob_name}`) === 'true') completedCount++;
+      });
+      const total = allCourseVideos.length;
+      const percentage = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+
+      document.getElementById('nav-progress-fill').style.width = `${percentage}%`;
+      document.getElementById('nav-progress-text').textContent = `${completedCount}/${total} Videos • ${percentage}% Complete`;
+    }
+
+    function switchTab(tabId, event) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'text-primary', 'border-primary', 'font-black');
+        btn.classList.add('text-text-muted', 'border-transparent', 'font-bold');
+      });
+      event.currentTarget.classList.remove('text-text-muted', 'border-transparent', 'font-bold');
+      event.currentTarget.classList.add('active', 'text-primary', 'border-primary', 'font-black');
+
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      if (tabId === 'transcript') updateTranscriptFromPlayback();
+    }
+
+    const videoPlayer = document.getElementById('main-video-player');
+    ['timeupdate', 'loadedmetadata', 'durationchange', 'seeked'].forEach(eventName => {
+      videoPlayer.addEventListener(eventName, updateTranscriptFromPlayback);
+    });
+
+    // Initialize Application
+    loadCourseVideos();
+  </script>
+
+  <script src="assets/common.js"></script>
+</body>
+
+</html>

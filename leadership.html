@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leadership Lecture Page</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#2B4C5E",
+
+                    "background-light": "#FFFFFF",
+                    "background-dark": "#1E1A17",
+
+                    "text-main": "#2C1E16",
+                    "text-secondary": "#5C473D",
+                    "text-muted": "#8A756B",
+
+                    "border-light": "#E8E2D9",
+                    "border-dark": "#4A3931",
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+
+<style>
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    }
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<!-- <header class="sticky top-0 z-50 flex items-center justify-between border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">school</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight hidden md:block">Corporate Training</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6 lg:gap-9">
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold" href="#">My Learning</a>
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Catalog</a>
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center justify-end gap-4 lg:gap-8">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 border border-transparent focus-within:border-primary transition-colors">
+<div class="text-slate-500 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-slate-900 dark:text-white placeholder:text-slate-500 px-3 focus:ring-0 text-sm" placeholder="Search courses..."/>
+</div>
+</label>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center text-slate-500 hover:text-primary dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-white dark:border-slate-700 shadow-sm" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3Der-q-enS_OpYvIDmGn9emGCxqIYY_VgZW2XoechsAPRcFmatqnW8L1WkvGXyhaA0f0Jb_rnnZaRpoSWDdCkLk3IARDZgPk8bRApBkjhLh3uSkW-wbX3nsCfKQjL178ui7zWjMQpwE7RcyPj6Suab_2n4p24edoCKa-DN74_QstXi8PsV3ZQn9RTVD0g5Ikk96ZSOUX97DSr0yNhax1sDObtMd-n80xGBUyBp4DuEGKTHr7DP_Df16qIaxjo_lMp3Yk6caXNJGQ");'></div>
+</div>
+</div>
+</header> -->
+<!-- Main Content -->
+<main class="flex-1 px-4 py-6 md:px-8 lg:px-12 xl:px-20 max-w-[1600px] mx-auto w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Video & Lesson Details (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="employee_dashboard.html">Home</a>
+<span class="text-slate-400">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="common_essentials.html">common_essentials</a>
+<span class="text-slate-400">/</span>
+<span class="text-slate-900 dark:text-white font-medium"> Leadership</span>
+</div>
+<!-- Heading -->
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-tight">Inspiring Your Team Through Change</h1>
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm md:text-base">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">person</span> Dr. Sarah Jenkins
+                            </span>
+<span class="size-1 rounded-full bg-slate-300"></span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">schedule</span> 12:30
+                            </span>
+</div>
+</div>
+<!-- Media Player -->
+<div class="relative w-full rounded-xl overflow-hidden shadow-lg group bg-slate-900">
+<div class="relative flex items-center justify-center aspect-video bg-cover bg-center group-hover:bg-blend-darken transition-all" data-alt="Video thumbnail of a corporate meeting room discussion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAF2Z7bFD6is3hhaMQ5Jx2GsXVyid-NmQk0nD-soBhJvZb0hpOq7X5qZEo_EM6lzTLFTRd2K3Wtvap8WQD_qP_X3xEwUcSVaUOuHyIYv5r3LhFZznB11J7Lrb0q7nAv7FjfZcVSp4GwXWG0G0LV5Gec06bfE5Y2Irw8ZLldPb1RvoBpdlc7n_UcxEC4tU8dC_AxrA3tHE8ftKaRu_9NUmokjEXdeQAemF2iVdxwZqwWWbadmaR0F5hmXma_2yrOSJGvaGy66QN208U");'>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80"></div>
+<!-- Play Button -->
+<button class="relative z-10 flex shrink-0 items-center justify-center rounded-full size-20 bg-primary/90 text-white backdrop-blur-sm shadow-xl hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-4xl ml-1">play_arrow</span>
+</button>
+<!-- Controls -->
+<div class="absolute inset-x-0 bottom-0 px-6 py-4 z-20">
+<div class="flex h-1.5 w-full items-center justify-start bg-white/30 rounded-full cursor-pointer overflow-hidden mb-3 hover:h-2 transition-all">
+<div class="h-full w-[25%] bg-primary rounded-full relative"></div>
+</div>
+<div class="flex items-center justify-between text-white">
+<div class="flex items-center gap-4">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">play_arrow</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">volume_up</span></button>
+<span class="text-xs font-medium tracking-wide">3:15 / 12:30</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">closed_caption</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">fullscreen</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-semibold text-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span> Previous
+                            </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-semibold text-sm">
+                                Next <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary hover:bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">check_circle</span> Mark as Complete
+                        </button>
+</div>
+<!-- Content Tabs -->
+<div>
+<div class="flex border-b border-slate-200 dark:border-slate-800 gap-8 mb-6">
+<button class="relative pb-4 text-primary font-bold text-sm tracking-wide">
+                                Lesson Details
+                                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-t-full"></span>
+</button>
+<button class="relative pb-4 text-slate-500 dark:text-slate-400 font-medium text-sm tracking-wide hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                                Transcript
+                            </button>
+<button class="relative pb-4 text-slate-500 dark:text-slate-400 font-medium text-sm tracking-wide hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                                Discussion <span class="ml-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded text-xs">24</span>
+</button>
+</div>
+<!-- Tab Content -->
+<div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">About this lesson</h3>
+<p class="mb-4">
+                                In this lesson, we explore the psychology of change management and how to keep morale high during organizational shifts. We will deep dive into the Kübler-Ross Change Curve and apply it to modern corporate restructuring scenarios.
+                            </p>
+<p class="mb-4">
+                                Dr. Jenkins shares three critical strategies for communication during uncertain times: Transparency, Empathy, and Repetition. By the end of this video, you will be able to formulate a communication plan for your direct reports.
+                            </p>
+<div class="flex items-center gap-2 mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-lg">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+<span class="text-sm font-medium text-blue-900 dark:text-blue-100">Pro Tip: Download the attached worksheet to follow along with the exercises at 08:45.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Progress Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-bold text-slate-900 dark:text-white">Course Progress</h3>
+<span class="text-sm font-bold text-primary">65%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 mb-4">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">7 of 12 lessons completed</p>
+</div>
+<!-- Syllabus / Playlist -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col max-h-[500px]">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+<h3 class="font-bold text-slate-900 dark:text-white">Module Content</h3>
+</div>
+<div class="overflow-y-auto custom-scrollbar">
+<!-- Completed Item -->
+<a class="flex items-start gap-3 p-4 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<div class="mt-0.5 text-green-500">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 line-through group-hover:text-slate-700 dark:group-hover:text-slate-300">1. Intro to Leadership</p>
+<p class="text-xs text-slate-400">8:15</p>
+</div>
+</a>
+<!-- Completed Item -->
+<a class="flex items-start gap-3 p-4 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<div class="mt-0.5 text-green-500">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 line-through group-hover:text-slate-700 dark:group-hover:text-slate-300">2. Understanding Conflict</p>
+<p class="text-xs text-slate-400">14:20</p>
+</div>
+</a>
+<!-- Active Item -->
+<div class="flex items-start gap-3 p-4 border-b border-slate-100 dark:border-slate-800 bg-blue-50/50 dark:bg-blue-900/10 border-l-4 border-l-primary">
+<div class="mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[20px] animate-pulse">play_circle</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">3. Inspiring Your Team</p>
+<p class="text-xs text-primary font-medium">12:30 • Playing</p>
+</div>
+</div>
+<!-- Upcoming Item -->
+<a class="flex items-start gap-3 p-4 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<div class="mt-0.5 text-slate-300 dark:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">radio_button_unchecked</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">4. Effective Delegation</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">15:45</p>
+</div>
+</a>
+<!-- Locked Item -->
+<div class="flex items-start gap-3 p-4 border-b border-slate-100 dark:border-slate-800 opacity-60">
+<div class="mt-0.5 text-slate-300 dark:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">5. Giving Feedback</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">10:00</p>
+</div>
+</div>
+<!-- Locked Item -->
+<div class="flex items-start gap-3 p-4 opacity-60">
+<div class="mt-0.5 text-slate-300 dark:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">6. Final Assessment</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">25 mins</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Takeaways / Resources -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bookmark</span> Key Takeaways
+                        </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                                Change is an emotional process, not just logical.
+                            </li>
+<li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                                Transparent communication builds trust during uncertainty.
+                            </li>
+<li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                                Acknowledge the "dip" in productivity as normal.
+                            </li>
+</ul>
+<div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Resources</h4>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-2 text-sm text-primary hover:underline group" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                    Module 3 Workbook.pdf
+                                </a>
+<a class="flex items-center gap-2 text-sm text-primary hover:underline group" href="#">
+<span class="material-symbols-outlined text-[18px]">link</span>
+                                    Related Article: HBR on Change
+                                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="assets/common.js"></script>
+</body></html>

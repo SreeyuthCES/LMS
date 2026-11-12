@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCM - Procurement / Purchasing (P2P) – CES Technical</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#2B4C5E",
+
+        "bg": "#FFFFFF",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+
+        "text-main": "#2C1E16",
+        "text-secondary": "#5C473D",
+        "border-light": "#E8E2D9",
+      },
+
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5C473D, #2C1E16);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+/* Vertical Tab Buttons */
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+  color: #5C473D;
+}
+
+.vtab-btn:hover {
+  background: #E8E2D9;
+  color: #4A82A3;
+}
+
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 130, 163, 0.2);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Content Card */
+.content-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid #E8E2D9;
+  box-shadow: 0 10px 30px rgba(74, 130, 163, 0.07);
+}
+
+/* Section Title (Glossy & High Contrast) */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #1A120D;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs */
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Bright & Glossy Pulse Button */
+.pulse-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+  color: #FFFFFF;
+  border: 1px solid #1C3644;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Inner white highlight for a glossy glass look + deep outer shadow */
+  box-shadow: 
+      0 6px 12px rgba(43, 76, 94, 0.4),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+      
+  /* Bright glossy text effect */
+  text-shadow: 
+      0px 2px 3px rgba(0, 0, 0, 0.8), 
+      0px -1px 1px rgba(255, 255, 255, 0.4);
+      
+  letter-spacing: 0.5px;
+}
+
+.pulse-btn:hover {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+  transform: scale(1.05);
+  animation: pulse 1s infinite;
+  
+  box-shadow: 
+      0 8px 16px rgba(43, 76, 94, 0.5),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.3),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0.6),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    box-shadow: 
+      0 0 0 15px rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-bg font-sans h-screen flex overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto">
+<h1 class="text-xl font-bold mb-6">SCM – Procurement / Purchasing (P2P)</h1>
+
+<div class="space-y-1">
+  <div class="vtab-btn active" onclick="openTab('overview',this)">
+    <span class="material-icons">dashboard_customize</span> Overview
+  </div>
+  <div class="vtab-btn" onclick="openTab('main',this)">
+    <span class="material-icons">fact_check</span> Main Points
+  </div>
+  <div class="vtab-btn" onclick="openTab('subtopics',this)">
+    <span class="material-icons">list_alt</span> Subtopics
+  </div>
+  <div class="vtab-btn" onclick="openTab('videos',this)">
+    <span class="material-icons">play_circle_filled</span> Video Lessons
+  </div>
+  <div class="vtab-btn" onclick="openTab('concepts',this)">
+    <span class="material-icons">psychology</span> Core Concepts
+  </div>
+  <div class="vtab-btn" onclick="openTab('architecture',this)">
+    <span class="material-icons">account_tree</span> Architecture & Flow
+  </div>
+  <div class="vtab-btn" onclick="openTab('handson',this)">
+    <span class="material-icons">build_circle</span> Hands-on Practice
+  </div>
+  <div class="vtab-btn" onclick="openTab('applications',this)">
+    <span class="material-icons">rocket_launch</span> Real-Time Applications
+  </div>
+  <div class="vtab-btn" onclick="openTab('notes',this)">
+    <span class="material-icons">edit_note</span> Notes
+  </div>
+  <div class="vtab-btn" onclick="openTab('interview',this)">
+    <span class="material-icons">help_center</span> Interview
+  </div>
+  <div class="vtab-btn" onclick="openTab('checklist',this)">
+    <span class="material-icons">checklist</span> Checklist
+  </div>
+</div>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10">
+    <div class="mb-6">
+        <nav class="flex items-center text-sm text-slate-500 gap-2">
+          <a href="employee_dashboard.html" class="hover:text-primary font-medium">
+            Dashboard
+          </a>
+          <span>/</span>
+          <a href="scm.html" class="hover:text-primary font-medium">
+            SCM page
+          </a>
+          <span>/</span>
+          <span class="text-slate-700 font-semibold">
+            SCM - Procurement / Purchasing (P2P)
+          </span>
+        </nav>
+      </div>
+    
+      <div class="max-w-6xl mx-auto space-y-10">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab active">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">dashboard_customize</span>
+      Procurement / Purchasing (P2P) Overview
+    </div>
+
+    <p class="text-slate-600 leading-relaxed">
+      Procurement / Purchasing (Procure-to-Pay or P2P) in Oracle Fusion SCM manages the complete cycle from requisition creation to supplier payment, ensuring controlled spending, supplier collaboration, and accurate financial recording.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed mt-4">
+      It integrates with Inventory, Payables, Projects, and Costing modules to provide end-to-end visibility and compliance in the source-to-pay process.
+    </p>
+
+    <div class="grid grid-cols-2 gap-6 mt-8">
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Used In</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Requisitions & Purchase Orders</li>
+          <li>Supplier Invoicing & Payments</li>
+          <li>Contract & Supplier Management</li>
+        </ul>
+      </div>
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Who Needs P2P?</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Procurement Specialists</li>
+          <li>Buyers / Purchasing Agents</li>
+          <li>Accounts Payable Teams</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN POINTS -->
+<section id="main" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">fact_check</span>
+      Main P2P Principles
+    </div>
+
+    <ul class="list-disc pl-6 space-y-3 text-slate-600">
+      <li><strong>Requisition-to-Receipt:</strong> Controlled approval and conversion to PO</li>
+      <li><strong>Three-way Match:</strong> PO – Receipt – Invoice matching for payment</li>
+      <li><strong>Supplier Collaboration:</strong> Portal for quotes, invoices, and ASN</li>
+      <li><strong>Blanket / Contract Purchase Agreements:</strong> For recurring purchases</li>
+      <li><strong>Encumbrance Accounting:</strong> Budget reservation on commitment</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUBTOPICS -->
+<section id="subtopics" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">list_alt</span>
+      Procurement / P2P Subtopics
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-slate-600">
+      <div>Requisitions & Approvals</div>
+      <div>Purchase Order Types</div>
+      <div>Blanket Purchase Agreements</div>
+      <div>Contract Purchase Agreements</div>
+      <div>RFQ & Supplier Quotes</div>
+      <div>Receiving & Inspection</div>
+      <div>Three-way / Two-way Matching</div>
+      <div>Supplier Onboarding</div>
+      <div>Supplier Sites & Contacts</div>
+      <div>Procurement Encumbrance</div>
+      <div>Self-Service Procurement</div>
+      <div>Procurement Reports & Analytics</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">play_circle_filled</span>
+      Video Lessons – Procurement / Purchasing (P2P)
+    </div>
+
+    <p class="text-slate-600 mb-6">
+      These videos are aligned to <strong>real procurement scenarios</strong> in Fusion SCM.
+      Watch them sequentially for best understanding.
+    </p>
+
+    <div class="space-y-5">
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>P2P Fundamentals</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Requisitions, approvals, and purchase order creation
+        </p>
+        <span class="text-xs text-slate-500">⏱ 20 mins · Beginner</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Supplier Management & Quotes</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Supplier profiles, RFQ process, and quote conversion
+        </p>
+        <span class="text-xs text-slate-500">⏱ 22 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Receiving & Invoice Matching</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Receiving transactions and three-way match process
+        </p>
+        <span class="text-xs text-slate-500">⏱ 24 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Advanced Procurement Features</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Contracts, blanket agreements, encumbrance, and analytics
+        </p>
+        <span class="text-xs text-slate-500">⏱ 28 mins · Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">psychology</span>
+      Core Concepts
+    </div>
+
+    <ul class="list-disc pl-6 space-y-2 text-slate-600">
+      <li>Requisition vs Purchase Order</li>
+      <li>PO Approval Hierarchy</li>
+      <li>Three-way Matching Rules</li>
+      <li>Supplier Profile & Sites</li>
+      <li>Encumbrance vs Actual Accounting</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">account_tree</span>
+      Architecture & Flow
+    </div>
+
+    <p class="font-medium text-slate-700 mt-2">
+      Requisition → Approval → Purchase Order → Supplier Acknowledgment → Receipt → Invoice → Three-way Match → Payment
+    </p>
+
+    <ul class="list-disc pl-6 mt-4 text-slate-600">
+      <li>Integrated with Payables & Inventory</li>
+      <li>Role-based security & approvals</li>
+      <li>Real-time supplier collaboration</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HANDSON -->
+<section id="handson" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">build_circle</span>
+      Hands-on Practice
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Create and approve a requisition</li>
+      <li>Convert requisition to Purchase Order</li>
+      <li>Perform receiving transaction</li>
+      <li>Match invoice with PO & Receipt</li>
+      <button class="pulse-btn" onclick="window.location.href='https://docs.oracle.com/en/cloud/saas/procurement/24c/oaprc/index.html'">
+        Open Official Procurement Guide
+      </button>
+    </ul>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section id="applications" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">rocket_launch</span>
+      Real-Time Applications
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Sourcing raw materials and services</li>
+      <li>Managing supplier relationships</li>
+      <li>Controlling spend and compliance</li>
+      <li>Automating invoice processing</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">edit_note</span>
+      Best Practices
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Use approval hierarchies effectively</li>
+      <li>Enable supplier self-service for invoices</li>
+      <li>Configure matching rules strictly</li>
+      <li>Review open commitments regularly</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">help_center</span>
+      Interview Questions
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>What is the difference between Requisition and Purchase Order?</li>
+      <li>Explain three-way matching process</li>
+      <li>What are Blanket Purchase Agreements?</li>
+      <li>How does encumbrance accounting work in P2P?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">checklist</span>
+      Completion Checklist
+    </div>
+
+    <ul class="space-y-2 text-slate-600">
+      <li>⬜ P2P cycle understood</li>
+      <li>⬜ Confident creating POs & receiving</li>
+      <li>⬜ Able to handle matching & payments</li>
+      <li>⬜ Ready for procurement projects</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('.vtab-btn').forEach(b=>b.classList.remove('active'))
+  btn.classList.add('active')
+}
+</script>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

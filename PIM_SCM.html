@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCM-Product Info Management – CES Technical</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#2B4C5E",
+
+        "bg": "#FFFFFF",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+
+        "text-main": "#2C1E16",
+        "text-secondary": "#5C473D",
+        "border-light": "#E8E2D9",
+      },
+
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5C473D, #2C1E16);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+/* Vertical Tab Buttons */
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+  color: #5C473D;
+}
+
+.vtab-btn:hover {
+  background: #E8E2D9;
+  color: #4A82A3;
+}
+
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 130, 163, 0.2);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Content Card */
+.content-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid #E8E2D9;
+  box-shadow: 0 10px 30px rgba(74, 130, 163, 0.07);
+}
+
+/* Section Title (Glossy & High Contrast) */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #1A120D;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs */
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Bright & Glossy Pulse Button */
+.pulse-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+  color: #FFFFFF;
+  border: 1px solid #1C3644;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Inner white highlight for a glossy glass look + deep outer shadow */
+  box-shadow: 
+      0 6px 12px rgba(43, 76, 94, 0.4),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+      
+  /* Bright glossy text effect */
+  text-shadow: 
+      0px 2px 3px rgba(0, 0, 0, 0.8), 
+      0px -1px 1px rgba(255, 255, 255, 0.4);
+      
+  letter-spacing: 0.5px;
+}
+
+.pulse-btn:hover {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+  transform: scale(1.05);
+  animation: pulse 1s infinite;
+  
+  box-shadow: 
+      0 8px 16px rgba(43, 76, 94, 0.5),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.3),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0.6),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    box-shadow: 
+      0 0 0 15px rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-bg font-sans h-screen flex overflow-hidden">
+    
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto">
+<h1 class="text-xl font-bold mb-6">SCM – Product Info Management</h1>
+
+<div class="space-y-1">
+  <div class="vtab-btn active" onclick="openTab('overview',this)">
+    <span class="material-icons">dashboard_customize</span> Overview
+  </div>
+  <div class="vtab-btn" onclick="openTab('main',this)">
+    <span class="material-icons">fact_check</span> Main Points
+  </div>
+  <div class="vtab-btn" onclick="openTab('subtopics',this)">
+    <span class="material-icons">list_alt</span> Subtopics
+  </div>
+  <div class="vtab-btn" onclick="openTab('videos',this)">
+    <span class="material-icons">play_circle_filled</span> Video Lessons
+  </div>
+  <div class="vtab-btn" onclick="openTab('concepts',this)">
+    <span class="material-icons">psychology</span> Core Concepts
+  </div>
+  <div class="vtab-btn" onclick="openTab('architecture',this)">
+    <span class="material-icons">account_tree</span> Architecture & Flow
+  </div>
+  <div class="vtab-btn" onclick="openTab('handson',this)">
+    <span class="material-icons">build_circle</span> Hands-on Practice
+  </div>
+  <div class="vtab-btn" onclick="openTab('applications',this)">
+    <span class="material-icons">rocket_launch</span> Real-Time Applications
+  </div>
+  <div class="vtab-btn" onclick="openTab('notes',this)">
+    <span class="material-icons">edit_note</span> Notes
+  </div>
+  <div class="vtab-btn" onclick="openTab('interview',this)">
+    <span class="material-icons">help_center</span> Interview
+  </div>
+  <div class="vtab-btn" onclick="openTab('checklist',this)">
+    <span class="material-icons">checklist</span> Checklist
+  </div>
+</div>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10">
+    <div class="mb-6">
+        <nav class="flex items-center text-sm text-slate-500 gap-2">
+          <a href="employee_dashboard.html" class="hover:text-primary font-medium">
+            Dashboard
+          </a>
+          <span>/</span>
+          <a href="scm.html" class="hover:text-primary font-medium">
+                        SCM page
+
+          </a>
+          <span>/</span>
+          <span class="text-slate-700 font-semibold">
+            SCM-Product Info Management
+          </span>
+        </nav>
+      </div>
+    
+      <div class="max-w-6xl mx-auto space-y-10">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab active">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">dashboard_customize</span>
+      Product Info Management Overview
+    </div>
+
+    <p class="text-slate-600 leading-relaxed">
+      Product Info Management (PIM) in Oracle Fusion SCM is the <strong>central hub</strong> for creating and maintaining all item master data across the enterprise.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed mt-4">
+      It ensures consistent product information across Procurement, Inventory, Manufacturing, Order Management, and Planning modules.
+    </p>
+
+    <div class="grid grid-cols-2 gap-6 mt-8">
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Used In</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Item Creation & Maintenance</li>
+          <li>Attribute Management</li>
+          <li>Global Item Master</li>
+        </ul>
+      </div>
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Who Needs PIM?</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>SCM Functional Consultants</li>
+          <li>Master Data Team</li>
+          <li>Product Managers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN POINTS -->
+<section id="main" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">fact_check</span>
+      Main PIM Principles
+    </div>
+
+    <ul class="list-disc pl-6 space-y-3 text-slate-600">
+      <li><strong>Single Source of Truth:</strong> One item record used everywhere</li>
+      <li><strong>Attribute-driven:</strong> Flexible attributes for different item types</li>
+      <li><strong>Change Management:</strong> Approval workflows for item changes</li>
+      <li><strong>Multi-Org Access:</strong> Items visible across organizations</li>
+      <li><strong>Integration Ready:</strong> Feeds data to all downstream modules</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUBTOPICS -->
+<section id="subtopics" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">list_alt</span>
+      PIM Subtopics
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-slate-600">
+      <div>Item Classes</div>
+      <div>Item Templates</div>
+      <div>Attributes & Attribute Groups</div>
+      <div>Item Creation Methods</div>
+      <div>Item Import (FBDI)</div>
+      <div>Item Status & Lifecycle</div>
+      <div>Item Organizations</div>
+      <div>Item Relationships</div>
+      <div>Manufacturer Parts</div>
+      <div>GTIN & Cross References</div>
+      <div>Change Orders</div>
+      <div>Item Rules & Validations</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">play_circle_filled</span>
+      Video Lessons – Product Info Management
+    </div>
+
+    <p class="text-slate-600 mb-6">
+      These videos follow <strong>real SCM project scenarios</strong>. Watch them in order for the best learning experience.
+    </p>
+
+    <div class="space-y-5">
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>PIM Fundamentals</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Item classes, templates, and basic item creation
+        </p>
+        <span class="text-xs text-slate-500">⏱ 18 mins · Beginner</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Advanced Attributes & Rules</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Attribute groups, validations, and conditional attributes
+        </p>
+        <span class="text-xs text-slate-500">⏱ 22 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Item Import & Mass Updates</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          FBDI templates, item import process, and change orders
+        </p>
+        <span class="text-xs text-slate-500">⏱ 20 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>PIM in Real Projects</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Best practices, common issues, and troubleshooting
+        </p>
+        <span class="text-xs text-slate-500">⏱ 25 mins · Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">psychology</span>
+      Core Concepts
+    </div>
+
+    <ul class="list-disc pl-6 space-y-2 text-slate-600">
+      <li>Item Master Organization</li>
+      <li>Child Organizations</li>
+      <li>Item Templates</li>
+      <li>Attribute Inheritance</li>
+      <li>Change Order Process</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">account_tree</span>
+      Architecture & Flow
+    </div>
+
+    <p class="font-medium text-slate-700 mt-2">
+      Business Requirement → Item Template → Item Creation → Approval (Change Order) → Assign to Organizations → Used in Transactions
+    </p>
+
+    <ul class="list-disc pl-6 mt-4 text-slate-600">
+      <li>Centralized item master</li>
+      <li>Role-based approvals</li>
+      <li>Audit trail for all changes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HANDSON -->
+<section id="handson" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">build_circle</span>
+      Hands-on Practice
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Create an item template</li>
+      <li>Create items using the template</li>
+      <li>Update items via change order</li>
+      <li>Import items using FBDI</li>
+      <button class="pulse-btn" onclick="window.location.href='https://docs.oracle.com/en/cloud/saas/supply-chain-management/24c/faipr/index.html'">
+        Open Official PIM Guide
+      </button>
+    </ul>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section id="applications" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">rocket_launch</span>
+      Real-Time Applications
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Creating new SKUs for procurement</li>
+      <li>Maintaining product catalogs</li>
+      <li>Mass item updates during mergers</li>
+      <li>Standardizing items across regions</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">edit_note</span>
+      Best Practices
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Always use templates</li>
+      <li>Define clear attribute groups</li>
+      <li>Use change orders for updates</li>
+      <li>Validate items before approval</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">help_center</span>
+      Interview Questions
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Difference between Item Class and Template?</li>
+      <li>How to mass update items?</li>
+      <li>What is Change Order?</li>
+      <li>How items are assigned to organizations?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">checklist</span>
+      Completion Checklist
+    </div>
+
+    <ul class="space-y-2 text-slate-600">
+      <li>⬜ PIM basics understood</li>
+      <li>⬜ Confident creating items</li>
+      <li>⬜ Able to import & update items</li>
+      <li>⬜ Ready for SCM projects</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('.vtab-btn').forEach(b=>b.classList.remove('active'))
+  btn.classList.add('active')
+}
+</script>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>common_essentials Homepage</title>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#2B4C5E",
+
+                    "background-light": "#FFFFFF",
+                    "background-secondary": "#F4EFE6",
+                    "background-card": "#FFFFFF",
+
+                    "text-main": "#2C1E16",
+                    "text-secondary": "#5C473D",
+                    "text-muted": "#8A756B",
+
+                    "border-light": "#E8E2D9",
+                    "border-medium": "#D3C8BE",
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+
+<style>
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    }
+
+    body {
+        background-color: #FFFFFF;
+        background-image: linear-gradient(135deg, #FFFFFF 0%, #F4EFE6 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+        color: #2C1E16;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8), 0px 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .dark body {
+        background: #1E1A17;
+        background-image: none;
+        color: #FFFFFF;
+        text-shadow: none;
+    }
+
+    #page {
+        margin-top: 50px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    #bread {
+        margin-bottom: 20px;
+        color: #2B4C5E;
+    }
+
+    /* Glossy Button */
+    .btn-primary-glossy {
+        background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+        color: #FFFFFF;
+        border: 1px solid #1C3644;
+        box-shadow: 0 6px 12px rgba(43, 76, 94, 0.4), inset 0px 2px 3px rgba(255, 255, 255, 0.5), inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.8), 0px -1px 1px rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary-glossy:hover {
+        background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(43, 76, 94, 0.5), inset 0px 2px 3px rgba(255, 255, 255, 0.3), inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #F4EFE6;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #8A756B, #5C473D);
+        border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2C1E16;
+    }
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body id="page" class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-slate-100 overflow-x-hidden">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
+    <!-- Breadcrumbs -->
+<div id="bread" class="flex flex-wrap gap-2 text-sm">
+<a class="text-text-muted hover:text-primary transition-colors" href="employee_dashboard.html">Home</a>
+<span class="text-border-medium">/</span>
+<a class="text-text-muted hover:text-primary transition-colors" href="common_essentials.html">common_essentials</a>
+</div>
+
+<!-- Stats Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-[#1a2632] border border-border-light dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<p class="text-text-muted dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">In Progress</p>
+<span class="material-symbols-outlined text-primary">pending_actions</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold leading-tight">5 Courses</p>
+<div class="w-full bg-border-light dark:bg-gray-700 rounded-full h-1.5 mt-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-[#1a2632] border border-border-light dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<p class="text-text-muted dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Completed</p>
+<span class="material-symbols-outlined text-emerald-600">check_circle</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold leading-tight">10 Modules</p>
+<div class="w-full bg-border-light dark:bg-gray-700 rounded-full h-1.5 mt-2">
+<div class="bg-emerald-600 h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-[#1a2632] border border-border-light dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<p class="text-text-muted dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Certificates</p>
+<span class="material-symbols-outlined text-amber-600">workspace_premium</span>
+</div>
+<p class="text-text-main dark:text-white text-3xl font-bold leading-tight">Yet to Earn</p>
+<p class="text-xs text-text-muted dark:text-gray-500 mt-2">Last earned 2 weeks ago</p>
+</div>
+</div>
+<!-- Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 px-2">
+<h2 class="text-text-main dark:text-white text-2xl md:text-3xl font-bold leading-tight tracking-tight">Browse by Category</h2>
+<a class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center gap-1 group" href="#">
+                        View all categories
+                        <span class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<!-- FeatureSection (Grid of Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<!-- Card 2 -->
+ <a href="presentationskills.html">
+<div class="group flex flex-col rounded-xl border border-border-light dark:border-gray-700 bg-white/80 dark:bg-[#1a2632] p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#F4EFE6] dark:bg-purple-900/30 text-primary">
+<span class="material-symbols-outlined text-[28px]">co_present</span>
+</div>
+<h3 class="text-text-main dark:text-white text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors">Presentation Skills</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 flex-grow">Deliver impactful presentations with confidence and clarity to any audience.</p>
+<div class="flex items-center text-primary font-bold text-sm">
+<span>Explore Modules</span>
+<span class="material-symbols-outlined ml-1 text-lg">chevron_right</span>
+</div>
+</div>
+</a>
+
+<!-- Card 3 -->
+   <a href="communication.html">
+
+<div class="group flex flex-col rounded-xl border border-border-light dark:border-gray-700 bg-white/80 dark:bg-[#1a2632] p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#F4EFE6] dark:bg-green-900/30 text-primary">
+<span class="material-symbols-outlined text-[28px]">chat</span>
+</div>
+<h3 class="text-text-main dark:text-white text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors">Communication</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 flex-grow">Enhance verbal and written communication for better workplace clarity.</p>
+<div class="flex items-center text-primary font-bold text-sm">
+<span>Explore Modules</span>
+<span class="material-symbols-outlined ml-1 text-lg">chevron_right</span>
+</div>
+</div>
+</a>
+<!-- Card 4 -->
+     <a href="teamwork.html">
+
+<div class="group flex flex-col rounded-xl border border-border-light dark:border-gray-700 bg-white/80 dark:bg-[#1a2632] p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#F4EFE6] dark:bg-orange-900/30 text-primary">
+<span class="material-symbols-outlined text-[28px]">diversity_3</span>
+</div>
+<h3 class="text-text-main dark:text-white text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors">Teamwork</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 flex-grow">Collaborate effectively within diverse teams and across departments.</p>
+<div class="flex items-center text-primary font-bold text-sm">
+<span>Explore Modules</span>
+<span class="material-symbols-outlined ml-1 text-lg">chevron_right</span>
+</div>
+</div>
+</a>
+<!-- Card 5 -->
+     <a href="time_management.html">
+
+<div class="group flex flex-col rounded-xl border border-border-light dark:border-gray-700 bg-white/80 dark:bg-[#1a2632] p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#F4EFE6] dark:bg-red-900/30 text-primary">
+<span class="material-symbols-outlined text-[28px]">schedule</span>
+</div>
+<h3 class="text-text-main dark:text-white text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors">Time Management</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 flex-grow">Prioritize tasks, reduce burnout, and boost your daily productivity.</p>
+<div class="flex items-center text-primary font-bold text-sm">
+<span>Explore Modules</span>
+<span class="material-symbols-outlined ml-1 text-lg">chevron_right</span>
+</div>
+</div>
+</a>
+<!-- Card 6 -->
+     <a href="leadership.html">
+
+<div class="group flex flex-col rounded-xl border border-border-light dark:border-gray-700 bg-white/80 dark:bg-[#1a2632] p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#F4EFE6] dark:bg-teal-900/30 text-primary">
+<span class="material-symbols-outlined text-[28px]">flag</span>
+</div>
+<h3 class="text-text-main dark:text-white text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors">Leadership</h3>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 flex-grow">Learn fundamental strategies for inspiring and leading others effectively.</p>
+<div class="flex items-center text-primary font-bold text-sm">
+<span>Explore Modules</span>
+<span class="material-symbols-outlined ml-1 text-lg">chevron_right</span>
+</div>
+</div>
+</a>
+</div>
+<!-- Call to Action Banner -->
+    <a href="softskillcertification.html">
+<div class="rounded-2xl bg-gradient-to-r from-[#2C1E16] to-[#5C473D] dark:from-primary/20 dark:to-gray-800 text-white p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+<div class="flex flex-col gap-3 max-w-xl">
+<h2 class="text-2xl md:text-3xl font-bold">Need a specific certification?</h2>
+<p class="text-border-light">Browse our library of industry-recognized certifications to advance your professional journey.</p>
+</div>
+<button class="whitespace-nowrap rounded-lg bg-white text-text-main hover:bg-background-secondary px-6 py-3 text-base font-bold transition-colors shadow-sm">
+                        Browse Certifications
+                    </button>
+</div>
+</a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white/80 dark:bg-[#1a2632] border-t border-border-light dark:border-gray-800 py-12 px-10">
+<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between gap-8">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-text-main dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg>
+</div>
+<img src="https://cesltd.com/wp-content/uploads/2025/02/ces_logo_blue.webp" alt="ces Icon" width="50" height="50">
+
+<span class="text-lg font-bold">CES LEARNING</span>
+</div>
+<p class="text-text-muted dark:text-gray-400 text-sm max-w-xs">Empowering employees with the skills of tomorrow, today.</p>
+</div>
+<div class="flex gap-16 flex-wrap">
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-text-main dark:text-white">Platform</h4>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">Browse Library</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">My Dashboard</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">Certifications</a>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-text-main dark:text-white">Support</h4>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">Help Center</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">Contact HR</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm hover:text-primary" href="#">Privacy Policy</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1280px] mx-auto mt-12 pt-8 border-t border-border-light dark:border-gray-800 text-center text-sm text-text-muted">
+                © 2024 CorpTrain Inc. All rights reserved.
+            </div>
+</footer>
+</div>
+<script src="assets/common.js"></script>
+</body></html>

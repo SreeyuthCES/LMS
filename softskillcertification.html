@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Soft Skills Certifications</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#2B4C5E",
+
+                    "background-light": "#FFFFFF",
+                    "background-dark": "#1E1A17",
+
+                    "surface": "#FFFFFF",
+                    "sidebar": "#F4EFE6",
+                    "border-light": "#E8E2D9",
+
+                    "text-main": "#2C1E16",
+                    "text-muted": "#8A756B",
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation Bar -->
+
+<!-- Main Layout -->
+<main class="flex-1 px-4 md:px-10 lg:px-40 py-8">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8">
+    <!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="employee_dashboard.html">Home</a>
+<span class="text-slate-400">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="common_essentials.html">common_essentials</a>
+<span class="text-slate-400">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Certifications</span>
+</div>
+<!-- Page Header & Stats -->
+<div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-end">
+<div class="flex flex-col gap-2 max-w-2xl">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">My Certifications</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base md:text-lg font-normal leading-normal">Track and manage your professional soft skills achievements and share your success.</p>
+</div>
+<!-- Stats Row -->
+<div class="flex flex-wrap md:flex-nowrap w-full xl:w-auto gap-4">
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2 text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Earned</p>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">12</p>
+</div>
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2 text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Hours</p>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">45h</p>
+</div>
+<div class="flex flex-1 min-w-[140px] flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2 text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Streak</p>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">5 Days</p>
+</div>
+</div>
+</div>
+<!-- Filters & Controls Toolbar -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-slate-800 p-2 pl-4 pr-2 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm sticky top-20 z-40">
+<!-- Chips -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-2 md:pb-0 mask-linear-fade">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-900 dark:bg-white px-4 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-white dark:text-slate-900">dataset</span>
+<p class="text-white dark:text-slate-900 text-sm font-medium">All</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 px-4 transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">chat</span>
+<p class="text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-medium transition-colors">Communication</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 px-4 transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">groups</span>
+<p class="text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-medium transition-colors">Leadership</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 px-4 transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">co_present</span>
+<p class="text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-medium transition-colors">Presentation</p>
+</button>
+</div>
+<!-- Sort Dropdown -->
+<div class="relative w-full md:w-auto min-w-[180px]">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-[20px] pointer-events-none">sort</span>
+<select class="w-full appearance-none bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 pl-10 pr-8 cursor-pointer">
+<option selected="">Newest First</option>
+<option value="oldest">Oldest First</option>
+<option value="name">Name (A-Z)</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Certificate Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-blue-500 to-cyan-400 p-6 flex items-end" data-alt="Blue gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-blue-600">record_voice_over</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Effective Business Communication</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on Oct 12, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">9823-AC-COMM</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-purple-500 to-pink-500 p-6 flex items-end" data-alt="Purple to pink gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-purple-600">psychology</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Leadership &amp; Empathy</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on Sept 05, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">4421-LE-EMPA</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-emerald-500 to-teal-400 p-6 flex items-end" data-alt="Emerald green gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-emerald-600">handshake</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Conflict Resolution</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on Aug 20, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">1102-CR-SOFT</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-orange-500 to-amber-400 p-6 flex items-end" data-alt="Orange gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-orange-600">co_present</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Public Speaking Pro</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on July 14, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">7748-PS-PRES</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-indigo-500 to-blue-600 p-6 flex items-end" data-alt="Indigo gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-indigo-600">timer</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Time Management</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on June 02, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">3329-TM-PROD</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="group flex flex-col bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300">
+<div class="relative h-32 bg-gradient-to-r from-red-500 to-rose-400 p-6 flex items-end" data-alt="Red rose gradient background abstract pattern">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs text-white font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+                            </div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-rose-600">diversity_3</span>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-1">Strategic Negotiation</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Completed on May 15, 2023</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Cert ID</span>
+<span class="font-mono text-xs text-slate-600 dark:text-slate-300">5590-SN-LEAD</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination / Empty State Placeholder -->
+<div class="flex justify-center pt-6">
+<button class="text-primary font-bold text-sm hover:underline">View All Archived Certifications</button>
+</div>
+</div>
+</main>
+</div>
+<script src="assets/common.js"></script>
+</body></html>

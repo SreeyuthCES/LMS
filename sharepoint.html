@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OIC &amp; VBCS · CES Learning Platform</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4A82A3",
+            "primary-light": "#6BA3C2",
+            "primary-dark": "#2B4C5E",
+            "text-main": "#2C1E16",
+            "text-muted": "#5C473D",
+            "background-light": "#FFFFFF",
+            "background-secondary": "#F9F6F3",
+          },
+          fontFamily: { display: ["Manrope", "sans-serif"] }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Manrope', sans-serif;
+      color: #2C1E16;
+      background-color: #FFFFFF;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(74, 130, 163, 0.05) 0px, transparent 50%),
+        linear-gradient(135deg, #FFFFFF 0%, #F9F6F3 100%);
+      background-attachment: fixed;
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 246, 243, 0.85) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(74, 130, 163, 0.08);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(74, 130, 163, 0.05);
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(74, 130, 163, 0.3);
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 130, 163, 0.6);
+    }
+
+    .glass-btn {
+      background: #4A82A3;
+      border: none;
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(74, 130, 163, 0.2);
+    }
+
+    .glass-btn:hover {
+      background: #2B4C5E;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(74, 130, 163, 0.3);
+    }
+
+    .playlist-link {
+      transition: all 0.2s ease;
+    }
+
+    .playlist-link:hover {
+      background: #FFFFFF;
+      border-color: rgba(74, 130, 163, 0.4);
+      box-shadow: 0 4px 8px rgba(74, 130, 163, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .playlist-link.is-active {
+      background: #FFFFFF;
+      border-color: rgba(74, 130, 163, 0.4);
+      box-shadow: 0 4px 8px rgba(74, 130, 163, 0.08);
+    }
+
+    .welcome-player {
+      background:
+        linear-gradient(120deg, rgba(14, 38, 51, 0.96), rgba(43, 76, 94, 0.9)),
+        radial-gradient(circle at 82% 18%, rgba(107, 163, 194, 0.55), transparent 34%);
+    }
+
+    .video-player-shell {
+      aspect-ratio: 16 / 9;
+      background: #1a1a1a;
+    }
+
+    .sharepoint-frame {
+      border: 0;
+    }
+
+    .embed-unavailable {
+      background: linear-gradient(120deg, rgba(14, 38, 51, 0.96), rgba(43, 76, 94, 0.96));
+    }
+  </style>
+  <link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="antialiased overflow-y-auto selection:bg-primary/20 selection:text-primary-dark">
+  <nav
+    class="w-full bg-white/80 backdrop-blur-md border-b border-white/50 px-6 py-2.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="max-w-[1600px] mx-auto w-full flex items-center justify-between gap-4">
+      <div class="flex-1 flex items-center page-header-brand-group">
+        <a href="technicalpage.html"
+          class="hover:text-primary flex items-center gap-1 transition-colors bg-white/60 px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-bold text-text-muted">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span> Back
+        </a>
+        <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+          class="h-8 w-20 sm:w-24 shrink-0 object-contain ml-3">
+      </div>
+
+      <div class="flex-1 flex flex-col items-center justify-center text-center">
+        <h1 class="text-base font-black text-text-main flex items-center gap-1">
+          <span class="material-symbols-outlined text-[18px] text-primary">smart_display</span> OIC &amp; VBCS
+        </h1>
+        <span id="playlist-count" class="text-[11px] font-bold text-text-muted tracking-wide">SharePoint video playlist</span>
+      </div>
+
+      <div class="flex-1 flex items-center justify-end">
+        <span class="text-[11px] font-bold px-2 py-1 rounded-md bg-primary/10 text-primary-dark border border-primary/20">
+          SharePoint POC
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <main
+    class="flex-1 w-full max-w-[1600px] mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[calc(100vh-80px)] mt-2">
+    <section class="col-span-1 lg:col-span-8 flex flex-col gap-6 pb-10">
+      <div
+        class="video-player-shell w-full rounded-3xl overflow-hidden shadow-2xl relative border border-slate-800/50 flex flex-col items-center justify-center">
+        <div id="video-placeholder"
+          class="welcome-player absolute inset-0 flex flex-col items-center justify-center text-center p-6 md:p-10 text-white overflow-hidden">
+          <div class="absolute -right-20 -top-24 w-72 h-72 rounded-full border border-white/10"></div>
+          <div class="absolute -right-8 -top-12 w-48 h-48 rounded-full border border-white/10"></div>
+          <div class="relative z-10 flex flex-col items-center max-w-xl">
+            <div class="w-16 h-16 rounded-2xl bg-primary-light/90 flex items-center justify-center mb-7 shadow-lg">
+              <span class="material-symbols-outlined text-4xl text-white">school</span>
+            </div>
+            <p class="text-primary-light text-xs md:text-sm font-black uppercase tracking-[0.22em] mb-3">OIC learning track</p>
+            <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-3">Continue your learning journey</h2>
+            <p class="text-white/70 font-medium max-w-md mb-7">
+              Choose a lesson from the playlist to watch it here.
+            </p>
+            <a id="featured-video-link" href="#" target="_blank" rel="noopener noreferrer"
+              class="glass-btn px-6 py-3 rounded-xl text-sm font-black flex items-center gap-2">
+              <span class="material-symbols-outlined text-[20px]">open_in_new</span> Open first lesson on SharePoint
+            </a>
+          </div>
+        </div>
+        <div id="embed-unavailable"
+          class="embed-unavailable absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 md:p-10 text-white hidden">
+          <span class="material-symbols-outlined text-5xl text-primary-light mb-4">link_off</span>
+          <h2 class="text-xl md:text-2xl font-black mb-3">SharePoint did not provide an embeddable link</h2>
+          <p class="text-white/75 font-medium max-w-xl">
+            This sharing link cannot be played inside this page. Use “Open in SharePoint” below, or add the video's
+            official SharePoint embed URL to enable in-page playback.
+          </p>
+        </div>
+        <iframe id="sharepoint-frame" class="sharepoint-frame absolute inset-0 w-full h-full hidden"
+          title="SharePoint OIC video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+
+      <div id="selected-video-actions"
+        class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 hidden">
+        <p id="selected-video-title" class="font-bold text-text-main"></p>
+        <a id="open-sharepoint-link" href="#" target="_blank" rel="noopener noreferrer"
+          class="glass-btn px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px]">open_in_new</span> Open in SharePoint
+        </a>
+      </div>
+
+      <div class="glass-card rounded-[2rem] flex flex-col min-h-[240px]">
+        <div class="flex items-center gap-4 px-6 md:px-8 border-b border-white/50 pt-6">
+          <span class="pb-4 text-sm font-bold text-primary border-b-[3px] border-primary">Module Overview</span>
+        </div>
+        <div class="p-6 md:p-8 space-y-4">
+          <p class="text-xs font-bold text-primary">OIC &amp; VBCS · SharePoint hosted</p>
+          <h2 class="text-2xl md:text-3xl font-black text-text-main leading-tight">Oracle Integration Cloud</h2>
+          <p class="text-text-muted font-medium leading-relaxed text-[15px]">
+            The supplied sharing links open on SharePoint. Inline playback requires the separate embed URL generated
+            by SharePoint; playback still requires permission to view the video.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="col-span-1 lg:col-span-4 flex flex-col gap-6">
+      <div
+        class="flex flex-col glass-card rounded-[2rem] overflow-hidden border-[3px] border-white/60 h-[620px] shrink-0">
+        <div class="p-5 bg-white/40 border-b border-white/60 shadow-sm shrink-0">
+          <h2 class="text-xl font-black text-text-main">Course Modules</h2>
+          <p class="text-xs font-semibold text-text-muted mt-1">Select a video to open it on SharePoint</p>
+        </div>
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2" id="playlist-container"
+          aria-label="OIC video playlist"></div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 shadow-sm border-[2px] border-white/60">
+        <h3 class="font-black text-text-main mb-2 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">info</span> About this playlist
+        </h3>
+        <p class="text-sm text-text-muted font-medium leading-relaxed">
+          To enable in-page playback, add each video's official SharePoint embed URL as its embedUrl in this page.
+          Sharing links alone cannot be embedded.
+        </p>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const videos = [
+      {
+        title: "Introduction to OIC",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/01.%20Introduction%20to%20OIC.mp4?d=w6f41554a9ac140bb9adcfbdb69d37fdd&csf=1&web=1&e=8uwSRP",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=6f41554a-9ac1-40bb-9adc-fbdb69d37fdd&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC-SOAP and Rest Services",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/02.%20OIC-SOAP%20and%20Rest%20Services.mp4?d=w5e043d643cf34b63a906884014cdf8f5&csf=1&web=1&e=afvPVL",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=5e043d64-3cf3-4b63-a906-884014cdf8f5&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC ATP database",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/03.%20OIC%20ATP%20database.mp4?d=wa4221e56956a424b9dfc0f5c79d7106b&csf=1&web=1&e=wDkz5V",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=a4221e56-956a-424b-9dfc-0f5c79d7106b&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC with rest services and actions",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/04.%20OIC%20with%20rest%20services%20and%20actions.mp4?d=wd933ed877f684391ad7f4d62ffbe6dc3&csf=1&web=1&e=DHhF0F",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=d933ed87-7f68-4391-ad7f-4d62ffbe6dc3&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC More Rest APIS and Intro to Actions",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/05.%20OIC%20More%20Rest%20APIS%20and%20Intro%20to%20Actions.mp4?d=w8a777f57095c4bc685bbbabe3007ab7d&csf=1&web=1&e=DWJsSX",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=8a777f57-095c-4bc6-85bb-babe3007ab7d&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC FBDI Example Day1",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/06.%20OIC%20FBDI%20Example%20Day1.mp4?d=wf371ce2a5f6a44499e40d6dbfca2d1ff&csf=1&web=1&e=bwN3j8",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=f371ce2a-5f6a-4449-9e40-d6dbfca2d1ff&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC FBDI Example 2 and CRM to Rightnow Cloud Integration",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/07.%20OIC%20FBDI%20Example%202%20and%20CRM%20to%20Rightnow%20Cloud%20Integreation.mp4?d=w0690571886154315a174187b9ee70ae8&csf=1&web=1&e=ftoQOq",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=06905718-8615-4315-a174-187b9ee70ae8&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "Introduction to VBCS",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/08.%20Introduction%20to%20VBCS.mp4?d=wf91db5183de644dfa42da2c7f1ad0d74&csf=1&web=1&e=xOJ6Vw",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=f91db518-3de6-44df-a42d-a2c7f1ad0d74&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "VBCS Redwood and Navigation",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/09.%20VBCS%20Readwood%20and%20Navigation.mp4?d=w8ef6e54a61b040afbc7a59b3c7bd1003&csf=1&web=1&e=TtG94e",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=8ef6e54a-61b0-40af-bc7a-59b3c7bd1003&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "VBSC hr project",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/10.%20VBSC%20hr%20project.mp4?d=wb7fdff6b10884e8f8a7ea8349bd5ca62&csf=1&web=1&e=LCQiTF",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=b7fdff6b-1088-4e8f-8a7e-a8349bd5ca62&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "VBCS_readwod days1",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/11.%20VBCS_readwod%20days1.mp4?d=w03996cb94381423981ab95279b4aa251&csf=1&web=1&e=UgiKyY",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=03996cb9-4381-4239-81ab-95279b4aa251&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "VBCS Readwod Days2",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/12.%20VBCS%20Readwod%20Days2.mp4?d=wb682ce7440024be1b92c5bedc500aab4&csf=1&web=1&e=4tcZay",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=b682ce74-4002-4be1-b92c-5bedc500aab4&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "CSC -HCM -HDL",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/13.%20CSC%20-HCM%20-HDL.mp4?d=w481639c90ffb4de0badd0bb35e545717&csf=1&web=1&e=nwFatM",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=481639c9-0ffb-4de0-badd-0bb35e545717&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "HCM-HDL &FBDI",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/14.%20HCM-HDL%20%26FBDI.mp4?d=w6b3a3528215f4ebe9cfbdc3646f4082d&csf=1&web=1&e=cDWtlb",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=6b3a3528-215f-4ebe-9cfb-dc3646f4082d&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OTBI Reporting Day1",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/15.%20OTBI%20Reporting%20Day1.mp4?d=w04e47b88311b46cda54095df856c21a5&csf=1&web=1&e=0v8d8D",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=04e47b88-311b-46cd-a540-95df856c21a5&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OTBI Reporting Day1 cont....",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/16.%20OTBI%20Reporting%20Day1%20cont.....mp4?d=w062f00df731a43d1b0d29e94df149491&csf=1&web=1&e=ZuMxxa",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=062f00df-731a-43d1-b0d2-9e94df149491&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "Complete BCCI execution",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/17.%20Complete%20BCCI%20execution.mp4?d=wc06c8d3d0cf0418ab647875a066b1616&csf=1&web=1&e=vfjQAw",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=c06c8d3d-0cf0-418a-b647-875a066b1616&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "Sandbox, Appearance themes, workspaces, environments.",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/18.%20Sandbox,%20Appearance%20themes,%20workspaces,%20environments..mp4?d=we29d799f5e054040b2921079b338254b&csf=1&web=1&e=gqGBaZ",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=e29d799f-5e05-4040-b292-1079b338254b&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "PAS, PCS, e2e Integration, New Application creation visual application)",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/19.%20PAS,%20PCS,%20e2e%20Integration,%20New%20Application%20creation%20visual%20application).mp4?d=w2c493b69e6124c7bae0d732f10e0e52d&csf=1&web=1&e=Z0gVS6",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=2c493b69-e612-4c7b-ae0d-732f10e0e52d&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "New features and their brief, Redwood",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/20.%20New%20features%20and%20their%20brief,%20Redwood.mp4?d=w048caba417904c7a910ecc98d52675ce&csf=1&web=1&e=RXwnJ2",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=048caba4-1790-4c7a-910e-cc98d52675ce&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC Exception handling",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/21.%20OIC%20Exception%20handling.mp4?d=w40b2fe1611674887864d64307535a513&csf=1&web=1&e=g25X83",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=40b2fe16-1167-4887-864d-64307535a513&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "Complex query's, OIC P&S, HCM, Fast Formula",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/22.%20Complex%20query%27s,%20OIC%20P%26S,%20HCM,%20Fast%20Formula.mp4?d=w96da2bc9a8364b059c9fbeae835cde3a&csf=1&web=1&e=951lXP",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=96da2bc9-a836-4b05-9c9f-beae835cde3a&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "VBCS - MASTER AND, fast-formulas",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/23.%20VBCS%20-%20MASTER%20AND,%20fast-formulas.mp4?d=wd640ea9e7bd44cacbc304192c7e5f2e5&csf=1&web=1&e=5ke17x",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=d640ea9e-7bd4-4cac-bc30-4192c7e5f2e5&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "ADFDI in Fusion",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/24.%20ADFDI%20in%20Fusion.mp4?d=w329fa41a283b4b99b894d3a37caf5cfc&csf=1&web=1&e=3lksGK",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=329fa41a-283b-4b99-b894-d3a37caf5cfc&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      },
+      {
+        title: "OIC XSLT Functions and Review",
+        url: "https://ceslimited01.sharepoint.com/:v:/r/sites/CESGlobalIT-ProjectManagementOffice/Shared%20Documents/AI%20Practice/AI%20Initiaves%20%26%20Internal/LMS/OIC%20Videos/25.%20OIC%20XSLT%20Functions%20and%20Review.mp4?d=w325ae671939e49f99cf31d513a95b731&csf=1&web=1&e=22kX47",
+        embedUrl: "https://ceslimited01.sharepoint.com/sites/CESGlobalIT-ProjectManagementOffice/_layouts/15/embed.aspx?UniqueId=325ae671-939e-49f9-9cf3-1d513a95b731&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+      }
+    ];
+
+    const playlist = document.getElementById("playlist-container");
+    const linkedVideos = videos.filter(video => video.url);
+    const playerFrame = document.getElementById("sharepoint-frame");
+    const videoPlaceholder = document.getElementById("video-placeholder");
+    const embedUnavailable = document.getElementById("embed-unavailable");
+    const selectedVideoActions = document.getElementById("selected-video-actions");
+    const selectedVideoTitle = document.getElementById("selected-video-title");
+    const openSharePointLink = document.getElementById("open-sharepoint-link");
+    document.getElementById("playlist-count").textContent =
+      `${linkedVideos.length} of ${videos.length} videos linked`;
+
+    function selectVideo(video, item) {
+      if (!video || !video.url) return;
+
+      videoPlaceholder.classList.add("hidden");
+      selectedVideoActions.classList.remove("hidden");
+      selectedVideoTitle.textContent = video.title;
+      openSharePointLink.href = video.url;
+
+      let embedUrl;
+      try {
+        embedUrl = video.embedUrl ? new URL(video.embedUrl) : null;
+      } catch {
+        embedUrl = null;
+      }
+
+      const canEmbed = embedUrl &&
+        embedUrl.protocol === "https:" &&
+        embedUrl.hostname === "ceslimited01.sharepoint.com";
+
+      if (canEmbed) {
+        embedUnavailable.classList.add("hidden");
+        playerFrame.title = `${video.title} - SharePoint video`;
+        playerFrame.src = embedUrl.href;
+        playerFrame.classList.remove("hidden");
+      } else {
+        playerFrame.removeAttribute("src");
+        playerFrame.classList.add("hidden");
+        embedUnavailable.classList.remove("hidden");
+      }
+
+      playlist.querySelectorAll(".playlist-link").forEach(link => {
+        link.classList.toggle("is-active", link === item);
+      });
+    }
+
+    document.getElementById("featured-video-link").href = linkedVideos[0].url;
+
+    videos.forEach((video, index) => {
+      const item = document.createElement(video.url ? "a" : "div");
+      item.className = `playlist-link flex items-center gap-3 p-3 rounded-xl border border-transparent bg-white/40${video.url ? "" : " opacity-60"}`;
+      item.dataset.videoIndex = String(index);
+
+      if (video.url) {
+        item.href = video.url;
+        item.target = "_blank";
+        item.rel = "noopener noreferrer";
+        item.setAttribute("aria-label", `Open ${video.title} on SharePoint`);
+        item.addEventListener("click", event => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          selectVideo(video, item);
+        });
+      } else {
+        item.setAttribute("aria-label", `${video.title} link not added yet`);
+      }
+
+      const number = document.createElement("span");
+      number.className =
+        "w-9 h-9 shrink-0 rounded-lg bg-primary/10 text-primary-dark flex items-center justify-center text-xs font-black";
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const details = document.createElement("span");
+      details.className = "min-w-0 flex-1";
+
+      const title = document.createElement("span");
+      title.className = "item-title block text-sm font-bold text-text-main truncate";
+      title.textContent = video.title;
+
+      const status = document.createElement("span");
+      status.className = "block text-[11px] font-semibold text-text-muted mt-0.5";
+      status.textContent = video.url ? (video.embedUrl ? "Play in player" : "Open on SharePoint") : "Link to be added";
+
+      details.append(title, status);
+
+      const icon = document.createElement("span");
+      icon.className = "material-symbols-outlined text-[20px] text-primary";
+      icon.textContent = video.url ? (video.embedUrl ? "play_arrow" : "open_in_new") : "link";
+
+      item.append(number, details, icon);
+      playlist.appendChild(item);
+    });
+  </script>
+  <script src="assets/common.js"></script>
+</body>
+
+</html>

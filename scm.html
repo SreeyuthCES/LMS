@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Supply Chain Skills Dashboard</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  
+  <script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          /* Deep Blue-Teal Gradient */
+          primary: "#4A82A3",
+          "primary-light": "#6BA3C2",
+          "primary-dark": "#2B4C5E",
+
+          /* Warm Off-White Surface Gradient */
+          bg: "#FFFFFF",
+          surface: "#FFFDF7",
+          sidebar: "#F4EFE6",
+          
+          /* Typography & Line Gradient (Dark Brown-Chestnut) */
+          border: "#E8E2D9",
+          "text-main": "#2C1E16",
+          "text-muted": "#8A756B",
+          "text-accent": "#5C473D",
+
+          glass: "rgba(255, 253, 247, 0.65)",
+          "glass-dark": "rgba(30, 26, 23, 0.65)",
+        },
+
+        fontFamily: {
+          display: ["Inter", "sans-serif"]
+        },
+
+        borderRadius: {
+          DEFAULT: "1.25rem"
+        },
+
+        animation: {
+          "fade-in-up": "fadeInUp 0.7s ease-out forwards"
+        },
+
+        keyframes: {
+          fadeInUp: {
+            "0%": {
+              opacity: "0",
+              transform: "translateY(24px)"
+            },
+            "100%": {
+              opacity: "1",
+              transform: "translateY(0)"
+            }
+          }
+        }
+      }
+    }
+  }
+  </script>
+
+  <style>
+  /* Global Warm Theme */
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: #FFFFFF;
+    background-image: linear-gradient(135deg, #FFFFFF 0%, #F4EFE6 100%);
+    background-attachment: fixed;
+    color: #2C1E16;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark body {
+    background: #1E1A17;
+    background-image: none;
+    color: #FFFFFF;
+    text-shadow: none;
+  }
+
+  /* Glassmorphism Cards */
+  .glass-card {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 253, 247, 0.85),
+      rgba(244, 239, 230, 0.5)
+    );
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(232, 226, 217, 0.8);
+    box-shadow: 0 10px 30px rgba(44, 30, 22, 0.06);
+  }
+
+  .dark .glass-card {
+    background: linear-gradient(
+      135deg,
+      rgba(43, 76, 94, 0.40),
+      rgba(30, 26, 23, 0.65)
+    );
+    border: 1px solid rgba(107, 163, 194, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .card-hover {
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-10px) scale(1.025);
+    box-shadow: 0 25px 50px -12px rgba(74, 130, 163, 0.25) !important;
+  }
+
+  /* Glossy Button */
+  .btn-primary {
+    background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+    color: #FFFFFF !important;
+    border: 1px solid #1C3644;
+    box-shadow: 0 6px 12px rgba(43, 76, 94, 0.4), inset 0px 2px 3px rgba(255, 255, 255, 0.5), inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.8), 0px -1px 1px rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(43, 76, 94, 0.5), inset 0px 2px 3px rgba(255, 255, 255, 0.3), inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .progress-bg {
+    background: rgba(138, 117, 107, 0.15);
+  }
+
+  .dark .progress-bg {
+    background: rgba(0, 0, 0, 0.22);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F4EFE6;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8A756B, #5C473D);
+    border-radius: 20px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2C1E16;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: #1E1A17;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #4A82A3;
+  }
+
+  /* Keep the dashboard header in normal page flow. */
+  main > header {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: auto;
+  }
+
+  main > header + * {
+    margin-top: 0;
+  }
+  </style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="text-text-main min-h-screen transition-colors duration-300">
+
+<nav class="border-b border-border bg-surface/60 dark:bg-black/50 backdrop-blur-xl px-6 sm:px-8 py-4 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-md">
+        <span class="material-icons-round text-white text-xl" style="text-shadow: none;">inventory_2</span>
+      </div>
+      <span class="font-bold text-2xl tracking-tight text-text-main">Supply Chain Management</span>
+      <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+        class="h-8 w-20 sm:w-24 shrink-0 object-contain">
+    </div>
+    <div class="flex items-center space-x-6">
+      <button class="p-2.5 rounded-full hover:bg-sidebar dark:hover:bg-gray-800 transition-all border border-transparent hover:border-border" onclick="document.documentElement.classList.toggle('dark')">
+        <span class="material-icons-round text-text-muted">dark_mode</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-6 sm:px-8 py-12">
+  <header class="mb-12">
+     <nav class="flex items-center text-sm font-medium text-text-muted mb-3">
+            <a href="functional.html" class="hover:text-primary transition-colors">FUNCTIONAL PAGE</a>
+            <span class="mx-2 text-border">/</span>
+            <span class="text-primary font-bold">SCM</span>
+          </nav>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2 text-text-main">Supply Chain Skills Track</h1>
+        <p class="text-text-muted text-lg">
+          You're on a <span class="text-text-accent font-extrabold italic drop-shadow-sm">5-day streak</span>, Keep pushing 🔥
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button class="flex items-center px-6 py-3 bg-surface border border-border rounded-xl font-bold text-text-main hover:bg-sidebar transition-all shadow-sm">
+          <span class="material-icons-round mr-2 text-text-muted">calendar_today</span>
+          Schedule Learning
+        </button>
+        <button class="btn-primary flex items-center px-6 py-3 rounded-xl font-bold transition-all">
+          <span class="material-icons-round mr-2">add</span>
+          Explore Catalog
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-text-main">Operational Domains</h2>
+    <button class="text-primary font-bold flex items-center hover:text-primary-dark transition-colors">
+      View All <span class="material-icons-round ml-1 text-sm">arrow_forward</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+    <!-- 1. Product Info (PIM) -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.05s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">inventory</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Intermediate</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Product Info (PIM)</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Manage master data, item attributes, and global product catalogs efficiently.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">4h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-[2%] transition-all duration-1000"></div>
+        </div>
+       <a href="PIM_SCM.html"> 
+         <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+       </a>
+      </div>
+    </div>
+
+    <!-- 2. Bill of Materials -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.10s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">account_tree</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Beginner</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Bill of Materials</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Structuring assemblies, phantom items, and manufacturing routing logic.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">2h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-[5%] transition-all duration-1000"></div>
+        </div>
+        <a href="BOM_SCM.html">
+          <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Inventory Mgmt -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.15s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">warehouse</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Advanced</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Inventory Management</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Control stock levels, cycle counting, and sub-inventory transfer workflows.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">8h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-[1%] transition-all duration-1000"></div>
+        </div>
+        <a href="inventory_scm.html">
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Procurement (P2P) -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.20s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">shopping_cart</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Intermediate</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Procurement (P2P)</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">End-to-end purchasing from requisition to supplier invoice payment.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">12h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <a href="p2p_scm.html">
+          <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. iSupplier Portal -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.25s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">groups</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Beginner</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">iSupplier Portal</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Self-service collaboration tools for vendors and supply partners.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">3h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+      <a href="iSupplier_scm.html"> 
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </a> 
+      </div>
+    </div>
+
+    <!-- 6. Manufacturing / WIP -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.30s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">precision_manufacturing</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Advanced</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Manufacturing / WIP</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Managing work orders, shop floor executions, and job tracking.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">1h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <a href="manufacturing_scm.html">
+          <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+        </a>
+      </div>
+    </div>
+
+    <!-- 7. Cost Management -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.35s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">payments</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Advanced</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Cost Management</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Standard and average costing, variance analysis, and accounting flows.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">15h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+    <!-- 8. Order Mgmt (O2C) -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.40s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">receipt_long</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Intermediate</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Order Management (O2C)</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Managing customer orders, pricing, and fulfillment processing.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">6h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+    <!-- 9. Shipping / Logistics -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.45s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">local_shipping</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Beginner</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Shipping / Logistics</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Managing freight, carrier selection, and shipment documentation.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">4h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+    <!-- 10. Warehouse (WMS) -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.50s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">layers</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Advanced</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Warehouse (WMS)</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Advanced picking rules, put-away strategies, and dock management.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">20h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+    <!-- 11. Supply Planning -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.55s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">insights</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Advanced</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Supply Planning</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Demand forecasting, supply network modeling, and replenishment planning.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">10h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+    <!-- 12. Quality Mgmt -->
+    <div class="glass-card p-6 rounded-3xl flex flex-col h-full card-hover animate-fade-in-up" style="animation-delay: 0.60s;">
+      <div class="flex justify-between items-start mb-5">
+        <div class="w-12 h-12 bg-sidebar border border-border text-primary rounded-2xl flex items-center justify-center shadow-sm">
+          <span class="material-icons-round text-3xl">verified</span>
+        </div>
+        <span class="px-3 py-1 bg-sidebar border border-border text-text-muted text-[10px] font-extrabold uppercase tracking-wider rounded-full shadow-sm">Beginner</span>
+      </div>
+      <h3 class="text-xl font-extrabold mb-2 text-text-main">Quality Management</h3>
+      <p class="text-sm text-text-muted mb-8 flex-grow font-medium">Inspection plans, non-conformance tracking, and quality assurance.</p>
+      <div class="mt-auto">
+        <div class="flex justify-between text-xs font-bold mb-2">
+          <span class="text-primary">0% Complete</span>
+          <span class="text-text-muted">5h remaining</span>
+        </div>
+        <div class="progress-bg h-2 rounded-full overflow-hidden border border-border/50">
+          <div class="bg-primary h-full w-0 transition-all duration-1000"></div>
+        </div>
+        <button class="btn-primary w-full mt-5 py-3 rounded-xl font-bold transition-all shadow-sm">
+          Start Learning
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="mt-20 pt-10 border-t border-border flex flex-col md:flex-row justify-between items-center text-sm text-text-muted">
+    <p>© 2024 Supply Chain Academy. All rights reserved.</p>
+    <div class="flex space-x-6 mt-4 md:mt-0 font-medium">
+      <a class="hover:text-primary transition-colors" href="#">Documentation</a>
+      <a class="hover:text-primary transition-colors" href="#">Help Center</a>
+      <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+    </div>
+  </footer>
+</main>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

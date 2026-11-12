@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skill Details Page</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    /* Primary Blue-Teal */
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#2B4C5E",
+
+                    /* Warm Off-White / Wood tones */
+                    "background-light": "#FFFFFF",
+                    "background-dark": "#1E1A17",
+                    "surface": "#FFFFFF",
+                    "sidebar": "#F4EFE6",
+                    "border-light": "#E8E2D9",
+
+                    /* Deep Brown text for legibility */
+                    "text-main": "#2C1E16",
+                    "text-muted": "#8A756B",
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+
+<style>
+    /* =========================
+       GLOBAL WARM THEME 
+    ========================= */
+    body {
+        background-color: #FFFFFF;
+        background-image: linear-gradient(135deg, #FFFFFF 0%, #F4EFE6 100%);
+        background-attachment: fixed;
+        color: #2C1E16;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    h1, h2, h3, h4, .text-slate-900 {
+        color: #1A120D !important;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Override slate text with warm browns */
+    .text-slate-500, .text-slate-600, .text-slate-700 {
+        color: #5C473D !important;
+        text-shadow: none;
+    }
+
+    .text-slate-400 {
+        color: #8A756B !important;
+        text-shadow: none;
+    }
+
+    /* Soften the white backgrounds to allow the gradient to show */
+    .bg-white {
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(8px);
+    }
+
+    /* =========================
+       SCROLLBAR
+    ========================= */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #F4EFE6;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #8A756B, #5C473D);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2C1E16;
+    }
+
+    /* =========================
+       GLOSSY BUTTON
+    ========================= */
+    .btn-primary {
+        background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #1C3644 !important;
+        transition: all 0.3s ease;
+        
+        /* Inner white highlight + deep outer shadow */
+        box-shadow: 
+            0 6px 12px rgba(43, 76, 94, 0.4),
+            inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+            inset 0px -2px 4px rgba(0, 0, 0, 0.2) !important;
+            
+        /* Bright glossy text effect */
+        text-shadow: 
+            0px 2px 3px rgba(0, 0, 0, 0.8), 
+            0px -1px 1px rgba(255, 255, 255, 0.4) !important;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 
+            0 8px 16px rgba(43, 76, 94, 0.5),
+            inset 0px 2px 3px rgba(255, 255, 255, 0.3),
+            inset 0px -2px 4px rgba(0, 0, 0, 0.4) !important;
+    }
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="font-display antialiased min-h-screen flex flex-col">
+<div class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+<nav aria-label="Breadcrumb" class="flex">
+<ol class="flex items-center space-x-2">
+<li><a class="text-text-muted hover:text-primary transition-colors" href="employee_dashboard.html"><span class="material-symbols-outlined text-[20px]">home</span></a></li>
+<li><span class="text-border-light">/</span></li>
+<li><a class="text-sm font-medium text-text-muted hover:text-primary transition-colors" href="common_essentials.html">common_essentials</a></li>
+<li><span class="text-border-light">/</span></li>
+<li><span aria-current="page" class="text-sm font-bold text-text-main">Presentation Skills</span></li>
+</ol>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border-light bg-surface text-text-main text-sm font-medium hover:bg-sidebar transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+<span>Save for later</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg border border-border-light bg-surface text-text-main hover:text-primary hover:border-primary/30 transition-colors shadow-sm" title="Share">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<main class="lg:col-span-8 space-y-8">
+<div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+<span class="material-symbols-outlined text-[200px] text-text-main">campaign</span>
+</div>
+<div class="relative z-10 flex flex-col gap-5">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sidebar w-fit border border-border-light">
+<span class="material-symbols-outlined text-[16px] text-primary">campaign</span>
+<span class="text-xs font-bold text-primary uppercase tracking-wide">Communication Skills</span>
+</div>
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-main leading-tight tracking-tight">Presentation Skills: <br/>Mastery for Leaders</h1>
+<p class="text-lg text-text-muted leading-relaxed max-w-2xl">
+                            Master the art of public speaking, slide design, and audience engagement. Learn to deliver impactful presentations that drive results and influence decisions in a corporate environment.
+                        </p>
+<div class="flex flex-wrap gap-x-6 gap-y-3 mt-2 pt-5 border-t border-border-light">
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-[20px] text-text-muted">schedule</span>
+<span>45 mins</span>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-[20px] text-text-muted">signal_cellular_alt</span>
+<span>Intermediate</span>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-[20px] text-primary fill-current">star</span>
+<span class="text-text-main font-bold">4.8</span>
+<span>(120 reviews)</span>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-[20px] text-text-muted">translate</span>
+<span>English, Spanish</span>
+</div>
+</div>
+</div>
+</div>
+<section class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
+<h3 class="text-xl font-bold text-text-main flex items-center gap-3 mb-4">
+<div class="p-2 bg-sidebar rounded-lg text-primary border border-border-light">
+<span class="material-symbols-outlined">info</span>
+</div>
+                        Overview
+                    </h3>
+<div class="max-w-none text-text-muted leading-relaxed text-sm">
+<p>
+                            Effective presentation skills are crucial for career advancement. In this comprehensive module, you will move beyond basic slide creation to understanding the psychology of your audience. We cover storytelling techniques, voice modulation, and how to handle difficult Q&amp;A sessions with confidence.
+                        </p>
+<p class="mt-4">
+                            Whether you are presenting to a small team, a board of directors, or at a large conference, these tools will help you shine and get your message across effectively.
+                        </p>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<section class="bg-white p-6 rounded-2xl shadow-sm border border-border-light h-full">
+<h4 class="font-bold text-lg text-text-main mb-5 flex items-center gap-3">
+<div class="p-1.5 bg-sidebar rounded-lg text-primary border border-border-light">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+                            Key Takeaways
+                        </h4>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">check</span>
+<span class="text-text-muted text-sm">Structuring a narrative arc for business context.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">check</span>
+<span class="text-text-muted text-sm">Visual design principles for non-designers.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">check</span>
+<span class="text-text-muted text-sm">Body language and stage presence mastery.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">check</span>
+<span class="text-text-muted text-sm">Overcoming public speaking anxiety strategies.</span>
+</li>
+</ul>
+</section>
+<section class="bg-white p-6 rounded-2xl shadow-sm border border-border-light h-full">
+<h4 class="font-bold text-lg text-text-main mb-5 flex items-center gap-3">
+<div class="p-1.5 bg-sidebar rounded-lg text-primary border border-border-light">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+                            Best Practices
+                        </h4>
+<div class="space-y-5">
+<div class="flex gap-4">
+<div class="bg-sidebar p-2 rounded-lg shadow-sm h-fit shrink-0 border border-border-light">
+<span class="material-symbols-outlined text-primary text-[20px]">visibility</span>
+</div>
+<div>
+<p class="font-bold text-sm text-text-main">Less is More</p>
+<p class="text-text-muted text-xs mt-1 leading-relaxed">Avoid cluttered slides. Use visuals over text whenever possible to keep attention.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="bg-sidebar p-2 rounded-lg shadow-sm h-fit shrink-0 border border-border-light">
+<span class="material-symbols-outlined text-primary text-[20px]">record_voice_over</span>
+</div>
+<div>
+<p class="font-bold text-sm text-text-main">Rehearse Out Loud</p>
+<p class="text-text-muted text-xs mt-1 leading-relaxed">Practice timing and transitions to ensure a smooth flow and identify weak spots.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<section class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
+<div class="flex justify-between items-center mb-5">
+<h3 class="text-xl font-bold text-text-main">Example Scenario</h3>
+<a class="text-sm font-bold text-primary hover:underline" href="#">View all examples</a>
+</div>
+<div class="relative w-full aspect-video md:aspect-[21/9] bg-sidebar rounded-xl overflow-hidden flex items-center justify-center group cursor-pointer border border-border-light">
+<div class="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors"></div>
+<div class="bg-white/90 p-4 rounded-full shadow-lg backdrop-blur-sm transform group-hover:scale-110 transition-transform z-10 border border-border-light">
+<span class="material-symbols-outlined text-primary text-4xl">play_arrow</span>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<span class="text-xs font-bold text-text-main bg-white/80 px-3 py-1.5 rounded-lg backdrop-blur-md flex items-center gap-2 border border-border-light">
+<span class="size-2 rounded-full bg-primary animate-pulse"></span>
+                                 Video • 02:15
+                             </span>
+<p class="text-text-main font-bold text-sm drop-shadow-md hidden sm:block bg-white/60 px-3 py-1 rounded-md backdrop-blur-sm">The "10-20-30" Rule in Action</p>
+</div>
+</div>
+<p class="mt-4 text-sm text-text-muted">
+                         Watch how a Product Manager effectively uses the 10-20-30 rule (10 slides, 20 minutes, 30 point font) to pitch a new feature to stakeholders.
+                     </p>
+</section>
+</main>
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-white p-6 rounded-2xl shadow-lg shadow-primary/5 border border-border-light sticky top-24">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-text-main text-lg">Your Progress</h3>
+<div class="px-2.5 py-1 bg-sidebar text-primary border border-primary-light text-xs font-bold rounded-md uppercase tracking-wide">
+                             Active
+                         </div>
+</div>
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-text-muted">Completed</span>
+<span class="text-lg font-bold text-text-main">35%</span>
+</div>
+<div class="h-2.5 w-full bg-sidebar rounded-full overflow-hidden border border-border-light">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out relative" style="width: 35%;">
+<div class="absolute right-0 top-0 bottom-0 w-[2px] bg-white/30"></div>
+</div>
+</div>
+<p class="text-xs text-text-muted mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                            Last accessed 2 days ago
+                        </p>
+</div>
+<div class="space-y-3">
+<button class="btn-primary w-full py-3.5 px-4 font-bold rounded-xl transition-all flex items-center justify-center gap-2 group">
+<span>Resume Course</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full py-3.5 px-4 bg-sidebar border border-border-light hover:bg-border-light text-text-main font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">list_alt</span>
+<span>View Syllabus</span>
+</button>
+</div>
+<div class="mt-8 pt-6 border-t border-border-light">
+<p class="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">Up Next</p>
+<div class="flex gap-4 group cursor-pointer p-2 -mx-2 hover:bg-sidebar rounded-lg transition-colors">
+<div class="size-12 rounded-lg bg-sidebar border border-border-light flex items-center justify-center shrink-0 group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors text-[24px]">lock</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-text-main leading-tight group-hover:text-primary transition-colors">Structuring Your Deck</h4>
+<p class="text-xs text-text-muted mt-1">Lesson 2 • 15 mins</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<footer class="bg-white border-t border-border-light mt-auto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-sidebar text-text-muted border border-border-light">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<span class="font-bold text-lg text-text-main tracking-tight">CorpSkill</span>
+</div>
+<div class="flex gap-8 text-sm font-medium text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+<p class="text-xs text-text-muted">© 2026 Corporate Training Inc. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script src="assets/common.js"></script>
+</body>
+</html>

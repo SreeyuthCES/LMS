@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Teamwork Lecture Page</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#2B4C5E",
+
+                    "background-light": "#FFFFFF",
+                    "background-dark": "#1E1A17",
+
+                    "surface-light": "#FFFFFF",
+                    "surface-dark": "#2A2420",
+
+                    "text-main-light": "#2C1E16",
+                    "text-main-dark": "#FFFFFF",
+
+                    "text-sec-light": "#8A756B",
+                    "text-sec-dark": "#C5B3A7",
+
+                    "border-light": "#E8E2D9",
+                    "border-dark": "#433730"
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+
+<style>
+    body {
+        font-family: 'Manrope', sans-serif;
+        background-color: #FFFFFF;
+        background-image: linear-gradient(135deg, #FFFFFF 0%, #F4EFE6 100%);
+        background-attachment: fixed;
+        color: #2C1E16;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .dark body {
+        background: #1E1A17;
+        background-image: none;
+        color: #FFFFFF;
+        text-shadow: none;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    }
+
+    /* Custom Scrollbar */
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #F4EFE6;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #8A756B, #5C473D);
+        border-radius: 20px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #2C1E16;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+        background: #1E1A17;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #4A82A3;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #6BA3C2;
+    }
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark flex flex-col min-h-screen">
+<!-- Navigation Header -->
+<header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 lg:px-8 py-3 shadow-sm">
+<div class="max-w-[1600px] mx-auto flex items-center justify-between gap-4">
+<!-- Left: Logo & Title -->
+<div class="flex items-center gap-4 page-header-brand-group">
+<a class="flex items-center justify-center p-2 rounded-full hover:bg-background-light dark:hover:bg-background-dark transition-colors text-text-sec-light dark:text-text-sec-dark" href="#">
+<span  onclick="window.location.href='common_essentials.html'" class="material-symbols-outlined">arrow_back</span>
+</a>
+<img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo" class="h-8 w-20 sm:w-24 shrink-0 object-contain">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-text-sec-light dark:text-text-sec-dark uppercase tracking-wide">Course</span>
+<h1 class="text-base lg:text-lg font-bold leading-tight">Teamwork &amp; Collaboration</h1>
+</div>
+</div>
+<!-- Center: Progress (Desktop only) -->
+<div class="hidden md:flex flex-col flex-1 max-w-md mx-4 gap-1.5">
+<div class="flex justify-between text-xs font-medium text-text-sec-light dark:text-text-sec-dark">
+<span>Course Progress</span>
+<span>45%</span>
+</div>
+<div class="h-2 w-full rounded-full bg-border-light dark:bg-border-dark overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 45%;"></div>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center gap-2 text-sm font-medium text-text-sec-light dark:text-text-sec-dark hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span>Help</span>
+</button>
+<div class="h-8 w-[1px] bg-border-light dark:bg-border-dark hidden sm:block"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border border-border-light dark:border-border-dark shadow-sm" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD18hEgTZnEykye0p_NuDik9UeHajgV7Y6sg9_oKFc5wwEKwWQlZ9yQzEGi1pCcppG2Xj2aJmd2sg6XMnzXN0dvWH6MoEHXlSNppt4OfUmousPrTE2869mn52OeV-Hsk4_r9dt0vrXxmBHb9PA5LOljZ4DjuF8MnqeY5gR-Pik9y13I8RbrwfFQ4EunTPx4fKWU3Wdsow-tNMD40rFH8PFKKji8DF_JycD0VkbvCDKY7qvTclasP067ZPth1DeAOBa-RIA0Ga-41ns");'></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow w-full max-w-[1600px] mx-auto p-4 lg:p-6 lg:pb-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
+<!-- Left Column: Video Player & Content -->
+<div class="lg:col-span-8 xl:col-span-9 flex flex-col gap-6">
+<!-- Breadcrumbs & Heading -->
+<div>
+<!-- <div class="flex items-center gap-2 text-sm text-primary font-medium mb-2">
+<span>Module 2: Communication Strategies</span>
+</div> -->
+<!-- <h2 class="text-2xl lg:text-3xl font-black tracking-tight text-text-main-light dark:text-text-main-dark">
+                        Lesson 3: Effective Communication in Remote Teams
+                    </h2> -->
+</div>
+<!-- Video Player Component -->
+<div class="group relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border-light dark:border-border-dark">
+<!-- Background Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-90 transition-opacity group-hover:opacity-100" data-alt="Video thumbnail showing a diverse team having a video conference call" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjLv4GS-iOZ6KSpKykudrR56_bYXHbthHUoYx3AEWTFZeZkPw0Rx-g5K2tXy86QdHmxUa519a371e0AK13e0KUKV1qz6rxEGr4fxPJUU8kVJT2vq8rIZTiKNgjHvBPLFFcACc6KV97VERd02nqYYoYt3qVCzjJtZBHLXkJUNkZezr_UkqTqrO_Lby1VD2LlxqM69FoEgMGR0BB75zdQ5BypXK9Ruw1LjCln2JadaMGx4JBVfTqxZJexF0uIexfYi9TyVL3TvpFaW4");'>
+</div>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+<!-- Play Button (Centered) -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="flex items-center justify-center size-20 rounded-full bg-primary/90 text-white hover:bg-primary hover:scale-105 transition-all shadow-xl backdrop-blur-sm">
+<span class="material-symbols-outlined text-[40px] ml-1">play_arrow</span>
+</button>
+</div>
+<!-- Video Controls (Bottom) -->
+<div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 flex flex-col gap-3">
+<!-- Progress Bar -->
+<div class="group/progress relative h-1.5 w-full cursor-pointer bg-white/30 rounded-full hover:h-2 transition-all">
+<div class="absolute top-0 left-0 h-full w-[35%] bg-primary rounded-full relative">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 size-3 bg-white rounded-full shadow opacity-0 group-hover/progress:opacity-100 transition-opacity"></div>
+</div>
+</div>
+<!-- Control Buttons -->
+<div class="flex items-center justify-between text-white">
+<div class="flex items-center gap-4">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">play_arrow</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">volume_up</span></button>
+<span class="text-xs font-medium tracking-wide">05:12 / 15:00</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">closed_caption</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">fullscreen</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl shadow-sm">
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark text-sm font-semibold hover:bg-border-light dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                            Previous
+                        </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark text-sm font-semibold hover:bg-border-light dark:hover:bg-border-dark transition-colors">
+                            Next
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-bold shadow-sm hover:bg-blue-600 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                        Mark as Complete
+                    </button>
+</div>
+<!-- Tabbed Content Area -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden shadow-sm">
+<!-- Tabs -->
+<div class="flex border-b border-border-light dark:border-border-dark overflow-x-auto">
+<button class="px-6 py-4 text-sm font-bold text-primary border-b-2 border-primary whitespace-nowrap">Overview</button>
+<button class="px-6 py-4 text-sm font-medium text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark whitespace-nowrap transition-colors">Lecture Notes</button>
+<button class="px-6 py-4 text-sm font-medium text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark whitespace-nowrap transition-colors">Q&amp;A Discussion</button>
+<button class="px-6 py-4 text-sm font-medium text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark whitespace-nowrap transition-colors">Resources</button>
+</div>
+<!-- Content -->
+<div class="p-6 lg:p-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div>
+<h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3">About this lesson</h3>
+<p class="text-text-sec-light dark:text-text-sec-dark text-sm leading-relaxed">
+                                        Remote work requires a shift in how we communicate. Without the benefit of non-verbal cues and spontaneous desk chats, teams must be intentional about their interactions. In this lesson, we explore strategies to overcome the distance gap, including synchronous vs. asynchronous communication methods and establishing digital etiquette.
+                                    </p>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3">Key Takeaways</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-sm text-text-sec-light dark:text-text-sec-dark">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">check</span>
+<span>Understanding the "Virtual Distance" phenomenon and its impact on trust.</span>
+</li>
+<li class="flex items-start gap-3 text-sm text-text-sec-light dark:text-text-sec-dark">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">check</span>
+<span>Best practices for video conferencing: When to turn the camera on.</span>
+</li>
+<li class="flex items-start gap-3 text-sm text-text-sec-light dark:text-text-sec-dark">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">check</span>
+<span>The golden rule of remote work: Over-communicate, but concisely.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Instructor Card -->
+<div class="lg:col-span-1">
+<div class="bg-background-light dark:bg-background-dark p-5 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-xs font-bold text-text-sec-light dark:text-text-sec-dark uppercase mb-4">Instructor</p>
+<div class="flex items-center gap-4 mb-3">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of Sarah Jenkins, the instructor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC8AaC3I_OhNEeEbCZBgca9zacj0RUVFxkmfJeGVyw9Ag1x9Ttjj-K2joVcVbOd1uMs0LadAqVRNe7nhUwgPpYUtHIKv8YbgqzEzT_1SFRwOMa-XTL8exc3IttCC_xqq9LYnkooOXauK9EtkkB-EoV2XL_dbG3artJP1LGJket4QbZQg7SBvWZzPySH_rzMB_fxCvKOuAsZ8Ue_cLubpefSZT3NH6HKDkoSjMWLYg3DQqjgBkip1KoGisYHDqOFkKvEaS6luey4kEM");'></div>
+<div>
+<p class="font-bold text-text-main-light dark:text-text-main-dark">Sarah Jenkins</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">Senior HR Strategist</p>
+</div>
+</div>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark leading-normal">
+                                        Sarah has over 15 years of experience leading remote teams for Fortune 500 companies. She specializes in organizational psychology.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Curriculum Sidebar -->
+<aside class="lg:col-span-4 xl:col-span-3 flex flex-col h-fit lg:sticky lg:top-24">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden shadow-sm flex flex-col max-h-[calc(100vh-120px)]">
+<div class="p-4 border-b border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark flex justify-between items-center">
+<h3 class="font-bold text-text-main-light dark:text-text-main-dark">Course Content</h3>
+<span class="text-xs font-medium text-text-sec-light dark:text-text-sec-dark">12/32 Lessons</span>
+</div>
+<div class="overflow-y-auto custom-scrollbar flex-1">
+<!-- Module 1: Completed -->
+<div class="border-b border-border-light dark:border-border-dark">
+<div class="p-4 bg-background-light/50 dark:bg-background-dark/50 cursor-pointer hover:bg-background-light dark:hover:bg-background-dark transition-colors flex justify-between items-center">
+<div>
+<p class="text-xs font-bold text-text-sec-light dark:text-text-sec-dark uppercase mb-1">Module 1</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">Foundations of Teamwork</p>
+</div>
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+</div>
+</div>
+<!-- Module 2: Active -->
+<div class="border-b border-border-light dark:border-border-dark">
+<div class="p-4 bg-white dark:bg-surface-dark cursor-pointer flex justify-between items-center border-l-4 border-primary">
+<div>
+<p class="text-xs font-bold text-primary uppercase mb-1">Module 2</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">Communication Strategies</p>
+</div>
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark rotate-180">expand_less</span>
+</div>
+<!-- Lessons List -->
+<div class="bg-background-light dark:bg-background-dark">
+<!-- Lesson 1 -->
+<a class="group flex items-start gap-3 p-4 hover:bg-white dark:hover:bg-surface-dark border-b border-border-light/50 dark:border-border-dark/50 transition-colors" href="#">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-[20px] text-green-500">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main-light dark:text-text-main-dark group-hover:text-primary transition-colors">2.1 Verbal Cues in Meetings</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-text-sec-light dark:text-text-sec-dark">play_circle</span>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">10 min</span>
+</div>
+</div>
+</a>
+<!-- Lesson 2 (Active) -->
+<a class="flex items-start gap-3 p-4 bg-primary/10 border-l-4 border-primary border-b border-border-light/50 dark:border-border-dark/50" href="#">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-[20px] text-primary animate-pulse">play_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-primary">2.2 Effective Communication in Remote Teams</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-primary/70">schedule</span>
+<span class="text-xs text-primary/70">15 min</span>
+</div>
+</div>
+</a>
+<!-- Lesson 3 -->
+<a class="group flex items-start gap-3 p-4 hover:bg-white dark:hover:bg-surface-dark border-b border-border-light/50 dark:border-border-dark/50 transition-colors opacity-70" href="#">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-[20px] text-text-sec-light dark:text-text-sec-dark">lock</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main-light dark:text-text-main-dark">2.3 Conflict Resolution</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-text-sec-light dark:text-text-sec-dark">play_circle</span>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">12 min</span>
+</div>
+</div>
+</a>
+<!-- Lesson 4 -->
+<a class="group flex items-start gap-3 p-4 hover:bg-white dark:hover:bg-surface-dark transition-colors opacity-70" href="#">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-[20px] text-text-sec-light dark:text-text-sec-dark">lock</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main-light dark:text-text-main-dark">2.4 Active Listening Workshop</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-text-sec-light dark:text-text-sec-dark">description</span>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">Quiz</span>
+</div>
+</div>
+</a>
+</div>
+</div>
+<!-- Module 3 -->
+<div class="border-b border-border-light dark:border-border-dark">
+<div class="p-4 bg-background-light/50 dark:bg-background-dark/50 cursor-pointer hover:bg-background-light dark:hover:bg-background-dark transition-colors flex justify-between items-center opacity-60">
+<div>
+<p class="text-xs font-bold text-text-sec-light dark:text-text-sec-dark uppercase mb-1">Module 3</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">High Performance</p>
+</div>
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Helper card -->
+<div class="mt-6 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 hidden lg:block">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+<div>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark mb-1">Pro Tip</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">Use the lecture notes tab to jot down thoughts. Notes are automatically saved to your profile.</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<script src="assets/common.js"></script>
+</body></html>

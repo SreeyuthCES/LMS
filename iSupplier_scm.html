@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCM - iSupplier Portal – CES Technical</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#2B4C5E",
+
+        "bg": "#FFFFFF",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+
+        "text-main": "#2C1E16",
+        "text-secondary": "#5C473D",
+        "border-light": "#E8E2D9",
+      },
+
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5C473D, #2C1E16);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+/* Vertical Tab Buttons */
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+  color: #5C473D;
+}
+
+.vtab-btn:hover {
+  background: #E8E2D9;
+  color: #4A82A3;
+}
+
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 130, 163, 0.2);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Content Card */
+.content-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid #E8E2D9;
+  box-shadow: 0 10px 30px rgba(74, 130, 163, 0.07);
+}
+
+/* Section Title (Glossy & High Contrast) */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #1A120D;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1), 0px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs */
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Bright & Glossy Pulse Button */
+.pulse-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #6BA3C2 0%, #4A82A3 45%, #2B4C5E 100%);
+  color: #FFFFFF;
+  border: 1px solid #1C3644;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Inner white highlight for a glossy glass look + deep outer shadow */
+  box-shadow: 
+      0 6px 12px rgba(43, 76, 94, 0.4),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+      
+  /* Bright glossy text effect */
+  text-shadow: 
+      0px 2px 3px rgba(0, 0, 0, 0.8), 
+      0px -1px 1px rgba(255, 255, 255, 0.4);
+      
+  letter-spacing: 0.5px;
+}
+
+.pulse-btn:hover {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 45%, #1C3644 100%);
+  transform: scale(1.05);
+  animation: pulse 1s infinite;
+  
+  box-shadow: 
+      0 8px 16px rgba(43, 76, 94, 0.5),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.3),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0.6),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    box-shadow: 
+      0 0 0 15px rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 0 rgba(74, 130, 163, 0),
+      inset 0px 2px 3px rgba(255, 255, 255, 0.5),
+      inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-bg font-sans h-screen flex overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto">
+<h1 class="text-xl font-bold mb-6">SCM – iSupplier Portal</h1>
+
+<div class="space-y-1">
+  <div class="vtab-btn active" onclick="openTab('overview',this)">
+    <span class="material-icons">dashboard_customize</span> Overview
+  </div>
+  <div class="vtab-btn" onclick="openTab('main',this)">
+    <span class="material-icons">fact_check</span> Main Points
+  </div>
+  <div class="vtab-btn" onclick="openTab('subtopics',this)">
+    <span class="material-icons">list_alt</span> Subtopics
+  </div>
+  <div class="vtab-btn" onclick="openTab('videos',this)">
+    <span class="material-icons">play_circle_filled</span> Video Lessons
+  </div>
+  <div class="vtab-btn" onclick="openTab('concepts',this)">
+    <span class="material-icons">psychology</span> Core Concepts
+  </div>
+  <div class="vtab-btn" onclick="openTab('architecture',this)">
+    <span class="material-icons">account_tree</span> Architecture & Flow
+  </div>
+  <div class="vtab-btn" onclick="openTab('handson',this)">
+    <span class="material-icons">build_circle</span> Hands-on Practice
+  </div>
+  <div class="vtab-btn" onclick="openTab('applications',this)">
+    <span class="material-icons">rocket_launch</span> Real-Time Applications
+  </div>
+  <div class="vtab-btn" onclick="openTab('notes',this)">
+    <span class="material-icons">edit_note</span> Notes
+  </div>
+  <div class="vtab-btn" onclick="openTab('interview',this)">
+    <span class="material-icons">help_center</span> Interview
+  </div>
+  <div class="vtab-btn" onclick="openTab('checklist',this)">
+    <span class="material-icons">checklist</span> Checklist
+  </div>
+</div>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10">
+    <div class="mb-6">
+        <nav class="flex items-center text-sm text-slate-500 gap-2">
+          <a href="employee_dashboard.html" class="hover:text-primary font-medium">
+            Dashboard
+          </a>
+          <span>/</span>
+          <a href="scm.html" class="hover:text-primary font-medium">
+SCM page          </a>
+          <span>/</span>
+          <span class="text-slate-700 font-semibold">
+            SCM - iSupplier Portal
+          </span>
+        </nav>
+      </div>
+    
+      <div class="max-w-6xl mx-auto space-y-10">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab active">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">dashboard_customize</span>
+      iSupplier Portal Overview
+    </div>
+
+    <p class="text-slate-600 leading-relaxed">
+      iSupplier Portal is the self-service supplier collaboration platform in Oracle Fusion SCM. It allows external suppliers to interact directly with the buying organization for purchase orders, invoices, payments, ASN, and performance visibility.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed mt-4">
+      It reduces manual communication, speeds up processes, improves data accuracy, and strengthens supplier relationships in the procure-to-pay cycle.
+    </p>
+
+    <div class="grid grid-cols-2 gap-6 mt-8">
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Used In</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>PO Acknowledgment & ASN</li>
+          <li>Supplier Invoice Submission</li>
+          <li>Payment & Remittance Advice</li>
+        </ul>
+      </div>
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Who Needs iSupplier?</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Suppliers / Vendors</li>
+          <li>Procurement Teams</li>
+          <li>Accounts Payable Staff</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN POINTS -->
+<section id="main" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">fact_check</span>
+      Main iSupplier Principles
+    </div>
+
+    <ul class="list-disc pl-6 space-y-3 text-slate-600">
+      <li><strong>Self-Service:</strong> Suppliers manage their own data and transactions</li>
+      <li><strong>Real-time Visibility:</strong> Suppliers see PO status, invoices, payments</li>
+      <li><strong>Electronic Collaboration:</strong> ASN, invoices, change requests online</li>
+      <li><strong>Secure Access:</strong> Role-based, supplier-specific login</li>
+      <li><strong>Integration:</strong> Bi-directional sync with Fusion Procurement & Payables</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUBTOPICS -->
+<section id="subtopics" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">list_alt</span>
+      iSupplier Portal Subtopics
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-slate-600">
+      <div>Supplier Registration & Onboarding</div>
+      <div>PO Acknowledgment</div>
+      <div>Advanced Shipment Notice (ASN)</div>
+      <div>Supplier Invoice Submission</div>
+      <div>Invoice Status Tracking</div>
+      <div>Payment & Remittance Advice</div>
+      <div>Change Requests (PO / Schedule)</div>
+      <div>Supplier Profile & Contacts</div>
+      <div>Performance Scorecards</div>
+      <div>Supplier Self-Service Reports</div>
+      <div>Supplier Notifications</div>
+      <div>iSupplier Security & Roles</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">play_circle_filled</span>
+      Video Lessons – iSupplier Portal
+    </div>
+
+    <p class="text-slate-600 mb-6">
+      These videos are aligned to <strong>real supplier collaboration scenarios</strong>.
+      Watch them sequentially for best understanding.
+    </p>
+
+    <div class="space-y-5">
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>iSupplier Basics</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Supplier registration, login, and profile management
+        </p>
+        <span class="text-xs text-slate-500">⏱ 18 mins · Beginner</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>PO & ASN Collaboration</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Acknowledging POs, submitting ASNs, and schedule changes
+        </p>
+        <span class="text-xs text-slate-500">⏱ 22 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Invoice Submission & Tracking</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Creating invoices, status tracking, and disputes
+        </p>
+        <span class="text-xs text-slate-500">⏱ 20 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Advanced Supplier Features</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Performance dashboards, notifications, and best practices
+        </p>
+        <span class="text-xs text-slate-500">⏱ 24 mins · Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">psychology</span>
+      Core Concepts
+    </div>
+
+    <ul class="list-disc pl-6 space-y-2 text-slate-600">
+      <li>Supplier Contact vs Site Contact</li>
+      <li>ASN vs Packing Slip</li>
+      <li>Invoice Approval Workflow</li>
+      <li>Supplier Scorecard Metrics</li>
+      <li>Electronic Data Interchange (EDI) vs Portal</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">account_tree</span>
+      Architecture & Flow
+    </div>
+
+    <p class="font-medium text-slate-700 mt-2">
+      Fusion PO → Supplier Login → PO Acknowledgment / ASN → Invoice Submission → Invoice Validation → Payment → Remittance Advice
+    </p>
+
+    <ul class="list-disc pl-6 mt-4 text-slate-600">
+      <li>Self-service portal (external access)</li>
+      <li>Secure supplier-specific credentials</li>
+      <li>Bi-directional integration with Procurement & Payables</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HANDSON -->
+<section id="handson" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">build_circle</span>
+      Hands-on Practice
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Register a new supplier user</li>
+      <li>Acknowledge a Purchase Order</li>
+      <li>Submit an ASN for a PO</li>
+      <li>Create and submit a supplier invoice</li>
+      <button class="pulse-btn" onclick="window.location.href='https://docs.oracle.com/en/cloud/saas/procurement/24c/oaprc/index.html'">
+        Open Official iSupplier Guide
+      </button>
+    </ul>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section id="applications" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">rocket_launch</span>
+      Real-Time Applications
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Reducing email/fax communication with suppliers</li>
+      <li>Improving on-time delivery visibility</li>
+      <li>Accelerating invoice processing</li>
+      <li>Monitoring supplier performance</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">edit_note</span>
+      Best Practices
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Enable ASN requirement for key suppliers</li>
+      <li>Train suppliers on portal usage</li>
+      <li>Monitor invoice aging and disputes</li>
+      <li>Use notifications for critical events</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">help_center</span>
+      Interview Questions
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>What is the purpose of iSupplier Portal?</li>
+      <li>Difference between PO Acknowledgment and ASN?</li>
+      <li>How do suppliers submit invoices?</li>
+      <li>What supplier performance metrics are available?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">checklist</span>
+      Completion Checklist
+    </div>
+
+    <ul class="space-y-2 text-slate-600">
+      <li>⬜ iSupplier basics understood</li>
+      <li>⬜ Confident with PO/ASN/Invoice flows</li>
+      <li>⬜ Able to onboard suppliers</li>
+      <li>⬜ Ready for supplier collaboration projects</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('.vtab-btn').forEach(b=>b.classList.remove('active'))
+  btn.classList.add('active')
+}
+</script>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

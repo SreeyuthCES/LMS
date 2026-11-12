@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html class="light scroll-smooth" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>CES Learning Platform</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            /* Primary Blue-Teal (Matches the Explore button) */
+            "primary": "#4A82A3",
+            "primary-light": "#6BA3C2",
+            "primary-dark": "#2B4C5E",
+
+            /* Clean Glass effect */
+            "glass-border": "rgba(255, 255, 255, 0.8)",
+            "glass-bg": "rgba(255, 255, 255, 0.85)",
+
+            /* High Contrast Text for Readability */
+            "text-main": "#2C1E16", /* Deeper, crisper brown for high legibility */
+            "text-muted": "#5C473D",
+
+            /* Bright Backgrounds */
+            "background-light": "#FFFFFF",
+            "background-secondary": "#F9F6F3",
+          },
+
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+
+          backgroundImage: {
+            "page-gradient":
+              "linear-gradient(135deg, #FFFFFF 0%, #F9F6F3 100%)",
+          }
+        },
+      }
+    }
+  </script>
+
+  <style>
+    /* =========================
+       PAGE BACKGROUND
+    ========================= */
+
+    body {
+      background-color: #FFFFFF;
+      color: #2C1E16;
+      /* Removed global text-shadow to fix legibility issues */
+
+      background-image:
+        radial-gradient(at 0% 0%,
+          rgba(74, 130, 163, 0.05) 0px,
+          transparent 50%),
+        linear-gradient(135deg,
+          #FFFFFF 0%,
+          #F9F6F3 100%);
+
+      background-attachment: fixed;
+    }
+
+    /* =========================
+       EMBOSSED HERO TEXT
+       (Use this class for the large "CES Learning Platform" text)
+    ========================= */
+    .hero-title-embossed {
+      color: #F4F6F8;
+      text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.15),
+        -2px -2px 4px rgba(255, 255, 255, 1);
+    }
+
+
+    /* =========================
+       GLASS CARD
+    ========================= */
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+
+      border: 1px solid rgba(255, 255, 255, 0.9);
+
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(74, 130, 163, 0.08);
+
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.08),
+        0 10px 10px -5px rgba(74, 130, 163, 0.05);
+
+      border-color: rgba(220, 210, 200, 0.8);
+
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+
+    /* =========================
+       PRIMARY BUTTON
+    ========================= */
+
+    .glass-btn {
+      background: #4A82A3;
+      border: none;
+      color: #FFFFFF;
+      padding: 10px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(74, 130, 163, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .glass-btn:hover {
+      background: #2B4C5E;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(74, 130, 163, 0.3);
+    }
+
+
+    /* =========================
+       PROFILE DROPDOWN
+    ========================= */
+
+    .profile-menu .dropdown-content {
+      opacity: 0;
+      visibility: hidden;
+
+      transform: translateY(-10px);
+
+      transition:
+        all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .profile-menu:hover .dropdown-content,
+    .profile-menu:focus-within .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+
+      transform: translateY(0);
+    }
+
+
+    /* =========================
+       CARD IMAGE
+    ========================= */
+
+    .card-image-container {
+      overflow: hidden;
+    }
+
+    .card-image-container img {
+      transition:
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card-image-container:hover img {
+      transform: scale(1.1);
+    }
+
+    /* =========================
+       HOME HERO
+    ========================= */
+
+    .home-hero {
+      position: relative;
+    }
+
+
+    /* IMAGE LAYER */
+
+    .homebg-image {
+      position: absolute;
+      inset: 0;
+
+      background-image: url("assets/employee_dashboard.png");
+      /* background-image: url("assets/login.png"); */
+
+      background-size: cover;
+      background-position: top center;
+      background-repeat: no-repeat;
+
+      animation: zoomCycle 8s ease-in-out infinite alternate;
+
+      will-change: transform;
+    }
+
+    #homebg {
+      height: calc(100vh - 80px);
+      min-height: 0;
+      padding-top: clamp(1.5rem, 5vh, 4rem);
+      padding-bottom: clamp(1.5rem, 5vh, 4rem);
+      box-sizing: border-box;
+    }
+
+    @supports (height: 100dvh) {
+      #homebg {
+        height: calc(100dvh - 80px);
+      }
+    }
+
+
+    /* =========================
+       HERO ZOOM
+    ========================= */
+
+    @keyframes zoomCycle {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.05);
+      }
+    }
+
+
+    /* =========================
+       HERO OVERLAY
+    ========================= */
+
+    .homebg-overlay {
+      position: absolute;
+      inset: 0;
+
+      /* Lighter, softer overlay to brighten the image */
+      background: rgba(255, 255, 255, 0.2);
+      /* backdrop-filter: blur(2px); */
+
+      animation:
+        lightDarkCycle 8s ease-in-out infinite;
+    }
+
+
+    /* =========================
+       HERO LIGHT / DARK LOOP
+    ========================= */
+
+    @keyframes lightDarkCycle {
+      0% {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      50% {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      100% {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    /* Navigation Active State */
+    .nav-link {
+      position: relative;
+      color: #2C1E16;
+      font-weight: 500;
+      transition: all .3s ease;
+    }
+
+    .nav-link:hover {
+      color: #4A82A3;
+    }
+
+    .nav-link.active {
+      color: #4A82A3;
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 2px;
+      background: #4A82A3;
+    }
+  </style>
+  <link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body
+  class="font-display text-text-main antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary/20 selection:text-primary">
+  <header class="sticky top-0 left-0 right-0 z-[9999] bg-white">
+    <div class="glass-card !bg-white/80 !border-b-white/50 !rounded-none !shadow-sm">
+      <div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between gap-4">
+
+        <!-- LEFT SIDE: Logo & Navigation Grouped Together -->
+        <div class="flex items-center gap-8 lg:gap-12">
+
+          <!-- 1. Logo -->
+          <div class="flex flex-col items-center justify-center shrink-0">
+            <img src="https://portal.cesteam.com/static/media/logo.bae2b86a23b9f3a78072.png" alt="CES Logo"
+              class="h-16 w-auto object-contain mb-1" />
+          </div>
+
+          <!-- 2. Navigation Links (Starts immediately after Logo) -->
+          <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+
+            <a href="#homebg" class="nav-link active">Home</a>
+
+            <div class="relative group cursor-pointer flex items-center gap-1">
+              <a href="#learnings-section" class="nav-link">Learnings</a>
+              <span
+                class="material-symbols-outlined text-[18px] text-text-muted group-hover:text-primary transition-colors">
+                expand_more
+              </span>
+            </div>
+
+            <div class="relative group cursor-pointer flex items-center gap-1">
+              <a href="#ai-certifications" class="nav-link">Certifications</a>
+              <span
+                class="material-symbols-outlined text-[18px] text-text-muted group-hover:text-primary transition-colors">
+                expand_more
+              </span>
+            </div>
+
+          </nav>
+        </div>
+
+        <!-- RIGHT SIDE: Search Bar, Notifications & Profile -->
+        <div class="flex items-center justify-end gap-4 shrink-0">
+
+          <!-- Compact Search Bar -->
+          <div class="hidden lg:flex relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-symbols-outlined text-text-muted/80 text-[20px]">search</span>
+            </div>
+            <input
+              class="block w-[160px] xl:w-[240px] focus:w-[200px] xl:focus:w-[260px] pl-10 pr-4 py-2 border border-white/80 rounded-xl text-sm bg-white/60 text-text-main placeholder-text-muted focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-300 shadow-sm hover:bg-white/90 hover:shadow-md"
+              placeholder="Search for courses, skills..." type="text" />
+          </div>
+
+          <!-- Notification Bell -->
+          <button class="relative text-text-muted hover:text-primary transition-colors flex items-center">
+            <span class="material-symbols-outlined text-[24px]">notifications</span>
+            <span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border border-white/80"></span>
+          </button>
+
+          <!-- User Profile Badge -->
+          <div class="relative profile-menu border-l border-gray-200/50 pl-4 ml-2" tabindex="0">
+            <button class="flex items-center gap-1 group focus:outline-none">
+              <div
+                class="size-9 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shadow-sm ring-2 ring-transparent group-hover:ring-primary/30 transition-all">
+                BR
+              </div>
+              <span
+                class="material-symbols-outlined text-text-muted text-[20px] group-hover:text-primary transition-colors">expand_more</span>
+            </button>
+
+            <!-- Dropdown Menu Content -->
+            <div
+              class="dropdown-content absolute right-0 top-full mt-2 w-72 origin-top-right bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl ring-1 ring-black/5 focus:outline-none z-50">
+              <div class="p-4 border-b border-gray-100">
+                <div class="flex items-center gap-3">
+                  <div class="size-10 rounded-full bg-cover bg-center ring-2 ring-white shadow-sm"
+                    style='background-image: url("https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80");'>
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-text-main">BVS.RAMKUMAR</h3>
+                    <p class="text-xs text-text-muted">venkatasairam.bommidi@cesltd.com</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-2">
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-main hover:bg-primary/5 hover:text-primary transition-colors"
+                  href="#">
+                  <span class="material-symbols-outlined text-[20px] text-gray-400">person</span>
+                  My Profile
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-main hover:bg-primary/5 hover:text-primary transition-colors"
+                  href="#">
+                  <span class="material-symbols-outlined text-[20px] text-gray-400">settings</span>
+                  Settings
+                </a>
+              </div>
+              <div class="p-2 border-t border-gray-100">
+                <a href="login.html"
+                  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors">
+                  <span class="material-symbols-outlined text-[20px]">logout</span>
+                  Sign out
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- RESTORED: FULL WIDTH HERO SECTION -->
+  <section id="homebg"
+    class="home-hero group relative overflow-hidden flex flex-col items-center justify-center text-center w-full py-6 sm:py-10 mt-0">
+
+    <div class="homebg-image"></div>
+    <div class="homebg-overlay"></div>
+
+    <div class="relative z-10 flex flex-col items-center text-center px-4 w-full mt-8">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold uppercase tracking-wider mb-4 animate-pulse">
+        Beginner Ready
+      </div>
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight text-text-main mb-6 max-w-4xl leading-[1.15]">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-text-main via-text-main to-primary/80">
+          CES Learning Platform
+        </span>
+      </h1>
+      <p class="text-lg md:text-xl text-text-muted font-medium max-w-2xl mb-12 leading-relaxed">
+        Choose your path and start your learning journey. Master enterprise skills with structured tracks and hands-on
+        practice.
+      </p>
+
+      <!-- 4 Learning Badges -->
+      <div class="flex flex-wrap justify-center gap-6 md:gap-10 max-w-4xl w-full mb-10 px-4">
+        <div class="flex flex-col items-center text-center gap-3 group/icon cursor-default">
+          <div
+            class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-md shadow-primary/30 group-hover/icon:-translate-y-1 transition-transform duration-300">
+            <span class="material-symbols-outlined text-2xl">school</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-text-main text-base">Learning Tracks</h4>
+            <p class="text-xs text-text-muted font-medium mt-0.5">Technical &amp; Functional</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center text-center gap-3 group/icon cursor-default">
+          <div
+            class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-md shadow-primary/30 group-hover/icon:-translate-y-1 transition-transform duration-300">
+            <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-text-main text-base">Certifications</h4>
+            <p class="text-xs text-text-muted font-medium mt-0.5">Courses &amp; Badges</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center text-center gap-3 group/icon cursor-default">
+          <div
+            class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-md shadow-primary/30 group-hover/icon:-translate-y-1 transition-transform duration-300">
+            <span class="material-symbols-outlined text-2xl">auto_awesome</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-text-main text-base">AI-pedia</h4>
+            <p class="text-xs text-text-muted font-medium mt-0.5">AI Knowledge Hub</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center text-center gap-3 group/icon cursor-default">
+          <div
+            class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-md shadow-primary/30 group-hover/icon:-translate-y-1 transition-transform duration-300">
+            <span class="material-symbols-outlined text-2xl">diversity_3</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-text-main text-base">Work Etiquette</h4>
+            <p class="text-xs text-text-muted font-medium mt-0.5">Everyday Essentials</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER STARTS HERE -->
+  <main class="flex-grow pb-20 px-6 w-full max-w-[1400px] mx-auto flex flex-col gap-16 md:gap-24 mt-12">
+
+    <section id="learnings-section" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 scroll-mt-30">
+
+      <!-- 1. TECHNICAL TRACK -->
+      <div class="glass-card rounded-2xl flex flex-col group cursor-pointer relative overflow-hidden h-full border-0">
+        <div class="h-48 w-full overflow-hidden relative card-image-container shrink-0 bg-teal-50">
+          <img alt="Bright minimal coding workspace" class="w-full h-full object-cover" src="assets/technical.png" />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-white/10 opacity-90 transition-opacity group-hover:opacity-75">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-3 rounded-xl shadow-sm border border-white/50">
+            <span class="material-symbols-outlined text-2xl text-primary">terminal</span>
+          </div>
+        </div>
+        <!-- FIX: Added flex flex-col flex-grow to the <a> tag -->
+        <a href="technicalpage.html" class="group flex flex-col flex-grow">
+          <div class="p-8 pt-2 flex flex-col gap-4 flex-grow relative z-10 -mt-8">
+            <div
+              class="w-fit px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-xs font-bold tracking-wide shadow-sm border border-teal-200">
+              TRACK
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
+                Technical
+              </h3>
+              <p class="text-text-muted text-sm leading-relaxed">
+                Oracle Fusion Technical, Integrations, Reports, Extensions and more. Deep dive into the code.
+              </p>
+            </div>
+            <div
+              class="mt-auto pt-4 flex items-center text-primary font-bold text-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+              Start Learning
+              <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 2. FUNCTIONAL TRACK -->
+      <div class="glass-card rounded-2xl flex flex-col group cursor-pointer relative overflow-hidden h-full border-0">
+        <div class="h-48 w-full overflow-hidden relative card-image-container shrink-0 bg-teal-50">
+          <img alt="Bright functional business planning workspace" class="w-full h-full object-cover"
+            src="assets/functional.png" />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-white/10 opacity-90 transition-opacity group-hover:opacity-75">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-3 rounded-xl shadow-sm border border-white/50">
+            <span class="material-symbols-outlined text-2xl text-primary">settings_account_box</span>
+          </div>
+        </div>
+        <!-- FIX: Added flex flex-col flex-grow to the <a> tag -->
+        <a href="functional.html" class="group flex flex-col flex-grow">
+          <div class="p-8 pt-2 flex flex-col gap-4 flex-grow relative z-10 -mt-8">
+            <div
+              class="w-fit px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-xs font-bold tracking-wide shadow-sm border border-teal-200">
+              TRACK
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
+                Functional
+              </h3>
+              <p class="text-text-muted text-sm leading-relaxed">
+                Finance, SCM, HCM, P2P, O2C and core business process learning. Understand the flow.
+              </p>
+            </div>
+            <div
+              class="mt-auto pt-4 flex items-center text-primary font-bold text-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+              Start Learning
+              <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 3. WORK ETIQUETTE -->
+      <div class="glass-card rounded-2xl flex flex-col group cursor-pointer relative overflow-hidden h-full border-0">
+        <div class="h-48 w-full overflow-hidden relative card-image-container shrink-0 bg-teal-50">
+          <img alt="Foundational learning workspace" class="w-full h-full object-cover" src="assets/work_etiquette_card.png" />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-white/10 opacity-90 transition-opacity group-hover:opacity-75">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-3 rounded-xl shadow-sm border border-white/50">
+            <span class="material-symbols-outlined text-2xl text-primary">foundation</span>
+          </div>
+        </div>
+        <!-- FIX: Added flex flex-col flex-grow to the <a> tag -->
+        <a href="work_etiquette.html" class="group flex flex-col flex-grow">
+          <div class="p-8 pt-2 flex flex-col gap-4 flex-grow relative z-10 -mt-8">
+            <div
+              class="w-fit px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-xs font-bold tracking-wide shadow-sm border border-teal-200">
+              FOUNDATION
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
+                Work Etiquette
+              </h3>
+              <p class="text-text-muted text-sm leading-relaxed">
+                Elevating Teamwork Through Professional Courtesy
+              </p>
+            </div>
+            <div
+              class="mt-auto pt-4 flex items-center text-primary font-bold text-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+              Start Learning <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 4. AI-PEDIA -->
+      <div class="glass-card rounded-2xl flex flex-col group cursor-pointer relative overflow-hidden h-full border-0">
+        <div class="h-48 w-full overflow-hidden relative card-image-container shrink-0 bg-indigo-50">
+          <img alt="AI learning and resources" class="w-full h-full object-cover" src="assets/aipedia.png" />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-white/10 opacity-90 transition-opacity group-hover:opacity-75">
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-3 rounded-xl shadow-sm border border-white/50">
+            <span class="material-symbols-outlined text-2xl text-primary">psychology</span>
+          </div>
+        </div>
+        <!-- FIX: Added flex flex-col flex-grow to the <a> tag -->
+        <a href="aipedia 1.html" class="group flex flex-col flex-grow">
+          <div class="p-8 pt-2 flex flex-col gap-4 flex-grow relative z-10 -mt-8">
+            <div
+              class="w-fit px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-xs font-bold tracking-wide shadow-sm border border-teal-200">
+              KNOWLEDGE
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
+                AI-pedia
+              </h3>
+              <p class="text-text-muted text-sm leading-relaxed">
+                Discover AI concepts, tools, and best practices to accelerate enterprise workflows.
+              </p>
+            </div>
+            <div
+              class="mt-auto pt-4 flex items-center text-primary font-bold text-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+              Start Learning <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </section>
+    <section id="ai-certifications" class="flex flex-col gap-10 scroll-mt-30">
+      <a href="certifications.html"
+        class="glass-card p-0 rounded-2xl flex flex-col md:flex-row items-stretch justify-between group cursor-pointer relative overflow-hidden outline-none block">
+        <div
+          class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-primary/20 to-purple-500/10 rounded-full blur-3xl pointer-events-none mix-blend-multiply">
+        </div>
+        <div class="p-8 md:p-10 flex-1 flex flex-col justify-center relative z-10">
+
+          <!-- Title -->
+          <div class="flex items-center gap-3 mb-3">
+            <span class="material-symbols-outlined text-primary text-3xl">smart_toy</span>
+            <h2 class="text-2xl font-bold text-text-main group-hover:text-primary transition-colors">
+              Certifications &amp; Courses
+            </h2>
+          </div>
+
+          <!-- Main Description -->
+          <p class="text-text-muted text-base max-w-xl leading-relaxed mb-6">
+            Smart guidance to choose the right learning path, certifications, and career
+            direction based on your current skills, assessments, and performance trends.
+            Our AI continuously adapts recommendations as you grow.
+          </p>
+
+          <!-- Added Content : Feature Highlights -->
+          <ul class="space-y-3 mb-6 text-text-main text-sm max-w-xl">
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-base">
+                check_circle
+              </span>
+              Personalized certification roadmap aligned with your role, level, and
+              long-term career goals
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-base">
+                check_circle
+              </span>
+              AI-driven insights generated from assessments, feedback forms, and
+              performance metrics
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-base">
+                check_circle
+              </span>
+              Smart skill-gap analysis with clear recommendations on what to learn next
+              and why
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-base">
+                check_circle
+              </span>
+              Certification readiness score with progress tracking and confidence levels
+            </li>
+          </ul>
+
+          <!-- CTA -->
+          <div>
+            <div
+              class="inline-flex items-center gap-2 text-primary font-bold text-base bg-white/50 px-6 py-3 rounded-xl transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-lg shadow-sm border border-white/60">
+              Explore
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="w-full md:w-2/5 relative min-h-[200px] overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/90 z-10"></div>
+          <img alt="Certifications & Courses"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90"
+            src="assets/certifications.png" />
+        </div>
+      </a>
+    </section>
+    <section class="flex flex-col gap-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-extrabold text-text-main mb-3">Why Choose CES Global Learning</h2>
+        <p class="text-text-muted">Empowering your career with structured, industry-relevant education.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          class="glass-card p-6 rounded-2xl flex flex-col items-center text-center gap-4 hover:!transform-none hover:shadow-lg">
+          <div class="size-12 rounded-full bg-blue-50 flex items-center justify-center text-primary mb-2">
+            <span class="material-symbols-outlined">menu_book</span>
+          </div>
+          <h3 class="text-lg font-bold text-text-main">Comprehensive Content</h3>
+          <p class="text-sm text-text-muted leading-relaxed">Structured learning modules with theory, practice, and
+            real-world applications designed by experts.</p>
+        </div>
+        <div
+          class="glass-card p-6 rounded-2xl flex flex-col items-center text-center gap-4 hover:!transform-none hover:shadow-lg">
+          <div class="size-12 rounded-full bg-blue-50 flex items-center justify-center text-primary mb-2">
+            <span class="material-symbols-outlined">extension</span>
+          </div>
+          <h3 class="text-lg font-bold text-text-main">Hands-on Practice</h3>
+          <p class="text-sm text-text-muted leading-relaxed">Interactive exercises, sandbox environments, and
+            assignments to reinforce your understanding immediately.</p>
+        </div>
+        <div
+          class="glass-card p-6 rounded-2xl flex flex-col items-center text-center gap-4 hover:!transform-none hover:shadow-lg">
+          <div class="size-12 rounded-full bg-blue-50 flex items-center justify-center text-primary mb-2">
+            <span class="material-symbols-outlined">rocket_launch</span>
+          </div>
+          <h3 class="text-lg font-bold text-text-main">Career Focused</h3>
+          <p class="text-sm text-text-muted leading-relaxed">Interview preparation, soft skills coaching, and real-time
+            application scenarios for rapid career growth.</p>
+        </div>
+      </div>
+    </section>
+    <section class="flex flex-col gap-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-extrabold text-text-main mb-3">What Our Learners Say</h2>
+        <p class="text-text-muted">Real stories from professionals growing their careers.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+          <div class="flex text-yellow-400 gap-1">
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+          </div>
+          <p class="text-text-main font-medium leading-relaxed">"The Technical track helped me transition from a junior
+            dev to a lead role. The hands-on labs are unmatched."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="size-10 rounded-full bg-cover bg-center bg-gray-200" data-alt="Portrait of Sarah Jenkins"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAm8CSEZPGnsfBQ-93UnhXyA29jkdPcaYEtLDERB2HSdCf4oue27Ks3YfCN9QDK4KarRdCGuECe8hzUFtLobfy1ruHt81e01tM16zZ9irvhrWC6m79gCxexI2KwkP_VWoDky5QPu6FxOPNMHVbYHbeYZoud50NfuOZs8Qia3LG-NPTV1nW75xlcgUyDXDxXjQ66Gryn4rIzav10M50nSkkzfktr7V4ao0nUpB5iJuJtV5XJabRKcbwtpZAkXOc9XSQe989fPJYOU9Y");'>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-text-main">NIKITHA</div>
+              <div class="text-xs text-text-muted">Software Architect</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+          <div class="flex text-yellow-400 gap-1">
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+          </div>
+          <p class="text-text-main font-medium leading-relaxed">"I was intimidated by ERP systems until I took the
+            Functional track. The concepts were explained so clearly."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="size-10 rounded-full bg-cover bg-center bg-gray-200" data-alt="Portrait of Michael Chen"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4wAcmkDGKGMnExsGB7GYx_8rnC8nBYZ1WJapcD3McHCbla8_szPPsaORQYdKpRDKAuNKCh2Pm6JGayCh2--yZUT6-j5JESekmeXyF2_-ft8BKmrejpd8IglYrCo84-o2CGt5XBo1sNgMjk4y8SiDj3KgoeQwkncZ4FO6xtDZYX-deHiHHwrXtfhMvR3u_M4CPM35FkoHURXI0mueh4yYuvHLizyynQePtYy3pEHnQgg89UH9KRLwIITG-CrG6I7_bAn4vrI38Xoc");'>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-text-main">RAM</div>
+              <div class="text-xs text-text-muted">Finance Analyst</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+          <div class="flex text-yellow-400 gap-1">
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+          </div>
+          <p class="text-text-main font-medium leading-relaxed">"The AI Certification path gave me a roadmap I couldn't
+            find anywhere else. Highly recommended."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="size-10 rounded-full bg-cover bg-center bg-gray-200" data-alt="Portrait of Priya Patel"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn5KjjkcS1P2XF7bYU51Q3eqUC4Khy4PStlQCLQBwH29DyNguRhfS7rof2l3krmJP85QEo3M1PgDLZyMOGKXNMlm3NmDOWqMdvUWYpk9gENTBvjIrbIOhVVssyw_HYtQNz-q_I7pW-ufp-zLoaHPKFp4Q5rvFKG33rYbvXG0Vf7tHxq5l6g84O9j00yndz5qmn5Sgq3Qmod38fSrdZAxbc_QCyRMJkLkH-qmC0WzuSz5Qr2BZnFal1KhWiHiwAe1H4Cw9W8hS603c");'>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-text-main">NIKITHA</div>
+              <div class="text-xs text-text-muted">Product Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+          <div class="flex text-yellow-400 gap-1">
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+            <span class="material-symbols-outlined text-[20px] fill-current">star</span>
+          </div>
+          <p class="text-text-main font-medium leading-relaxed">"Excellent support and community. Whenever I got stuck,
+            help was just a message away."</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <div class="size-10 rounded-full bg-cover bg-center bg-gray-200" data-alt="Portrait of David Rossi"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATKbD6WwSlehO1VZX02aLDx32jmYjLD0Ch5E8vwcb7wPKHB35jiMfFVNVMizY0blMA0ANpGjgiOkYguERwIKD_wMTuov9e-87trVp_NX4NFs3gxfXTklt12NKNDPf2hgedph08P_dbDsfY7CW5zvLQYQZpJG-OIxwG0Cf433N0mD8iaqHcDyoMy5s1Y04KqxnmH8ikTqyHnapuaYlL5qgqBnqIDnikQShee3Ib82j0nRGLSzz4aAK-vSK1uV8_1On60gv55HNdUug");'>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-text-main">RAM</div>
+              <div class="text-xs text-text-muted">Systems Admin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="flex flex-col items-center text-center gap-8 py-8">
+      <div
+        class="size-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white shadow-xl shadow-primary/30">
+        <span class="material-symbols-outlined text-4xl">verified_user</span>
+      </div>
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-extrabold text-text-main mb-3">Trusted by Industry Leaders</h2>
+        <p class="text-text-muted text-lg">Empowering learners with enterprise-ready skills and real-world expertise.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-lg">
+        <div class="glass-card p-5 rounded-xl flex items-center justify-center gap-3">
+          <span class="text-3xl font-black text-primary">30+</span>
+          <span class="text-sm font-bold text-text-main text-left leading-tight">Learning<br />Modules</span>
+        </div>
+        <div class="glass-card p-5 rounded-xl flex items-center justify-center gap-3">
+          <span class="text-3xl font-black text-primary">24/7</span>
+          <span class="text-sm font-bold text-text-main text-left leading-tight">Support<br />Access</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="mt-auto border-t border-white/50 bg-white/40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-2">
+            <div class="size-6 rounded bg-primary flex items-center justify-center text-white">
+              <span class="material-symbols-outlined text-[14px]">school</span>
+            </div>
+            <span class="text-lg font-bold text-text-main">CES Learning</span>
+          </div>
+          <p class="text-sm text-text-muted leading-relaxed">
+            Your gateway to mastering enterprise technologies. Build the future with us today.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <h4 class="font-bold text-text-main mb-1">Learning</h4>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Catalog</a>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Pathways</a>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Certifications</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <h4 class="font-bold text-text-main mb-1">Resources</h4>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Community</a>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Blog</a>
+          <a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Help Center</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h4 class="font-bold text-text-main">Stay Updated</h4>
+          <div class="flex gap-2">
+            <input
+              class="w-full px-4 py-2 rounded-lg border-none bg-white/60 focus:ring-2 focus:ring-primary/50 text-sm placeholder:text-gray-400"
+              placeholder="Enter email" type="email" />
+            <button
+              class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary-dark transition-colors">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-gray-200/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-muted">
+        <div>© 2025 CES Limited. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a class="hover:text-text-main transition-colors" href="#">Privacy Policy</a>
+          <a class="hover:text-text-main transition-colors" href="#">Terms of Use</a>
+          <a class="hover:text-text-main transition-colors" href="#">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    let isScrollingByClick = false;
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach(link => {
+
+      link.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        isScrollingByClick = true;
+
+        navLinks.forEach(item => item.classList.remove("active"));
+        this.classList.add("active");
+
+        const targetHref = this.getAttribute("href");
+
+        // If clicking Home, scroll to the absolute top of the page
+        if (targetHref === "#homebg") {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        } else {
+          const target = document.querySelector(targetHref);
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        }
+
+        setTimeout(() => {
+          isScrollingByClick = false;
+        }, 300);
+
+      });
+
+    });
+
+    const sections = document.querySelectorAll("section[id]");
+    const learningsSection = document.getElementById("learnings-section");
+    const aiSection = document.getElementById("ai-certifications");
+
+    window.addEventListener("scroll", () => {
+      if (isScrollingByClick) return;
+      const scrollPos = window.scrollY + 150;
+
+      navLinks.forEach(link => link.classList.remove("active"));
+
+      if (scrollPos < learningsSection.offsetTop) {
+
+        document.querySelector('a[href="#homebg"]').classList.add("active");
+
+      }
+      else if (scrollPos < aiSection.offsetTop) {
+
+        document.querySelector('a[href="#learnings-section"]').classList.add("active");
+
+      }
+      else if (scrollPos < document.querySelector(".text-center.max-w-2xl.mx-auto").offsetTop) {
+
+        document.querySelector('a[href="#ai-certifications"]').classList.add("active");
+
+      }
+
+    });
+  </script>
+
+  <script src="assets/common.js"></script>
+</body>
+
+</html>

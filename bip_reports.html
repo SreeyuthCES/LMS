@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BIP Reports Master Track · CES Technical</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#1C3644",
+        "bg": "#FFFDF7",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+        "text-main": "#3E2B22",
+        "text-secondary": "#75584D",
+        "border-light": "#E8E2D9",
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      },
+      boxShadow: {
+        soft: "0 10px 30px rgba(74, 130, 163, .07)",
+        glow: "0 12px 40px rgba(74, 130, 163, .20)"
+      },
+    }
+  }
+}
+</script>
+
+<style>
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #75584D, #4A3931); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #8C6A5D, #5C473D); }
+::-webkit-scrollbar-track { background: #F4EFE6; }
+
+/* Micro-interactions (Sidebar Design) */
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .25s;
+  color: #5C473D;
+  margin-bottom: 6px;
+}
+.study-material-label {
+  margin-top: 30px;
+  margin-bottom: 12px;
+  display: block;
+  padding-top: 4px;
+}
+.vtab-btn:hover { background: #E8E2D9; color: #4A82A3; transform: translateX(2px); }
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFDF7;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(74, 130, 163, .25);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Premium Video Button Styling */
+.vtab-btn.premium-video {
+  border: 1px solid rgba(74, 130, 163, 0.3);
+  background: #FFFFFF;
+}
+.vtab-btn.premium-video.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  border-color: transparent;
+}
+
+/* Cards */
+.content-card {
+  background: rgba(255, 255, 255, .88);
+  border-radius: 22px;
+  padding: 32px;
+  border: 1px solid rgba(232, 226, 217, .75);
+  box-shadow: var(--card-shadow, 0 10px 30px rgba(74, 130, 163, .07));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.section-title {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 22px; font-weight: 700; margin-bottom: 20px;
+  color: #3E2B22; text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8), 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabs */
+.tab { display: none; opacity: 0; transform: translateY(12px); transition: opacity .35s ease, transform .35s ease; }
+.tab.active { display: block; opacity: 1; transform: translateY(0); }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .45s ease, transform .45s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Decorative background blobs */
+.bg-blob { position: absolute; inset: -80px auto auto -80px; width: 320px; height: 320px; background: radial-gradient(circle at 30% 30%, rgba(74, 130, 163, .16), transparent 60%); filter: blur(30px); pointer-events: none; }
+.bg-blob.right { inset: auto -100px -60px auto; width: 360px; height: 360px; background: radial-gradient(circle at 70% 70%, rgba(107, 163, 194, .16), transparent 60%); }
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-gradient-to-br from-bg via-white to-bg font-sans h-screen flex overflow-hidden selection:bg-primary/20 selection:text-primary">
+
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto relative flex flex-col hide-scrollbar">
+  <div class="bg-blob"></div>
+  
+  <div class="flex items-center gap-3 mb-8 relative z-10">
+    <div class="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-white shadow-md shrink-0">
+      <span class="material-symbols-outlined text-2xl">description</span>
+    </div>
+    <div>
+      <h1 class="text-lg font-extrabold text-text-main leading-tight">BIP Reports</h1>
+      <p class="text-[10px] font-bold text-primary uppercase tracking-wider mt-0.5">Master Track</p>
+    </div>
+  </div>
+
+  <div class="space-y-1 relative z-10 flex-grow">
+    
+    <!-- CORE LEARNING SECTION -->
+    <div class="text-[11px] font-bold text-primary uppercase tracking-wider mb-3 mt-2 ml-2 flex items-center justify-between">
+      Core Learning
+      <span class="flex h-2 w-2 relative mr-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+      </span>
+    </div>
+    
+    <div class="vtab-btn premium-video" onclick="openTab('videos',this)">
+      <span class="material-symbols-outlined text-[20px]">play_circle</span> Video Lessons
+    </div>
+
+    <!-- STUDY MATERIAL SECTION -->
+    <div class="study-material-label text-[11px] font-bold text-text-muted/70 uppercase tracking-wider ml-2">Study Material</div>
+    
+    <div class="vtab-btn active" onclick="openTab('overview',this)">
+      <span class="material-symbols-outlined text-[20px]">info</span> Overview
+    </div>
+    <div class="vtab-btn" onclick="openTab('main',this)">
+      <span class="material-symbols-outlined text-[20px]">fact_check</span> Main Points
+    </div>
+    <div class="vtab-btn" onclick="openTab('subtopics',this)">
+      <span class="material-symbols-outlined text-[20px]">format_list_bulleted</span> Subtopics
+    </div>
+    <div class="vtab-btn" onclick="openTab('concepts',this)">
+      <span class="material-symbols-outlined text-[20px]">lightbulb</span> Core Concepts
+    </div>
+    <div class="vtab-btn" onclick="openTab('architecture',this)">
+      <span class="material-symbols-outlined text-[20px]">account_tree</span> Architecture & Flow
+    </div>
+    <div class="vtab-btn" onclick="openTab('handson',this)">
+      <span class="material-symbols-outlined text-[20px]">construction</span> Hands-on Practice
+    </div>
+    <div class="vtab-btn" onclick="openTab('applications',this)">
+      <span class="material-symbols-outlined text-[20px]">rocket_launch</span> Real-Time Applications
+    </div>
+    <div class="vtab-btn" onclick="openTab('notes',this)">
+      <span class="material-symbols-outlined text-[20px]">edit_note</span> Best Practices
+    </div>
+    <div class="vtab-btn" onclick="openTab('interview',this)">
+      <span class="material-symbols-outlined text-[20px]">help_center</span> Interview Prep
+    </div>
+    <div class="vtab-btn" onclick="openTab('checklist',this)">
+      <span class="material-symbols-outlined text-[20px]">checklist</span> Checklist
+    </div>
+  </div>
+
+  <a href="technicalpage.html" class="mt-8 flex items-center justify-center gap-2 py-3 rounded-xl border border-border-light text-sm font-bold text-text-secondary hover:bg-white hover:text-primary hover:border-primary transition-all cursor-pointer relative z-10">
+    <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+    Back to Technical
+  </a>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10 relative hide-scrollbar">
+  <div class="bg-blob right"></div>
+
+  <!-- Breadcrumb -->
+  <div class="mb-6 max-w-6xl mx-auto">
+    <nav class="flex items-center text-sm text-slate-500 gap-2 relative z-10">
+      <a href="employee_dashboard.html" class="hover:text-primary font-medium">Dashboard</a>
+      <span>/</span>
+      <a href="technicalpage.html" class="hover:text-primary font-medium">Technical</a>
+      <span>/</span>
+      <span class="text-slate-700 font-semibold">BIP Reports Track</span>
+    </nav>
+  </div>
+
+  <div class="max-w-6xl mx-auto space-y-10 pb-20 relative z-10">
+
+    <!-- 1. VIDEOS  -->
+    <section id="videos" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">play_circle</span>
+          BIP Video Masterclass
+        </div>
+        <p class="text-slate-600 mb-8 text-[15px] leading-relaxed">Watch our comprehensive continuous video masterclass. This sequence covers everything from building basic data models and designing complex RTF layouts to configuring advanced eText templates, ESS job scheduling, and extensibility triggers.</p>
+
+        <!-- Dynamic Container for your assets/video_loader.js -->
+        <div id="video-list-container" class="w-full">
+          <div class="p-12 text-center border-2 border-dashed border-border-light rounded-2xl bg-sidebar/20">
+            <span class="material-symbols-outlined text-4xl text-slate-400 mb-2 animate-pulse">cloud_download</span>
+            <h3 class="text-lg font-bold text-text-main">Loading Video Masterclass...</h3>
+            <p class="text-sm text-text-muted mt-1">Connecting to database.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. OVERVIEW (Now Default Active)-->
+    <section id="overview" class="tab active">
+      <div class="content-card reveal visible">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">info</span>
+          BIP Reports Comprehensive Overview
+        </div>
+        <div class="space-y-6 text-slate-600 leading-relaxed text-[15px]">
+          <div>
+            <h4 class="font-bold text-primary mb-2 text-lg">Introduction to Oracle BI Publisher</h4>
+            <p>Oracle BI Publisher (BIP) is Oracle's primary enterprise reporting solution embedded natively within Oracle Fusion Cloud Applications (ERP, HCM, SCM). It empowers organizations to extract data securely and generate highly formatted, pixel-perfect documents in formats like PDF, Excel, Word, PowerPoint, and HTML tailored to precise business and compliance needs.</p>
+          </div>
+          <div class="border-t border-border-light pt-4">
+            <h4 class="font-bold text-primary mb-2 text-lg">Data Models & Layouts</h4>
+            <p>BIP enforces a strict separation of data logic from visual design. Data Models use complex SQL, native extracts, or web services to gather data. Layouts merge with these models to produce outputs using RTF, eText (for banking files), XPT, or the online Layout Editor.</p>
+          </div>
+          <div class="border-t border-border-light pt-4">
+            <h4 class="font-bold text-primary mb-2 text-lg">ESS Jobs & Batch Processing</h4>
+            <p>Enterprise Scheduler Service (ESS) allows the scheduling and monitoring of background processes. It handles heavy batch processing such as payroll calculations, bulk data loads, benefit enrollments, and mass file exports.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MAIN POINTS -->
+    <section id="main" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">fact_check</span>
+          Main Principles
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="font-bold text-text-main mb-3 text-lg">Core Reporting & Layouts</h4>
+            <ul class="list-disc pl-6 space-y-2 text-slate-600 text-[15px] leading-relaxed">
+              <li><strong>Template-Based Rendering:</strong> Utilize RTF, eText, or XPT templates.</li>
+              <li><strong>Bursting Capabilities:</strong> Automatically split and deliver report batches.</li>
+              <li><strong>Dynamic Data Binding:</strong> Use embedded XDO tags for mapped fields.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-text-main mb-3 text-lg">ESS & Advanced Extensibility</h4>
+            <ul class="list-disc pl-6 space-y-2 text-slate-600 text-[15px] leading-relaxed">
+              <li><strong>Scheduled Job Execution:</strong> Run processes via ESS.</li>
+              <li><strong>Event Triggers:</strong> Deploy Fast Formulas fired precisely upon standard database changes.</li>
+              <li><strong>LOV Architecture:</strong> Build dynamic, context-aware dropdowns.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SUBTOPICS -->
+    <section id="subtopics" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">format_list_bulleted</span>
+          Comprehensive Curriculum
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-slate-700 text-sm bg-sidebar/30 p-6 rounded-xl border border-border-light">
+          <div>Report Creation Lifecycle</div>
+          <div>Data Models (SQL, Extracts)</div>
+          <div>Template Builder for MS Word</div>
+          <div>Report Bursting & Delivery</div>
+          <div>RTF & eText Templates</div>
+          <div>Conditional Formatting (XDO)</div>
+          <div>Translations & XLIFF</div>
+          <div>ESS Job Definitions</div>
+          <div>Schedule Management</div>
+          <div>File to Benefits (FTB)</div>
+          <div>Database & Formula Triggers</div>
+          <div>Dependent Cascading LOVs</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CONCEPTS -->
+    <section id="concepts" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">lightbulb</span>
+          Core Concepts
+        </div>
+        <ul class="list-disc pl-6 space-y-3 text-slate-600 text-[15px] leading-relaxed">
+          <li><strong>Report Bursting:</strong> The automated process of splitting a single massive report dataset by a specific key, generating an individual document for each slice, and securely delivering it to distinct destinations.</li>
+          <li><strong>XDO Commands:</strong> Essential BI Publisher syntax embedded directly within MS Word templates to implement logic, complex math, and conditional rendering.</li>
+          <li><strong>Calculated Fields & FTB:</strong> Utilizing Fast Formulas to derive dynamic computational values on the fly, and securely generating and transmitting encrypted files to third-party benefit carriers.</li>
+          <li><strong>Flex Fields & Value Sets:</strong> Mechanisms to inject custom data fields onto standard Fusion screens.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. ARCHITECTURE -->
+    <section id="architecture" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">account_tree</span>
+          Architecture & Flow
+        </div>
+        <div class="space-y-6">
+          <div class="bg-sidebar/40 p-5 rounded-xl border border-border-light">
+            <p class="font-bold text-text-main mb-2 text-lg">1. The Reporting Lifecycle</p>
+            <p class="text-[15px] text-primary font-medium">Business Requirement → SQL Data Model → Sample XML Generation → RTF Template Design → Upload to Catalog → Schedule/Burst → Final Delivery</p>
+          </div>
+          <div class="bg-sidebar/40 p-5 rounded-xl border border-border-light">
+            <p class="font-bold text-text-main mb-2 text-lg">2. ESS Execution & Notification Flow</p>
+            <p class="text-[15px] text-primary font-medium">Job Registration → Parameter Input → Schedule Triggered → Batch Execution → Notification Sent → Output/File Delivery</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. HANDSON -->
+    <section id="handson" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">construction</span>
+          Hands-on Practice
+        </div>
+        <ul class="list-disc pl-6 text-slate-600 space-y-3 text-[15px] leading-relaxed">
+          <li>Create a robust SQL-based data model extracting active employee records and generating a sample XML.</li>
+          <li>Install and utilize the BI Publisher Template Builder Add-in in MS Word to design an RTF layout with repeating tables, dynamic charts, and conditional row highlighting.</li>
+          <li>Build and import a standardized corporate subtemplate for document headers, footers, and standardized legal disclaimers.</li>
+          <li>Configure complex report bursting rules combined with automated, personalized email delivery to employees.</li>
+          <li>Register a BIP report as an ESS Job and submit it via the Scheduled Processes UI, passing dynamic runtime parameters.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. APPLICATIONS -->
+    <section id="applications" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
+          Real-Time Applications
+        </div>
+        <ul class="list-disc pl-6 text-slate-600 space-y-3 text-[15px] leading-relaxed">
+          <li><strong>Enterprise Document Generation:</strong> Producing custom branded customer invoices, secure employee payslips, statutory compliance filings, and professional Purchase Order documents.</li>
+          <li><strong>Financial & Banking Integrations:</strong> Utilizing specialized eText templates to generate highly specific, fixed-width bank EFT/ACH formats and MICR-compliant check printing files.</li>
+          <li><strong>Automated Payroll & Benefits:</strong> Executing automated monthly payroll calculation runs via ESS, and dispatching Benefit Enrollment Files securely.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9. NOTES -->
+    <section id="notes" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">edit_note</span>
+          Best Practices
+        </div>
+        <ul class="list-disc pl-6 text-slate-600 space-y-3 text-[15px] leading-relaxed">
+          <li><strong>Maximize the Template Builder:</strong> Always design layouts locally in MS Word using the BI Publisher Add-in for pixel-perfect control. Leverage subtemplates strictly to ensure branding consistency.</li>
+          <li><strong>Dynamic Parameterization:</strong> Avoid hardcoding specific dates, business units, or IDs directly in data models or ESS jobs. Always use user-facing parameters.</li>
+          <li><strong>Proactive Monitoring:</strong> Enable automated email notifications for critical scheduled jobs, monitor the ESS logs regularly for silent warnings.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 10. INTERVIEW -->
+    <section id="interview" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">help_center</span>
+          Interview Prep
+        </div>
+        <ul class="space-y-4">
+          <li class="bg-sidebar/50 p-4 rounded-xl border border-border-light">
+            <strong class="text-sm text-primary block mb-1">Q: What is the primary difference between OTBI and BI Publisher?</strong>
+            <p class="text-sm text-text-secondary">A: OTBI is designed for real-time, ad-hoc, drag-and-drop analytics aimed at business users. BI Publisher is a technical tool designed for executing direct SQL to extract large datasets and generating pixel-perfect, highly formatted documents.</p>
+          </li>
+          <li class="bg-sidebar/50 p-4 rounded-xl border border-border-light">
+            <strong class="text-sm text-primary block mb-1">Q: How does Bursting work in BIP?</strong>
+            <p class="text-sm text-text-secondary">A: Bursting is the process of taking a single, large dataset, splitting it based on a designated key, generating an individual document for each slice, and securely delivering it to distinct destinations.</p>
+          </li>
+          <li class="bg-sidebar/50 p-4 rounded-xl border border-border-light">
+            <strong class="text-sm text-primary block mb-1">Q: What is the difference between RTF and eText templates?</strong>
+            <p class="text-sm text-text-secondary">A: RTF is used for visually formatted documents like PDFs and Word files. eText is purely text-based, used to generate fixed-width or delimiter-separated files typically required by banks for Electronic Data Interchange (EDI).</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 11. CHECKLIST -->
+    <section id="checklist" class="tab">
+      <div class="content-card reveal">
+        <div class="section-title">
+          <span class="material-symbols-outlined text-primary text-3xl">checklist</span>
+          Completion Checklist
+        </div>
+        <ul class="space-y-4 text-slate-700 text-[15px] font-medium">
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-slate-300 text-[24px] shrink-0">check_box_outline_blank</span>
+            <span>Created a robust SQL-based data model and successfully generated a report in PDF and Excel formats.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-slate-300 text-[24px] shrink-0">check_box_outline_blank</span>
+            <span>Used the MS Word Template Builder to create an RTF layout featuring repeating tables, conditional formatting, and charts.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-slate-300 text-[24px] shrink-0">check_box_outline_blank</span>
+            <span>Built an eText template for bank file generation and securely imported a reusable subtemplate.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-slate-300 text-[24px] shrink-0">check_box_outline_blank</span>
+            <span>Navigated the ESS UI, submitted a background job with parameters, and verified email notifications.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+/* Tab switching logic */
+function openTab(id, btn){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+
+  document.querySelectorAll('.vtab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const firstCard = el.querySelector('.content-card');
+  if(firstCard){
+    firstCard.style.setProperty('--card-shadow', 'var(--card-shadow)');
+    firstCard.animate(
+      [{ transform:'translateY(8px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }],
+      { duration: 300, easing: 'ease-out' }
+    );
+  }
+}
+
+/* Reveal on scroll */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    }
+  })
+},{ threshold:.15 });
+revealEls.forEach(el => io.observe(el));
+</script>
+
+<script src="assets/common.js"></script>
+<script src="assets/video_loader.js"></script>
+
+<!-- Execute script on load -->
+<script>
+  window.onload = () => {
+    if(typeof loadVideosForCategory === "function") {
+      loadVideosForCategory('BIP REPORTS', 'video-list-container');
+    }
+  };
+</script>
+
+</body>
+</html>

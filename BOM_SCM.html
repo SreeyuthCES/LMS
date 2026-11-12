@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCM - Bill of Materials – CES Technical</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#4A82A3",
+        "primary-light": "#6BA3C2",
+        "primary-dark": "#1C3644",
+
+        "bg": "#FFFDF7",
+        "sidebar": "#F4EFE6",
+        "card": "#FFFFFF",
+
+        "text-main": "#3E2B22",
+        "text-secondary": "#75584D",
+        "border-light": "#E8E2D9",
+      },
+
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #75584D, #4A3931);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8C6A5D, #5C473D);
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+
+/* Vertical Tab Buttons */
+
+.vtab-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+  color: #75584D;
+}
+
+.vtab-btn:hover {
+  background: #E8E2D9;
+  color: #4A82A3;
+}
+
+.vtab-btn.active {
+  background: linear-gradient(135deg, #4A82A3 0%, #2B4C5E 100%);
+  color: #FFFDF7;
+  font-weight: 600;
+  box-shadow: 0 8px 22px rgba(74, 130, 163, .25);
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+
+/* Content Card */
+
+.content-card {
+  background: rgba(255, 255, 255, .88);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(232, 226, 217, .75);
+  box-shadow: 0 10px 30px rgba(74, 130, 163, .07);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+
+/* Section Title */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #3E2B22;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8), 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Tabs */
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+
+/* Pulse Button */
+
+.pulse-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #4A82A3, #2B4C5E);
+  color: #FFFDF7;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6), 0px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+.pulse-btn:hover {
+  background: linear-gradient(135deg, #3B6A87, #1C3644);
+  transform: scale(1.05);
+  animation: pulse 1s infinite;
+}
+
+
+/* Pulse Animation */
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 130, 163, 0.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 15px rgba(74, 130, 163, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 130, 163, 0);
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+
+<body class="bg-bg font-sans h-screen flex overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="w-72 bg-sidebar/60 backdrop-blur-md border-r border-slate-200 p-6 overflow-y-auto">
+<h1 class="text-xl font-bold mb-6">SCM – Bill of Materials</h1>
+
+<div class="space-y-1">
+  <div class="vtab-btn active" onclick="openTab('overview',this)">
+    <span class="material-icons">dashboard_customize</span> Overview
+  </div>
+  <div class="vtab-btn" onclick="openTab('main',this)">
+    <span class="material-icons">fact_check</span> Main Points
+  </div>
+  <div class="vtab-btn" onclick="openTab('subtopics',this)">
+    <span class="material-icons">list_alt</span> Subtopics
+  </div>
+  <div class="vtab-btn" onclick="openTab('videos',this)">
+    <span class="material-icons">play_circle_filled</span> Video Lessons
+  </div>
+  <div class="vtab-btn" onclick="openTab('concepts',this)">
+    <span class="material-icons">psychology</span> Core Concepts
+  </div>
+  <div class="vtab-btn" onclick="openTab('architecture',this)">
+    <span class="material-icons">account_tree</span> Architecture & Flow
+  </div>
+  <div class="vtab-btn" onclick="openTab('handson',this)">
+    <span class="material-icons">build_circle</span> Hands-on Practice
+  </div>
+  <div class="vtab-btn" onclick="openTab('applications',this)">
+    <span class="material-icons">rocket_launch</span> Real-Time Applications
+  </div>
+  <div class="vtab-btn" onclick="openTab('notes',this)">
+    <span class="material-icons">edit_note</span> Notes
+  </div>
+  <div class="vtab-btn" onclick="openTab('interview',this)">
+    <span class="material-icons">help_center</span> Interview
+  </div>
+  <div class="vtab-btn" onclick="openTab('checklist',this)">
+    <span class="material-icons">checklist</span> Checklist
+  </div>
+</div>
+</aside>
+
+<!-- RIGHT CONTENT -->
+<main class="flex-1 overflow-y-auto p-10">
+    <div class="mb-6">
+        <nav class="flex items-center text-sm text-slate-500 gap-2">
+          <a href="employee_dashboard.html" class="hover:text-primary font-medium">
+            Dashboard
+          </a>
+          <span>/</span>
+          <a href="scm.html" class="hover:text-primary font-medium">
+SCM page          </a>
+          <span>/</span>
+          <span class="text-slate-700 font-semibold">
+            SCM - Bill of Materials
+          </span>
+        </nav>
+      </div>
+    
+      <div class="max-w-6xl mx-auto space-y-10">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab active">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">dashboard_customize</span>
+      Bill of Materials Overview
+    </div>
+
+    <p class="text-slate-600 leading-relaxed">
+      Bill of Materials (BOM) in Oracle Fusion SCM defines the hierarchical structure of components, subassemblies, and quantities needed to manufacture, assemble, or package a finished product.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed mt-4">
+      BOM is the foundation for costing, material planning, work order execution, shop floor control, and variance analysis in manufacturing processes.
+    </p>
+
+    <div class="grid grid-cols-2 gap-6 mt-8">
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Used In</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Work Orders & WIP</li>
+          <li>Material Requirements Planning</li>
+          <li>Standard Costing</li>
+        </ul>
+      </div>
+      <div class="p-4 rounded-xl bg-blue-50">
+        <strong>Who Needs BOM?</strong>
+        <ul class="list-disc pl-5 mt-2 text-sm text-slate-600">
+          <li>Manufacturing Engineers</li>
+          <li>Cost Accountants</li>
+          <li>Supply Chain Planners</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN POINTS -->
+<section id="main" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">fact_check</span>
+      Main BOM Principles
+    </div>
+
+    <ul class="list-disc pl-6 space-y-3 text-slate-600">
+      <li><strong>Multi-level Structure:</strong> Supports nested assemblies and subassemblies</li>
+      <li><strong>BOM Types:</strong> Standard, Model, Option Class, Common, Alternate</li>
+      <li><strong>Effectivity Control:</strong> Date-effective, serial/lot effective, or revision-based</li>
+      <li><strong>Phantom BOM:</strong> Components are exploded into parent during planning/execution</li>
+      <li><strong>Cost Rollup:</strong> Automatically calculates standard cost from component costs</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUBTOPICS -->
+<section id="subtopics" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">list_alt</span>
+      BOM Subtopics
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-slate-600">
+      <div>BOM Types (Standard / Model / Option)</div>
+      <div>Common BOM</div>
+      <div>Alternate BOM</div>
+      <div>Phantom Assemblies</div>
+      <div>Effectivity Dates & Revisions</div>
+      <div>Substitute Components</div>
+      <div>Reference Designators</div>
+      <div>Component Yield & Scrap Factor</div>
+      <div>BOM Import via FBDI</div>
+      <div>Engineering Change Orders (ECO)</div>
+      <div>Cost Rollup Process</div>
+      <div>BOM Comparison & Indented Reports</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">play_circle_filled</span>
+      Video Lessons – Bill of Materials
+    </div>
+
+    <p class="text-slate-600 mb-6">
+      These videos are aligned to <strong>real manufacturing scenarios</strong> in Fusion SCM.
+      Watch them sequentially for best understanding.
+    </p>
+
+    <div class="space-y-5">
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>BOM Fundamentals</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Creating standard BOMs, item assignment, and basic structure
+        </p>
+        <span class="text-xs text-slate-500">⏱ 18 mins · Beginner</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Advanced BOM Structures</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Model / Option Class, Phantom, Alternate BOMs
+        </p>
+        <span class="text-xs text-slate-500">⏱ 22 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>BOM Changes & ECO</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Engineering Change Orders and revision control
+        </p>
+        <span class="text-xs text-slate-500">⏱ 20 mins · Intermediate</span>
+      </div>
+
+      <div class="p-5 border rounded-xl hover:shadow-md transition">
+        <strong>Costing & Planning with BOM</strong>
+        <p class="text-sm text-slate-600 mt-1">
+          Cost rollup, indented BOM reports, and planning impact
+        </p>
+        <span class="text-xs text-slate-500">⏱ 25 mins · Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">psychology</span>
+      Core Concepts
+    </div>
+
+    <ul class="list-disc pl-6 space-y-2 text-slate-600">
+      <li>Standard vs Model BOM</li>
+      <li>Phantom vs Regular Assembly</li>
+      <li>Component Effectivity</li>
+      <li>Substitute vs Primary Component</li>
+      <li>Cost Rollup & Standard Cost</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">account_tree</span>
+      Architecture & Flow
+    </div>
+
+    <p class="font-medium text-slate-700 mt-2">
+      Finished Good → BOM Definition → Component Assignment → Approval (if ECO) → Work Order Release → Component Issue → Costing & Variance
+    </p>
+
+    <ul class="list-disc pl-6 mt-4 text-slate-600">
+      <li>Centralized BOM maintenance</li>
+      <li>Multi-organization access control</li>
+      <li>Integration with Cost & Planning modules</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HANDSON -->
+<section id="handson" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">build_circle</span>
+      Hands-on Practice
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Create a standard BOM</li>
+      <li>Create a model BOM with options</li>
+      <li>Add substitute components</li>
+      <li>Run cost rollup and review reports</li>
+      <button class="pulse-btn" onclick="window.location.href='https://docs.oracle.com/en/cloud/saas/supply-chain-management/24c/famml/index.html'">
+        Open Official BOM Guide
+      </button>
+    </ul>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section id="applications" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">rocket_launch</span>
+      Real-Time Applications
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Defining manufacturing recipes</li>
+      <li>Calculating material requirements</li>
+      <li>Determining standard product cost</li>
+      <li>Supporting assemble-to-order processes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">edit_note</span>
+      Best Practices
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>Use meaningful BOM names and descriptions</li>
+      <li>Define effectivity dates carefully</li>
+      <li>Avoid excessive levels in BOM</li>
+      <li>Regularly review cost rollup results</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">help_center</span>
+      Interview Questions
+    </div>
+
+    <ul class="list-disc pl-6 text-slate-600">
+      <li>What is the difference between Standard and Model BOM?</li>
+      <li>What is a Phantom BOM and when is it used?</li>
+      <li>How does cost rollup work in BOM?</li>
+      <li>What is an Engineering Change Order (ECO)?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="tab">
+  <div class="content-card">
+    <div class="section-title">
+      <span class="material-icons text-primary">checklist</span>
+      Completion Checklist
+    </div>
+
+    <ul class="space-y-2 text-slate-600">
+      <li>⬜ BOM basics understood</li>
+      <li>⬜ Confident creating different BOM types</li>
+      <li>⬜ Able to manage changes via ECO</li>
+      <li>⬜ Ready for manufacturing projects</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  document.querySelectorAll('.vtab-btn').forEach(b=>b.classList.remove('active'))
+  btn.classList.add('active')
+}
+</script>
+
+<script src="assets/common.js"></script>
+</body>
+</html>

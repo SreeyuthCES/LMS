@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Communication Skill Details Page</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4A82A3",
+                    "primary-light": "#6BA3C2",
+                    "primary-dark": "#1C3644",
+
+                    "background-light": "#FFFDF7",
+                    "background-dark": "#1E1A17",
+
+                    "slate-850": "#292421",
+
+                    "text-main": "#3E2B22",
+                    "text-secondary": "#75584D",
+                    "text-muted": "#9A8073",
+
+                    "border-light": "#E8E2D9",
+                    "border-medium": "#D9CFC4",
+                },
+
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"]
+                },
+
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<link rel="stylesheet" href="assets/common.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-50 font-display transition-colors duration-200">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Top Navigation Bar (commented out in original, kept commented) -->
+        <!-- <header>...</header> -->
+
+        <div class="flex h-full w-full grow flex-col">
+            <!-- Removed extra padding that was compressing the content -->
+            <div class="flex flex-1 justify-center w-full">
+                <div class="w-full max-w-full flex flex-col">
+                    <!-- Breadcrumbs -->
+                    <div class="flex flex-wrap gap-2 px-6 py-4 bg-white dark:bg-slate-850 border-b border-slate-200 dark:border-slate-800">
+                        <a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:underline" href="employee_dashboard.html">Home</a>
+                        <span class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">/</span>
+                        <a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:underline" href="common_essentials.html">common_essentials</a>
+                        <span class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">/</span>
+                        <span class="text-slate-900 dark:text-white text-sm font-medium leading-normal">Communication Skills</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 px-6 py-8 w-full">
+                        <!-- Main Content Column -->
+                        <div class="lg:col-span-8 flex flex-col gap-6">
+                            <!-- Hero / Page Heading -->
+                            <div class="flex flex-col gap-4">
+                                <div class="relative w-full h-48 rounded-xl overflow-hidden mb-2">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/20 z-10"></div>
+                                    <div class="w-full h-full bg-cover bg-center" data-alt="People talking in a modern office meeting room" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtWvyVWwyJPvFT71ZC9OQuF3uZTE_3IegyOzs8NGk0_hwwZKG4jvQg3C9mHuNuDS1xzL-fstI96u4UMJ6AObSwyo1itlB-xGO7URVhXwsdSsl_eaxz5v1dvbNWz6iAFAGgjpIezLmCMThvYgpqpm9ip2yceTpazd6BOnVKZbP4QtSkwKwT1nmVUxVB5kMl9YBHUWM1bQwQ1G8lKsxr1PrLSqoxDkzPGzisMalNQ6puDMZtN6CpphqBmuuu8ovuLxZ8KkTzMrqAKP8');"></div>
+                                    <div class="absolute bottom-6 left-6 z-20">
+                                        <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block">SOFT SKILLS</span>
+                                        <h1 class="text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] drop-shadow-md">Communication Skills</h1>
+                                    </div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-lg font-normal leading-relaxed">
+                                    Master the art of conveying information effectively in a professional setting. Learn to articulate ideas clearly, listen actively, and adapt your style to different audiences.
+                                </p>
+                                <div class="flex gap-3 mt-2">
+                                    <button class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-all">
+                                        <span class="material-symbols-outlined mr-2 text-[20px]">play_arrow</span>
+                                        Start Module
+                                    </button>
+                                    <button class="flex items-center justify-center rounded-lg h-10 px-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-bold leading-normal transition-all">
+                                        <span class="material-symbols-outlined mr-2 text-[20px]">bookmark_border</span>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Overview Section -->
+                            <section>
+                                <h2 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight pb-3 pt-5 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">info</span>
+                                    Overview
+                                </h2>
+                                <div class="bg-white dark:bg-slate-850 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                                        Effective communication is the cornerstone of a productive workplace. This course dives deep into the nuances of verbal and non-verbal interactions, ensuring you can navigate complex professional landscapes with confidence. You will explore techniques for clarity, brevity, and impact.
+                                    </p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                                        <div class="flex items-start gap-3">
+                                            <div class="bg-green-100 dark:bg-green-900/30 p-1 rounded text-green-600 dark:text-green-400">
+                                                <span class="material-symbols-outlined text-sm">check</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Understand active listening techniques</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <div class="bg-green-100 dark:bg-green-900/30 p-1 rounded text-green-600 dark:text-green-400">
+                                                <span class="material-symbols-outlined text-sm">check</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Master non-verbal cues and body language</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <div class="bg-green-100 dark:bg-green-900/30 p-1 rounded text-green-600 dark:text-green-400">
+                                                <span class="material-symbols-outlined text-sm">check</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Adapt communication style to audience</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <div class="bg-green-100 dark:bg-green-900/30 p-1 rounded text-green-600 dark:text-green-400">
+                                                <span class="material-symbols-outlined text-sm">check</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Handle difficult conversations with empathy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Key Tips Cards -->
+                            <section>
+                                <h2 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight pb-3 pt-5 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Key Concepts
+                                </h2>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white dark:bg-slate-850 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="size-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary mb-3">
+                                            <span class="material-symbols-outlined">hearing</span>
+                                        </div>
+                                        <h3 class="font-bold text-slate-900 dark:text-white mb-2">Active Listening</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Focus completely on the speaker, understand their message, and respond thoughtfully.</p>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-850 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="size-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-3">
+                                            <span class="material-symbols-outlined">record_voice_over</span>
+                                        </div>
+                                        <h3 class="font-bold text-slate-900 dark:text-white mb-2">Clarity &amp; Brevity</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Deliver your message clearly and concisely to avoid confusion and maintain engagement.</p>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-850 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="size-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-3">
+                                            <span class="material-symbols-outlined">sentiment_satisfied</span>
+                                        </div>
+                                        <h3 class="font-bold text-slate-900 dark:text-white mb-2">Empathy</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Understand the emotional context of your interactions to build stronger relationships.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Scenarios -->
+                            <section class="mb-8">
+                                <h2 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight pb-3 pt-5 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">theater_comedy</span>
+                                    Real-world Scenarios
+                                </h2>
+                                <div class="bg-slate-100 dark:bg-slate-800 rounded-xl p-6">
+                                    <div class="flex flex-col md:flex-row gap-6">
+                                        <div class="flex-1">
+                                            <div class="w-full h-40 bg-slate-200 dark:bg-slate-700 rounded-lg mb-4 bg-cover bg-center relative group overflow-hidden" data-alt="Two colleagues having a disagreement in an office" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD860gqJ2B9HJX_aeeh53YoMwKdj2t51TDIjTN_ZNQDf9v5QgAG71KTOyLMQWBchZBZwLQ7ZXCQIn-zCtOLPTl_wxxyBFVc-fTuOipwavY06SY5dhAH2AeMtubh9mCVMELKki7Xn0rHBUg06LhWwzSNc7bn3CMcHDhI5R2W0RWmeKasCQBox7okXYlw38uPlV3m5NfPXhUGadI-SznbqtjGBPDl8Z0CUjIjkZrh-fbI_UmV3HEmxkhM77sZlfikoJbDYjpLWgIvMIQ');">
+                                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                                                <div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-900/90 px-2 py-1 rounded text-xs font-bold">Video: 3m</div>
+                                            </div>
+                                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Scenario A: Resolving Conflict</h3>
+                                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Watch how Sarah uses "I" statements to de-escalate a tense situation during a project review.</p>
+                                        </div>
+                                        <div class="w-px bg-slate-200 dark:bg-slate-700 hidden md:block"></div>
+                                        <div class="flex-1">
+                                            <div class="w-full h-40 bg-slate-200 dark:bg-slate-700 rounded-lg mb-4 bg-cover bg-center relative group overflow-hidden" data-alt="A manager giving feedback to an employee" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAItxmGtd7QeIupZSsula5pEfYjX7EiMuQKtk3yyouq9_HJddpflGqmW7JCEcuSDrz_0KLrOFictQXWZEhz44SA4kE1aefJWfto5qS8_MoXTpW7HTtTuxg25padngoNQKtv4v6GcPfCghX2iMAkjIkAMj54zTQ7jDhcC7_SxGjC64s4TUZFZCs7xiz4ZmBFJ_9GIxaJAbkif80d1kdmRzbG1p_mId9VjAs8LLDJJaaFvoP5LjaAnJZErAvLQqbATeQJa9-VgeoTTNk');">
+                                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                                                <div class="absolute top-2 right-2 bg-white/90 dark:bg-slate-900/90 px-2 py-1 rounded text-xs font-bold">Video: 4m</div>
+                                            </div>
+                                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Scenario B: Constructive Feedback</h3>
+                                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Observe best practices for delivering critical feedback without demotivating your team member.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="lg:col-span-4 flex flex-col gap-6">
+                            <!-- Progress Card -->
+                            <div class="bg-white dark:bg-slate-850 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm sticky top-24">
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex gap-6 justify-between items-center">
+                                        <p class="text-slate-900 dark:text-white text-base font-bold leading-normal">Your Progress</p>
+                                        <p class="text-primary text-sm font-bold leading-normal">0%</p>
+                                    </div>
+                                    <div class="rounded-full bg-slate-200 dark:bg-slate-700 h-2 w-full overflow-hidden">
+                                        <div class="h-full rounded-full bg-primary" style="width: 0%;"></div>
+                                    </div>
+                                    <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">0/5 Sections Completed</p>
+                                    <hr class="border-slate-100 dark:border-slate-800 my-2"/>
+                                    <div class="flex flex-col gap-3">
+                                        <div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                                            <span class="material-symbols-outlined text-[20px] text-slate-400">schedule</span>
+                                            <span>2h 15m remaining</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                                            <span class="material-symbols-outlined text-[20px] text-slate-400">signal_cellular_alt</span>
+                                            <span>Intermediate Level</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                                            <span class="material-symbols-outlined text-[20px] text-slate-400">workspace_premium</span>
+                                            <span>Certificate on completion</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Instructor Card -->
+                            <div class="bg-white dark:bg-slate-850 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <h3 class="text-slate-900 dark:text-white font-bold mb-4">Instructor</h3>
+                                <div class="flex items-center gap-4">
+                                    <div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of the instructor, Dr. Emily Chen" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBiEq1KaXczyVWkdq9Mnm_ERXWUrsfFUwkhA8jEme4bu1mooh7DtxDIHiExQILCZw1EP4pIGAPcBX5pFwQSpxe54OMXVxcyMnCNIBTXsCEiOu3NOQPCgcdPnzhKpaM7l-iRePkdxNNupuuX_fypYTePUZsnwOHjm329q9xk7pxLdA-ld3HQSu2CO83tcqWn-G9dWD64KCgHXa9rk8HRy68tsvYi1QPR5mdfawM8lbuwfQcOWlZQHwi0J9Swg8xefGiC68u3DizJcNY');"></div>
+                                    <div>
+                                        <p class="text-slate-900 dark:text-white font-bold text-sm">Dr. Emily Chen</p>
+                                        <p class="text-slate-500 dark:text-slate-400 text-xs">Senior Communication Strategist</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4">
+                                    Dr. Chen has over 15 years of experience coaching executives at Fortune 500 companies.
+                                </p>
+                            </div>
+
+                            <!-- Related Skills -->
+                            <div class="bg-transparent pt-2">
+                                <h3 class="text-slate-900 dark:text-white font-bold mb-4 px-1">Related Skills</h3>
+                                <div class="flex flex-col gap-2">
+                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+                                        <div class="bg-white dark:bg-slate-700 p-2 rounded border border-slate-200 dark:border-slate-600 group-hover:border-primary/50 transition-colors">
+                                            <span class="material-symbols-outlined text-primary text-[20px]">handshake</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Negotiation Basics</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">1h 30m</p>
+                                        </div>
+                                    </a>
+                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+                                        <div class="bg-white dark:bg-slate-700 p-2 rounded border border-slate-200 dark:border-slate-600 group-hover:border-primary/50 transition-colors">
+                                            <span class="material-symbols-outlined text-primary text-[20px]">groups</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Team Leadership</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">3h 45m</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simple Footer -->
+        <footer class="bg-white dark:bg-slate-850 border-t border-slate-200 dark:border-slate-800 py-8 px-6">
+            <div class="max-w-full mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-slate-500 dark:text-slate-400 text-sm">
+                    © 2026 Corporate Learning Inc. All rights reserved.
+                </div>
+                <div class="flex gap-6">
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Privacy Policy</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Terms of Service</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+<script src="assets/common.js"></script>
+</body>
+</html>
